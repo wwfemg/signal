@@ -1,0 +1,43 @@
+name: 提交一个打法
+description: 你有一套判断方法，想让它被验证。写清规则，我们用历史数据跑一遍，结果好坏都公开。
+title: "[打法] "
+labels: ["打法"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        规则写不清楚的没法回测。"感觉会涨"不算规则，"连续3天上龙虎榜且买一为机构席位"算规则。
+  - type: input
+    id: name
+    attributes: { label: 这个打法叫什么, placeholder: "例：机构席位连续买入" }
+    validations: { required: true }
+  - type: textarea
+    id: rule
+    attributes:
+      label: 触发条件（什么情况算出现信号）
+      placeholder: "例：近5个交易日内2次以上登上龙虎榜，且买一席位为机构专用"
+    validations: { required: true }
+  - type: textarea
+    id: action
+    attributes:
+      label: 出现信号后怎么做（买点、卖点、止损）
+      placeholder: "例：信号出现次日开盘买入，持有10个交易日或涨15%先到先执行，跌8%止损"
+    validations: { required: true }
+  - type: input
+    id: data
+    attributes:
+      label: 需要哪些公开数据
+      placeholder: "例：东方财富龙虎榜、日线行情"
+    validations: { required: true }
+  - type: textarea
+    id: why
+    attributes:
+      label: 你觉得它为什么有效（可不填）
+      placeholder: "背后的逻辑，比如某类资金的行为习惯"
+  - type: checkboxes
+    id: ok
+    attributes:
+      label: 确认
+      options:
+        - label: 我知道回测结果会公开，跑出来不行也会照样贴出来
+          required: true

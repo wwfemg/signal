@@ -1,0 +1,139 @@
+<title>查一只票</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .search{display:flex; gap:8px; margin:6px 0 18px;}
+  .search input{flex:1; min-width:0; font-size:16px; padding:11px 13px; border-radius:3px;
+    border:1px solid var(--line); background:var(--panel); color:var(--ink);
+    font-family:"IBM Plex Mono", monospace;}
+  .search input:focus{outline:2px solid var(--accent); outline-offset:-1px;}
+  .search button{padding:11px 18px; font-size:14px; border:none; border-radius:3px; cursor:pointer;
+    background:var(--accent); color:#fff;}
+  .hits{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;}
+  .hits button{font-size:12.5px; padding:5px 10px; border:1px solid var(--line); border-radius:2px;
+    background:var(--panel); color:var(--ink-2); cursor:pointer;}
+  .tagrow{display:flex; flex-wrap:wrap; gap:6px; margin:2px 0 12px;}
+  .tag{font-size:12px; padding:3px 10px; border-radius:2px; background:var(--accent-soft); color:var(--accent);}
+  .whylist{margin:0 0 14px; padding:0; list-style:none; display:flex; flex-direction:column; gap:5px;}
+  .whylist li{font-size:13px; color:var(--ink-2); border-left:2px solid var(--line); padding-left:10px;}
+  .whylist b{color:var(--ink);}
+  table.t{width:100%; border-collapse:collapse; font-size:13px;}
+  table.t th, table.t td{padding:7px 9px; border-bottom:1px solid var(--line-soft); text-align:left;}
+  table.t th{font-size:11.5px; color:var(--ink-3); font-weight:500;}
+  table.t td.num{font-family:"IBM Plex Mono", monospace; font-variant-numeric:tabular-nums; text-align:right;}
+  .down{color:var(--red);} .up{color:var(--green);}
+  .tblwrap{overflow-x:auto;}
+  .empty{font-size:13px; color:var(--ink-3);}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="kicker">Signal · 查一只票</p>
+    <h1>输入代码</h1>
+    <p class="sub">看这只票现在属于哪几种逻辑、时间轴走到哪一步、哪些机构在里面、最近有没有上龙虎榜。所有判定规则都写在下面，数据来自公开渠道。</p>
+    <div class="search">
+      <input id="q" inputmode="numeric" placeholder="600520 或 三佳" autocomplete="off">
+      <button id="go">查</button>
+    </div>
+    <div class="hits" id="hits"></div>
+  </header>
+  <div id="out"></div>
+  <section class="rules" id="rules"></section>
+  <footer>
+    数据来自交易所公告、十大流通股东名册、龙虎榜。机构成本为估算（其持股季度的量价均价），不是真实成交价。<br>
+    <b>研究记录，不构成投资建议。</b>
+  </footer>
+</div>
+
+<script>
+const D = {};
+const j = async n => { try { const r = await fetch('data/' + n, {cache:'no-store'}); return r.ok ? await r.json() : null; } catch(e) { return null; } };
+const esc = s => String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+
+function render(code) {
+  const t = D.tags?.stocks?.[code], tl = D.timeline?.stocks?.[code];
+  const pool = (D.pool?.rows || []).filter(r => r.code === code);
+  const lhb = D.lhb?.stocks?.[code] || [];
+  const led = (D.ledger?.entries || []).find(e => e.code === code);
+  const name = t?.name || tl?.name || pool[0]?.name || led?.name || '';
+  if (!t && !tl && !pool.length && !lhb.length && !led) {
+    document.getElementById('out').innerHTML =
+      `<section><p class="empty">没查到 ${esc(code)}。当前只收录了有标签、有机构持仓或近期上过龙虎榜的股票，台账里的票也能查到。</p></section>`;
+    return;
+  }
+  let h = `<section><h2>${esc(code)} ${esc(name)}</h2>`;
+  if (t?.tags?.length) {
+    h += `<div class="tagrow">${t.tags.map(x => `<span class="tag">${esc(x)}</span>`).join('')}</div>`;
+    h += `<ul class="whylist">${Object.entries(t.why || {}).map(([k,v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('')}</ul>`;
+  } else { h += `<p class="empty">暂无自动标签</p>`; }
+  h += `</section>`;
+
+  if (led) {
+    h += `<section><h2>台账</h2><div class="cards"><article class="card">
+      <header class="card-top"><h3>状态：${esc(led.status)}</h3></header><dl>
+      <dt>触发事实</dt><dd>${esc(led.trigger)}</dd>
+      <dt>在等什么</dt><dd>${esc(led.waiting)}</dd>
+      <dt>什么算看错</dt><dd>${esc(led.falsify)}</dd>
+      <dt>结果回看</dt><dd>${esc(led.review)}</dd></dl></article></div></section>`;
+  }
+
+  if (pool.length) {
+    h += `<section><h2>机构持仓（外资通道账户）</h2>
+      <p class="note">成本为估算：其持股季度的成交量加权均价。这不是买入信号——这些名字多为国内资金借通道持股，一起进的组合下季度 51% 一起消失。</p>
+      <div class="tblwrap"><table class="t"><thead><tr><th>报告期</th><th>机构</th><th>名次</th><th>占流通</th><th>变动</th><th>估算成本</th><th>现价</th><th>偏离</th></tr></thead><tbody>` +
+      pool.sort((a,b) => b.q.localeCompare(a.q)).map(r => `<tr>
+        <td>${esc(r.q)}</td><td>${esc(r.holder)}</td><td class="num">${r.rank}</td>
+        <td class="num">${r.ratio}%</td><td>${esc(r.chg)}</td>
+        <td class="num">${r.cost}</td><td class="num">${r.price}</td>
+        <td class="num ${r.dev < 0 ? 'down' : 'up'}">${r.dev > 0 ? '+' : ''}${r.dev}%</td></tr>`).join('') +
+      `</tbody></table></div></section>`;
+  }
+
+  if (lhb.length) {
+    h += `<section><h2>近30天龙虎榜</h2><div class="tblwrap"><table class="t">
+      <thead><tr><th>日期</th><th>当日涨跌</th><th>上榜原因</th></tr></thead><tbody>` +
+      lhb.map(r => `<tr><td>${esc(r.date)}</td>
+        <td class="num ${r.chg < 0 ? 'down' : 'up'}">${r.chg > 0 ? '+' : ''}${r.chg}%</td>
+        <td>${esc(r.explain)}</td></tr>`).join('') + `</tbody></table></div></section>`;
+  }
+
+  if (tl) {
+    const li = (e, f) => `<li class="${f ? 'tl-f' : 'tl-p'}"><span class="tl-date">${esc(e.date || '待定')}</span><span class="tl-kind">${esc(e.kind)}</span><span class="tl-t">${esc(e.title)}</span></li>`;
+    h += `<section><h2>时间轴</h2><ul class="tl-list">` +
+      (tl.future || []).map(e => li(e, true)).join('') +
+      `<li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">上面是今后已知的日子，下面是已经发生的</span></li>` +
+      (tl.past || []).map(e => li(e, false)).join('') + `</ul></section>`;
+  }
+  document.getElementById('out').innerHTML = h;
+  location.hash = code;
+}
+
+function search() {
+  const q = document.getElementById('q').value.trim();
+  if (!q) return;
+  if (/^\d{6}$/.test(q)) { render(q); document.getElementById('hits').innerHTML = ''; return; }
+  const all = {};
+  for (const [c, v] of Object.entries(D.tags?.stocks || {})) all[c] = v.name || '';
+  for (const [c, v] of Object.entries(D.timeline?.stocks || {})) all[c] = all[c] || v.name || '';
+  const hit = Object.entries(all).filter(([c, n]) => n && n.includes(q)).slice(0, 12);
+  document.getElementById('hits').innerHTML = hit.length
+    ? hit.map(([c, n]) => `<button data-c="${c}">${esc(c)} ${esc(n)}</button>`).join('')
+    : '<span class="empty">没找到这个名字，试试代码</span>';
+  document.querySelectorAll('.hits button').forEach(b =>
+    b.onclick = () => { document.getElementById('q').value = b.dataset.c; render(b.dataset.c); });
+}
+
+(async () => {
+  const [tags, timeline, pool, lhb, ledger] = await Promise.all(
+    ['tags.json','timeline.json','pool.json','lhb.json','ledger.json'].map(j));
+  Object.assign(D, {tags, timeline, pool, lhb, ledger});
+  const rules = tags?.rules || {};
+  document.getElementById('rules').innerHTML = '<h2>标签怎么判定</h2><ol>' +
+    Object.entries(rules).map(([k, v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('') +
+    '</ol><p class="note">规则都写死在脚本里，谁跑都一样。想加新标签，在 GitHub 提一个 Issue，写清怎么判定、用哪条公开数据验证。</p>';
+  document.getElementById('go').onclick = search;
+  document.getElementById('q').onkeydown = e => { if (e.key === 'Enter') search(); };
+  const h = location.hash.replace('#', '');
+  if (/^\d{6}$/.test(h)) { document.getElementById('q').value = h; render(h); }
+})();
+</script>

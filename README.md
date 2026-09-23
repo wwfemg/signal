@@ -2,6 +2,7 @@
 
 A 股研究记录：每只票在等哪个公告、什么条件算看错、后来发生了什么。
 台账页面：https://wwfemg.github.io/signal/
+查一只票：https://wwfemg.github.io/signal/stock.html （输入代码看标签、时间轴、机构持仓、龙虎榜）
 
 ## 目录
 
