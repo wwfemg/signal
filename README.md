@@ -29,6 +29,23 @@ python3 unlock.py 001391       # 查一只票的解禁时间表
 想加一只票或者补进展，看 [CONTRIBUTING.md](CONTRIBUTING.md)。不会用 Git 也可以开
 一个 Issue 提名。
 
+## 记录改过没有，自己可以查
+
+这个仓库的每一次改动都留在 Git 里，谁改的、改了哪一行、什么时候改的，都能翻出来，
+改不掉也删不掉。想核对某只票当初写的是什么：
+
+```
+git log --follow -p ledger.json      # 看台账每一次改动
+git tag                              # 看有哪些季度快照
+git show 2026Q3:ledger.json          # 看某个季度当时的原样
+```
+
+每季度打一个标签存档，看错的记录标成"作废"保留，不删。
+
+## 变更记录
+
+见 [CHANGELOG.md](CHANGELOG.md)。
+
 ## 说明
 
 数据来自交易所和公司公告原文、十大流通股东名册、基金定期报告。
