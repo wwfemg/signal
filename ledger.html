@@ -142,6 +142,16 @@
   .nav{text-transform:none; letter-spacing:0; font-family:"Noto Sans SC", sans-serif; font-size:12px;}
 
   .wrap{max-width:min(920px, 100%);}
+
+  .topbar .mini{position:relative;}
+  .msug{position:absolute; left:0; right:0; top:calc(100% + 6px); z-index:20;
+    display:flex; flex-direction:column; background:var(--panel);
+    border-radius:8px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,.18);}
+  .msug:empty{display:none;}
+  .msug button{text-align:left; padding:10px 16px; border:none; border-bottom:1px solid var(--line-soft);
+    background:transparent; color:var(--ink); font-size:14px; cursor:pointer; font-family:"Noto Sans SC",sans-serif;}
+  .msug button:hover{background:var(--line-soft);}
+  .msug button i{font-style:normal; color:var(--ink-3); font-size:12px; font-family:"IBM Plex Mono",monospace; margin-left:6px;}
 </style>
 </head>
 <body>
