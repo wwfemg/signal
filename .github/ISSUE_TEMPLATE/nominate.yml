@@ -1,5 +1,5 @@
-name: 提名一只票
-description: 推荐一只值得跟踪的股票。必须有公告出处，不接受"会涨"类观点。
+name: 补全一只票
+description: 某只票符合已有八条逻辑之一，但我们还没记。必须有公告出处，不接受"会涨"类观点。
 title: "[提名] "
 labels: ["提名"]
 body:
@@ -8,6 +8,13 @@ body:
       value: |
         **四条红线**：不写买卖建议与目标价｜不收费带单｜必须有公告出处｜记录只增不删。
         写不出"什么算看错"的提名不会被采纳。
+  - type: dropdown
+    id: logic
+    attributes:
+      label: 属于哪条逻辑
+      description: 八条之外的，请改用「提出一个新逻辑」模板
+      options: ["国资", "外资通道", "龙虎榜", "解禁", "并购重组", "定增", "重整摘帽", "季末拉升"]
+    validations: { required: true }
   - type: input
     id: code
     attributes: { label: 股票代码与名称, placeholder: "600520 三佳科技" }
