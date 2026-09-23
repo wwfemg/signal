@@ -57,8 +57,20 @@ function render(code) {
   const led = (D.ledger?.entries || []).find(e => e.code === code);
   const name = t?.name || tl?.name || pool[0]?.name || led?.name || '';
   if (!t && !tl && !pool.length && !lhb.length && !led) {
-    document.getElementById('out').innerHTML =
-      `<section><p class="empty">没查到 ${esc(code)}。当前只收录了有标签、有机构持仓或近期上过龙虎榜的股票，台账里的票也能查到。</p></section>`;
+    const nm = D.names?.[code] || '';
+    const title = nm ? `${esc(code)} ${esc(nm)}` : esc(code);
+    const issue = 'https://github.com/wwfemg/signal/issues/new?template=nominate.yml&title=' +
+      encodeURIComponent('[提名] ' + code + ' ' + nm);
+    document.getElementById('out').innerHTML = `<section>
+      <h2>${title}</h2>
+      <p class="empty">这只票我们还没有记录。收录的是：台账跟过的、有外资通道账户持仓的、近30天上过龙虎榜的、或者有解禁压力的票。</p>
+      <div class="entries" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px">
+        <a class="entry" href="https://www.cninfo.com.cn/new/fulltextSearch?keyWord=${esc(code)}" target="_blank"><b>去巨潮查公告</b><p>交易所指定披露网站，公告原文都在这</p></a>
+        <a class="entry" href="https://quote.eastmoney.com/concept/${code[0]==='6'?'sh':'sz'}${esc(code)}.html" target="_blank"><b>去东财看行情</b><p>股东、公告、资金流</p></a>
+        <a class="entry" href="${issue}" target="_blank"><b>提名这只票</b><p>写清触发它的公告和在等什么，核实后录入台账</p></a>
+      </div>
+      <p class="note" style="margin-top:14px">本机执行：<code>python3 tools/timeline.py ${esc(code)}</code> 可以直接拉它的时间轴，<code>python3 tools/unlock.py ${esc(code)}</code> 看解禁表。</p>
+    </section>`;
     return;
   }
   let h = `<section><h2>${esc(code)} ${esc(name)}</h2>`;
@@ -112,8 +124,8 @@ function search() {
   const q = document.getElementById('q').value.trim();
   if (!q) return;
   if (/^\d{6}$/.test(q)) { render(q); document.getElementById('hits').innerHTML = ''; return; }
-  const all = {};
-  for (const [c, v] of Object.entries(D.tags?.stocks || {})) all[c] = v.name || '';
+  const all = Object.assign({}, D.names || {});
+  for (const [c, v] of Object.entries(D.tags?.stocks || {})) all[c] = v.name || all[c] || '';
   for (const [c, v] of Object.entries(D.timeline?.stocks || {})) all[c] = all[c] || v.name || '';
   const hit = Object.entries(all).filter(([c, n]) => n && n.includes(q)).slice(0, 12);
   document.getElementById('hits').innerHTML = hit.length
@@ -124,9 +136,9 @@ function search() {
 }
 
 (async () => {
-  const [tags, timeline, pool, lhb, ledger] = await Promise.all(
-    ['tags.json','timeline.json','pool.json','lhb.json','ledger.json'].map(j));
-  Object.assign(D, {tags, timeline, pool, lhb, ledger});
+  const [tags, timeline, pool, lhb, ledger, names] = await Promise.all(
+    ['tags.json','timeline.json','pool.json','lhb.json','ledger.json','names.json'].map(j));
+  Object.assign(D, {tags, timeline, pool, lhb, ledger, names});
   const rules = tags?.rules || {};
   document.getElementById('rules').innerHTML = '<h2>标签怎么判定</h2><ol>' +
     Object.entries(rules).map(([k, v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('') +
