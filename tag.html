@@ -30,7 +30,15 @@
   .topbar .mini input:focus{border-color:var(--accent);}
   .topbar .tnav a{font-size:13px; color:var(--ink-2); text-decoration:none; margin-left:14px; white-space:nowrap;}
   .topbar .tnav a:hover{color:var(--accent);}
-  @media (max-width:520px){ .topbar .tnav a{margin-left:10px; font-size:12.5px;} }
+  .topbar .tnav{display:flex; gap:14px; flex:none;}
+  .topbar .tnav a{margin-left:0;}
+  @media (max-width:640px){
+    .topbar{flex-wrap:wrap; row-gap:8px;}
+    .topbar .brand{order:1;}
+    .topbar .tnav{order:2; margin-left:auto; gap:12px;}
+    .topbar .mini{order:3; flex-basis:100%;}
+    .topbar .tnav a{font-size:12.5px;}
+  }
   tbody tr.clk{cursor:pointer;}
   tbody tr.clk:hover{background:var(--line-soft);}
 

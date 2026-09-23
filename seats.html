@@ -25,6 +25,15 @@
   .det{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:12px 14px; margin:6px 0 14px;}
   .det h4{margin:0 0 8px; font-size:13.5px;}
   .det a{color:var(--accent); text-decoration:none;}
+  .topbar .tnav{display:flex; gap:14px; flex:none;}
+  .topbar .tnav a{margin-left:0;}
+  @media (max-width:640px){
+    .topbar{flex-wrap:wrap; row-gap:8px;}
+    .topbar .brand{order:1;}
+    .topbar .tnav{order:2; margin-left:auto; gap:12px;}
+    .topbar .mini{order:3; flex-basis:100%;}
+    .topbar .tnav a{font-size:12.5px;}
+  }
 </style>
 </head>
 <body>
