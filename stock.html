@@ -98,8 +98,8 @@ function render(code) {
 
   if (pool.length) {
     h += `<section><h2>机构持仓（外资通道账户）</h2>
-      <p class="note">成本为估算：其持股季度的成交量加权均价。这不是买入信号——这些名字多为国内资金借通道持股，一起进的组合下季度 51% 一起消失。</p>
-      <div class="tblwrap"><table class="t"><thead><tr><th>报告期</th><th>机构</th><th>名次</th><th>占流通</th><th>变动</th><th>估算成本</th><th>现价</th><th>偏离</th></tr></thead><tbody>` +
+      <p class="note">机构成本是估算的：按它持股那个季度的量价均价算。季报滞后一到两个月，它可能早已离场。只能当参考，不是买入理由。这些名字多为国内资金借通道持股，一起进的组合下季度 51% 一起消失。</p>
+      <div class="tblwrap"><table class="t"><thead><tr><th>报告期</th><th>机构</th><th>名次</th><th>占流通</th><th>变动</th><th>估算成本</th><th>现价</th><th>现价 vs 估算成本</th></tr></thead><tbody>` +
       pool.sort((a,b) => b.q.localeCompare(a.q)).map(r => `<tr>
         <td>${esc(r.q)}</td><td>${esc(r.holder)}</td><td class="num">${r.rank}</td>
         <td class="num">${r.ratio}%</td><td>${esc(r.chg)}</td>

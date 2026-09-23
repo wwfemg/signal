@@ -26,7 +26,7 @@
   <header class="top">
     <p class="kicker">Signal　<a class="nav" href="index.html">← 首页</a>　<a class="nav" href="stock.html">查一只票 →</a></p>
     <h1>机构持仓池</h1>
-    <p class="sub">外资通道账户出现在十大流通股东的票。成本是估算的——用它持股那个季度的成交量加权均价，不是真实成交价。名单按季度更新，中间靠回购公告附带的名单补。</p>
+    <p class="sub">外资通道账户出现在十大流通股东的票。机构成本是估算的：按它持股那个季度的量价均价算。季报滞后一到两个月，它可能早已离场。只能当参考，不是买入理由。名单按季度更新，中间靠回购公告附带的名单补。</p>
     <p class="warn"><b>这不是买入信号。</b>统计 1453 只票 × 14 个季度：这些名字多为国内资金借通道持股，一起进的组合下季度 51% 一起消失，股价跌破其成本后留榜率只有 22%——走不走跟赚不赚钱无关。能用的是三件事：谁和谁一起进来、下季度谁走了、成本线当反弹压力位。</p>
     <div class="filters" id="fh"></div>
     <div class="filters" id="fd"></div>
@@ -51,10 +51,10 @@ function paint(){
   let rows=P.filter(r=>(fh==='全部'||r.holder===fh)&&BANDS[fd](r));
   rows.sort((a,b)=> sort==='dev' ? a.dev-b.dev : sort==='ratio' ? b.ratio-a.ratio : b.q.localeCompare(a.q));
   document.getElementById('out').innerHTML = rows.length ? `<section>
-    <p class="note">共 ${rows.length} 条，按${sort==='dev'?'偏离从低到高':sort==='ratio'?'占流通从高到低':'报告期'}排。点表头可换排序。</p>
+    <p class="note">共 ${rows.length} 条，按${sort==='dev'?'现价与估算成本的差距从低到高':sort==='ratio'?'占流通从高到低':'报告期'}排。点表头可换排序。</p>
     <div class="tblwrap"><table class="t"><thead><tr><th>代码</th><th>名称</th><th>机构</th>
       <th data-s="q">报告期</th><th class="num" data-s="ratio">占流通</th><th>变动</th>
-      <th class="num">估算成本</th><th class="num">现价</th><th class="num" data-s="dev">偏离</th></tr></thead><tbody>`+
+      <th class="num">估算成本</th><th class="num">现价</th><th class="num" data-s="dev">现价 vs 估算成本</th></tr></thead><tbody>`+
     rows.slice(0,400).map(r=>`<tr><td><a href="stock.html#${r.code}">${r.code}</a></td><td>${esc(r.name)}</td>
       <td>${esc(r.holder)}</td><td>${esc(r.q)}</td><td class="num">${r.ratio}%</td><td>${esc(r.chg)}</td>
       <td class="num">${r.cost}</td><td class="num">${r.price}</td>
