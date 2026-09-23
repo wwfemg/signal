@@ -30,6 +30,10 @@
   .down{color:var(--red);} .up{color:var(--green);}
   .tblwrap{overflow-x:auto;}
   .empty{font-size:13px; color:var(--ink-3);}
+  .grp{font-size:13.5px; margin:16px 0 6px; font-family:"IBM Plex Mono", monospace; color:var(--ink);}
+  .gk{font-family:"Noto Sans SC",sans-serif; font-size:12px; color:var(--ink-3); font-weight:400;}
+  .gnew{font-family:"Noto Sans SC",sans-serif; font-size:11px; margin-left:8px; padding:2px 8px;
+        border-radius:2px; background:var(--accent-soft); color:var(--accent);}
 </style>
 </head>
 <body>
@@ -55,6 +59,7 @@
 <script>
 const D = {};
 const j = async n => { try { const r = await fetch('data/' + n, {cache:'no-store'}); return r.ok ? await r.json() : null; } catch(e) { return null; } };
+const CAVEAT = '机构成本是估算的：按它持股那个季度的量价均价算。季报滞后一到两个月，它可能早已离场。只能当参考，不是买入理由。';
 const esc = s => String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
 
 function render(code) {
@@ -97,15 +102,23 @@ function render(code) {
   }
 
   if (pool.length) {
+    const byDate = {};
+    pool.forEach(r => (byDate[r.q] = byDate[r.q] || []).push(r));
+    const dates = Object.keys(byDate).sort().reverse();
     h += `<section><h2>机构持仓（外资通道账户）</h2>
-      <p class="note">机构成本是估算的：按它持股那个季度的量价均价算。季报滞后一到两个月，它可能早已离场。只能当参考，不是买入理由。这些名字多为国内资金借通道持股，一起进的组合下季度 51% 一起消失。</p>
-      <div class="tblwrap"><table class="t"><thead><tr><th>报告期</th><th>机构</th><th>名次</th><th>占流通</th><th>变动</th><th>估算成本</th><th>现价</th><th>现价 vs 估算成本</th></tr></thead><tbody>` +
-      pool.sort((a,b) => b.q.localeCompare(a.q)).map(r => `<tr>
-        <td>${esc(r.q)}</td><td>${esc(r.holder)}</td><td class="num">${r.rank}</td>
-        <td class="num">${r.ratio}%</td><td>${esc(r.chg)}</td>
-        <td class="num">${r.cost}</td><td class="num">${r.price}</td>
-        <td class="num ${r.dev < 0 ? 'down' : 'up'}">${r.dev > 0 ? '+' : ''}${r.dev}%</td></tr>`).join('') +
-      `</tbody></table></div></section>`;
+      <p class="note">${CAVEAT}最新的排在最前面。“快照”来自公司回购公告附带的股东名单，基准日离披露只有 2—3 天；“季报”是定期报告，滞后 1—2 个月。</p>`;
+    dates.forEach((d, i) => {
+      const rows = byDate[d], kind = rows[0].kind || '季报';
+      h += `<h3 class="grp">${esc(d)}　<span class="gk">${esc(kind)}</span>${i === 0 ? '<span class="gnew">最新</span>' : ''}</h3>
+        <div class="tblwrap"><table class="t"><thead><tr><th>机构</th><th>名次</th><th>占流通</th><th>变动</th>
+        <th>估算成本</th><th>现价</th><th>现价 vs 估算成本</th></tr></thead><tbody>` +
+        rows.map(r => `<tr><td>${esc(r.holder)}</td><td class="num">${r.rank}</td>
+          <td class="num">${r.ratio}%</td><td>${esc(r.chg)}</td>
+          <td class="num">${r.cost}</td><td class="num">${r.price}</td>
+          <td class="num ${r.dev < 0 ? 'down' : 'up'}">${r.dev > 0 ? '+' : ''}${r.dev}%</td></tr>`).join('') +
+        `</tbody></table></div>`;
+    });
+    h += `</section>`;
   }
 
   if (lhb.length) {
