@@ -19,7 +19,9 @@
   .hits button{font-size:12.5px; padding:5px 10px; border:1px solid var(--line); border-radius:2px;
     background:var(--panel); color:var(--ink-2); cursor:pointer;}
   .tagrow{display:flex; flex-wrap:wrap; gap:6px; margin:2px 0 12px;}
-  .tag{font-size:12px; padding:3px 10px; border-radius:2px; background:var(--accent-soft); color:var(--accent);}
+  a.tag{font-size:12px; padding:4px 11px; border-radius:999px; background:var(--accent-soft);
+    color:var(--accent); text-decoration:none;}
+  a.tag:hover{background:var(--accent); color:#fff;}
   .whylist{margin:0 0 14px; padding:0; list-style:none; display:flex; flex-direction:column; gap:5px;}
   .whylist li{font-size:13px; color:var(--ink-2); border-left:2px solid var(--line); padding-left:10px;}
   .whylist b{color:var(--ink);}
@@ -34,12 +36,31 @@
   .gk{font-family:"Noto Sans SC",sans-serif; font-size:12px; color:var(--ink-3); font-weight:400;}
   .gnew{font-family:"Noto Sans SC",sans-serif; font-size:11px; margin-left:8px; padding:2px 8px;
         border-radius:2px; background:var(--accent-soft); color:var(--accent);}
+
+  .topbar{display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    padding:10px clamp(14px,3vw,26px); border-bottom:1px solid var(--line); background:var(--panel);
+    position:sticky; top:env(safe-area-inset-top, 0px); z-index:9;}
+  .topbar .brand{font-family:"IBM Plex Serif",Georgia,serif; font-size:19px; font-weight:600;
+    color:var(--ink); text-decoration:none; letter-spacing:-.01em;}
+  .topbar .mini{flex:1; min-width:150px;}
+  .topbar .mini input{width:100%; border:1px solid var(--line); background:var(--ground); color:var(--ink);
+    border-radius:999px; padding:8px 16px; font-size:14px; outline:none; font-family:"Noto Sans SC",sans-serif;}
+  .topbar .mini input:focus{border-color:var(--accent);}
+  .topbar .tnav a{font-size:13px; color:var(--ink-2); text-decoration:none; margin-left:14px; white-space:nowrap;}
+  .topbar .tnav a:hover{color:var(--accent);}
+  @media (max-width:520px){ .topbar .tnav a{margin-left:10px; font-size:12.5px;} }
+  tbody tr.clk{cursor:pointer;}
+  tbody tr.clk:hover{background:var(--line-soft);}
 </style>
 </head>
 <body>
+<div class="topbar">
+  <a class="brand" href="index.html">Signal</a>
+  <div class="mini"><input id="mq" placeholder="输入代码跳转，如 600520" aria-label="跳转到某只票"></div>
+  <nav class="tnav"><a href="ledger.html">台账</a><a href="pool.html">机构池</a><a href="tag.html">标签</a></nav>
+</div>
 <div class="wrap">
   <header class="top">
-    <p class="kicker">Signal · 查一只票</p>
     <h1>输入代码</h1>
     <p class="sub">看这只票现在属于哪几种逻辑、时间轴走到哪一步、哪些机构在里面、最近有没有上龙虎榜。所有判定规则都写在下面，数据来自公开渠道。</p>
     <div class="search">
@@ -85,9 +106,11 @@ function render(code) {
     </section>`;
     return;
   }
+  document.title = (name ? name + ' ' + code : code) + '｜Signal';
+  const h1 = document.querySelector('h1'); if (h1) h1.textContent = name ? `${name} ${code}` : code;
   let h = `<section><h2>${esc(code)} ${esc(name)}</h2>`;
   if (t?.tags?.length) {
-    h += `<div class="tagrow">${t.tags.map(x => `<span class="tag">${esc(x)}</span>`).join('')}</div>`;
+    h += `<div class="tagrow">${t.tags.map(x => `<a class="tag" href="tag.html#${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}</div>`;
     h += `<ul class="whylist">${Object.entries(t.why || {}).map(([k,v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('')}</ul>`;
   } else { h += `<p class="empty">暂无自动标签</p>`; }
   h += `</section>`;
@@ -109,7 +132,7 @@ function render(code) {
       <p class="note">${CAVEAT}最新的排在最前面。“快照”来自公司回购公告附带的股东名单，基准日离披露只有 2—3 天；“季报”是定期报告，滞后 1—2 个月。</p>`;
     dates.forEach((d, i) => {
       const rows = byDate[d], kind = rows[0].kind || '季报';
-      h += `<h3 class="grp">${esc(d)}　<span class="gk">${esc(kind)}</span>${i === 0 ? '<span class="gnew">最新</span>' : ''}</h3>
+      h += `<h3 class="grp"><a href="pool.html#${esc(d)}">${esc(d)}</a>　<span class="gk">${esc(kind)}</span>${i === 0 ? '<span class="gnew">最新</span>' : ''}</h3>
         <div class="tblwrap"><table class="t"><thead><tr><th>机构</th><th>名次</th><th>占流通</th><th>变动</th>
         <th>估算成本</th><th>现价</th><th>现价 vs 估算成本</th></tr></thead><tbody>` +
         rows.map(r => `<tr><td>${esc(r.holder)}</td><td class="num">${r.rank}</td>
@@ -168,6 +191,14 @@ function search() {
   const h = location.hash.replace('#', '');
   if (/^\d{6}$/.test(h)) { document.getElementById('q').value = h; render(h); }
 })();
+</script>
+
+<script>
+(() => { const m = document.getElementById('mq'); if (!m) return;
+  m.onkeydown = e => { if (e.key !== 'Enter') return;
+    const v = m.value.trim();
+    if (/^[0-9]{6}$/.test(v)) location.href = 'stock.html#' + v;
+    else if (v) location.href = 'index.html'; }; })();
 </script>
 </body>
 </html>

@@ -20,12 +20,31 @@
   .down{color:var(--red);} .up{color:var(--green);}
   .tblwrap{overflow-x:auto;}
   .empty{font-size:13px;color:var(--ink-3);}
+
+  .topbar{display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    padding:10px clamp(14px,3vw,26px); border-bottom:1px solid var(--line); background:var(--panel);
+    position:sticky; top:env(safe-area-inset-top, 0px); z-index:9;}
+  .topbar .brand{font-family:"IBM Plex Serif",Georgia,serif; font-size:19px; font-weight:600;
+    color:var(--ink); text-decoration:none; letter-spacing:-.01em;}
+  .topbar .mini{flex:1; min-width:150px;}
+  .topbar .mini input{width:100%; border:1px solid var(--line); background:var(--ground); color:var(--ink);
+    border-radius:999px; padding:8px 16px; font-size:14px; outline:none; font-family:"Noto Sans SC",sans-serif;}
+  .topbar .mini input:focus{border-color:var(--accent);}
+  .topbar .tnav a{font-size:13px; color:var(--ink-2); text-decoration:none; margin-left:14px; white-space:nowrap;}
+  .topbar .tnav a:hover{color:var(--accent);}
+  @media (max-width:520px){ .topbar .tnav a{margin-left:10px; font-size:12.5px;} }
+  tbody tr.clk{cursor:pointer;}
+  tbody tr.clk:hover{background:var(--line-soft);}
 </style>
 </head>
 <body>
+<div class="topbar">
+  <a class="brand" href="index.html">Signal</a>
+  <div class="mini"><input id="mq" placeholder="输入代码跳转，如 600520" aria-label="跳转到某只票"></div>
+  <nav class="tnav"><a href="ledger.html">台账</a><a href="pool.html">机构池</a><a href="tag.html">标签</a></nav>
+</div>
 <div class="wrap">
   <header class="top">
-    <p class="kicker">Signal　<a class="nav" href="index.html">← 首页</a>　<a class="nav" href="stock.html">查一只票 →</a></p>
     <h1>机构持仓池</h1>
     <p class="sub">外资通道账户出现在十大流通股东的票。机构成本是估算的：按它持股那个季度的量价均价算。季报滞后一到两个月，它可能早已离场。只能当参考，不是买入理由。名单按季度更新，中间靠回购公告附带的名单补。</p>
     <p class="warn"><b>这不是买入信号。</b>统计 1453 只票 × 14 个季度：这些名字多为国内资金借通道持股，一起进的组合下季度 51% 一起消失，股价跌破其成本后留榜率只有 22%——走不走跟赚不赚钱无关。能用的是三件事：谁和谁一起进来、下季度谁走了、成本线当反弹压力位。</p>
@@ -66,13 +85,14 @@ function paint(){
       <th data-s="q">日期</th><th>来源</th><th class="num" data-s="ratio">占流通</th><th>变动</th>
       <th class="num">估算成本</th><th class="num">现价</th>
       <th class="num" data-s="dev">现价 vs 估算成本</th></tr></thead><tbody>`+
-    rows.slice(0,400).map(r=>`<tr><td><a href="stock.html#${r.code}">${r.code}</a></td><td>${esc(r.name)}</td>
+    rows.slice(0,400).map(r=>`<tr class="clk" data-c="${r.code}"><td><a href="stock.html#${r.code}">${r.code}</a></td><td>${esc(r.name)}</td>
       <td>${esc(r.holder)}</td><td>${esc(r.q)}</td><td>${esc(r.kind||'季报')}</td>
       <td class="num">${r.ratio}%</td><td>${esc(r.chg)}</td>
       <td class="num">${r.cost}</td><td class="num">${r.price}</td>
       <td class="num ${r.dev<0?'down':'up'}">${r.dev>0?'+':''}${r.dev}%</td></tr>`).join('')+
     `</tbody></table></div>${rows.length>400?'<p class="note">只显示前 400 条，缩小筛选范围可看全</p>':''}</section>`
     : '<section><p class="empty">没有符合条件的记录</p></section>';
+  document.querySelectorAll('tbody tr.clk').forEach(tr=>tr.onclick=e=>{ if(e.target.tagName!=='A') location.href='stock.html#'+tr.dataset.c; });
   document.querySelectorAll('th[data-s]').forEach(th=>th.onclick=()=>{sort=th.dataset.s; paint();});
 }
 (async()=>{
@@ -87,6 +107,14 @@ function paint(){
     ` 数据更新于 ${esc(d.updated)}，行情为 ${esc(d.price_date)} 收盘。`);
   paint();
 })();
+</script>
+
+<script>
+(() => { const m = document.getElementById('mq'); if (!m) return;
+  m.onkeydown = e => { if (e.key !== 'Enter') return;
+    const v = m.value.trim();
+    if (/^[0-9]{6}$/.test(v)) location.href = 'stock.html#' + v;
+    else if (v) location.href = 'index.html'; }; })();
 </script>
 </body>
 </html>
