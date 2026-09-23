@@ -1,0 +1,41 @@
+name: 提名一只票
+description: 推荐一只值得跟踪的股票。必须有公告出处，不接受"会涨"类观点。
+title: "[提名] "
+labels: ["提名"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **四条红线**：不写买卖建议与目标价｜不收费带单｜必须有公告出处｜记录只增不删。
+        写不出"什么算看错"的提名不会被采纳。
+  - type: input
+    id: code
+    attributes: { label: 股票代码与名称, placeholder: "600520 三佳科技" }
+    validations: { required: true }
+  - type: textarea
+    id: trigger
+    attributes:
+      label: 触发事实（必须有公告标题＋披露日期）
+      placeholder: "例：2026-09-05《2026年限制性股票激励计划(草案)》，授予价12.66元"
+    validations: { required: true }
+  - type: input
+    id: waiting
+    attributes:
+      label: 在等哪个具体公告
+      placeholder: "例：上交所受理定增申请"
+    validations: { required: true }
+  - type: textarea
+    id: falsify
+    attributes:
+      label: 什么情况算看错（事先写死，事后不改）
+      placeholder: "例：定增终止或撤回；受理迟迟不来且跌破7月低点"
+    validations: { required: true }
+  - type: dropdown
+    id: grade
+    attributes:
+      label: 证据分级
+      options: ["✅ 公告原文证实", "🟡 间接迹象", "❓ 猜测"]
+    validations: { required: true }
+  - type: textarea
+    id: more
+    attributes: { label: 其他（可不填）, placeholder: "股东名册变化、同类案例、你的角度…" }

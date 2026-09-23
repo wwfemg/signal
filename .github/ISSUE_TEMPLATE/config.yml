@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 先读投稿规矩
+    url: https://github.com/wwfemg/signal/blob/main/CONTRIBUTING.md
+    about: 四条红线与五栏模板，读完再提

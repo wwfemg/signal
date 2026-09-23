@@ -123,6 +123,13 @@
     .tl-kind{grid-column:2; }
     .tl-t{grid-column:1 / -1; padding-left:0;}
   }
+
+  .score{display:grid; grid-template-columns:repeat(auto-fit, minmax(96px,1fr)); gap:1px;
+         background:var(--line-soft); border:1px solid var(--line); border-radius:3px; overflow:hidden;}
+  .sc{background:var(--panel); padding:14px 12px; text-align:center;}
+  .sc b{display:block; font-family:"IBM Plex Mono", monospace; font-size:22px; color:var(--ink);
+        font-variant-numeric:tabular-nums; line-height:1.2;}
+  .sc span{font-size:11.5px; color:var(--ink-3);}
 </style>
 
 <div class="wrap">
@@ -285,6 +292,19 @@
     <h2>季末拉升观察</h2>
     <p class="note">近 20 日涨幅。季末猛拉且外资扎堆的票，约四成在季初 20 个交易日内深跌超 20%。这是回避名单，不是买入名单。</p>
     <div class="rows"><div class="move"><span><strong>超声电子</strong></span><span class="pct">+55%</span><p>季末前猛拉，季初兑现风险高；若季报再现外资扎堆，历史上40%会20日内深跌超20%</p></div><div class="move"><span><strong>剑桥科技</strong></span><span class="pct">+26%</span><p>留意季初兑现</p></div><div class="move"><span><strong>科创新源</strong></span><span class="pct">+25%</span><p>留意季初兑现</p></div><div class="move"><span><strong>深圳新星</strong></span><span class="pct">+20%</span><p>留意季初兑现</p></div></div>
+  </section>
+
+  <section>
+    <h2>成绩单</h2>
+    <p class="note">只统计已经有结论的记录。样本少的时候这张表没有意义，我们照样公开——它随时间变厚，也随时间打脸。</p>
+    <div class="score">
+      <div class="sc"><b>9</b><span>在跟</span></div>
+      <div class="sc"><b>1</b><span>应验</span></div>
+      <div class="sc"><b>1</b><span>作废</span></div>
+      <div class="sc"><b>2</b><span>看过否决</span></div>
+      <div class="sc"><b>50%</b><span>已了结中的应验比例</span></div>
+    </div>
+    <p class="note">“否决”不计入胜率：那是看过之后决定不做的票，对不对要另外回看（例：国货航否决后 9-28 解禁 47%）。</p>
   </section>
 
   <section>
