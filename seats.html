@@ -38,6 +38,8 @@
     <h1>龙虎榜席位</h1>
     <p class="sub" id="sub">把每个席位当成一个操作者来看：上榜多少次、买了多少、买入之后 1／5／10 个交易日平均涨跌多少、有多少次是涨的。</p>
     <p class="warn"><b>看的是统计倾向，不是预测。</b>龙虎榜是结果不是预告，它只告诉你昨天谁买了。一个营业部席位背后可能有好几拨人，也可能换了人；“机构专用”不具名，只知道是机构，不知道是谁。胜率按买入日之后 5 个交易日的复权涨跌算，样本次数一并列出，次数少的别当回事。</p>
+    <div class="score" id="sum"></div>
+    <p class="note" id="sumnote"></p>
     <div class="filters" id="ft"></div>
     <div class="filters" id="fs"></div>
   </header>
@@ -86,6 +88,19 @@ function paint(){
   try{const r=await fetch('data/seats.json',{cache:'no-store'}); if(r.ok) d=await r.json();}catch(e){}
   if(!d||!d.seats?.length){document.getElementById('out').innerHTML='<section><p class="empty">席位数据还在生成中，稍后再看</p></section>';return;}
   S=d.seats;
+  const agg = t => {
+    const rows = S.filter(s => (t === '全部' || s.type === t) && s.n_perf);
+    const n = rows.reduce((a, s) => a + s.n_perf, 0);
+    if (!n) return null;
+    return {n, d5: (rows.reduce((a, s) => a + s.d5 * s.n_perf, 0) / n).toFixed(2),
+            win: Math.round(rows.reduce((a, s) => a + s.win5 * s.n_perf, 0) / n)};
+  };
+  const cells = [['全部','全部席位'],['营业部','营业部'],['机构专用','机构专用'],['北向','北向']]
+    .map(([t,label]) => { const a = agg(t); return a ?
+      `<div class="sc"><b>${a.d5}%</b><span>${label}买后5日均涨（${a.win}%为正）</span></div>` : ''; }).join('');
+  document.getElementById('sum').innerHTML = cells;
+  document.getElementById('sumnote').textContent =
+    '这是按买入笔数加权的平均值。四栏都是负的，说明跟着龙虎榜买入、持有5个交易日，平均跑输——差别只在亏多亏少。散户聚集的席位亏得最多。';
   document.getElementById('sub').insertAdjacentHTML('beforeend',` 统计区间：最近 ${d.days} 天，更新于 ${esc(d.updated)}。`);
   paint();
 })();
