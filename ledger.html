@@ -161,7 +161,8 @@
     <h1>2026Q3 台账</h1>
     <p class="sub">每只票记五件事：什么时候进入视野、触发它的事实（必须有公告出处）、在等什么节点、什么条件算看错、后来发生了什么。<b>只记录，不建议买卖，不写目标价。</b>看错的记录保留并标注，不删除。</p>
     <div class="stats">
-      <span>更新 <b>2026-09-23</b></span>
+      <span>台账更新 <b>2026-09-24</b></span>
+      <span>数据更新 <b id="dupd">—</b></span>
       <span>在跟 <b>11</b></span>
       <span>已了结 <b>4</b></span>
       <span>图谱 <b>161</b> 篇</span>
@@ -431,5 +432,10 @@
     <b>研究记录，不构成投资建议。</b>页面由脚本生成，不含任何持仓、成本与盈亏信息。
   </footer>
 </div>
+<script>
+fetch('data/tags.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(d => {
+  if (d) document.getElementById('dupd').textContent = d.updated;
+}).catch(() => {});
+</script>
 </body>
 </html>

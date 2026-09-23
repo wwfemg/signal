@@ -126,7 +126,8 @@ function render(code) {
   const h1 = document.querySelector('h1'); if (h1) h1.textContent = name ? `${name} ${code}` : code;
   const lead = document.getElementById('lead'); if (lead) lead.remove();
   let h = `<section>`;
-  h += `<p class="note">更新 ${esc(D.tags?.updated || D.ledger?.updated || '')}</p>`;
+  const ups = [D.tags?.updated, D.pool?.updated, D.lhb?.updated, D.timeline?.updated].filter(Boolean).sort();
+  h += `<p class="note">数据更新 ${esc(ups[ups.length-1] || '')}　·　台账 ${esc(D.ledger?.updated || '—')}</p>`;
   if (t?.tags?.length) {
     h += `<div class="tagrow">${t.tags.map(x => `<a class="tag" href="tag.html#${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}</div>`;
     h += `<ul class="whylist">${Object.entries(t.why || {}).map(([k,v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('')}</ul>`;
