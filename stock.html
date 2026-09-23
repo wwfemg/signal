@@ -61,12 +61,8 @@
 </div>
 <div class="wrap">
   <header class="top">
-    <h1>输入代码</h1>
-    <p class="sub">看这只票现在属于哪几种逻辑、时间轴走到哪一步、哪些机构在里面、最近有没有上龙虎榜。所有判定规则都写在下面，数据来自公开渠道。</p>
-    <div class="search">
-      <input id="q" inputmode="numeric" placeholder="600520 或 三佳" autocomplete="off">
-      <button id="go">查</button>
-    </div>
+    <h1>查一只票</h1>
+    <p class="sub" id="lead">在上面的框里输入代码，看这只票属于哪几种逻辑、时间轴走到哪一步、哪些机构在里面、最近有没有上龙虎榜。</p>
     <div class="hits" id="hits"></div>
   </header>
   <div id="out"></div>
@@ -108,7 +104,9 @@ function render(code) {
   }
   document.title = (name ? name + ' ' + code : code) + '｜Signal';
   const h1 = document.querySelector('h1'); if (h1) h1.textContent = name ? `${name} ${code}` : code;
-  let h = `<section><h2>${esc(code)} ${esc(name)}</h2>`;
+  const lead = document.getElementById('lead'); if (lead) lead.remove();
+  let h = `<section>`;
+  h += `<p class="note">更新 ${esc(D.tags?.updated || D.ledger?.updated || '')}</p>`;
   if (t?.tags?.length) {
     h += `<div class="tagrow">${t.tags.map(x => `<a class="tag" href="tag.html#${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}</div>`;
     h += `<ul class="whylist">${Object.entries(t.why || {}).map(([k,v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('')}</ul>`;
@@ -164,7 +162,8 @@ function render(code) {
 }
 
 function search() {
-  const q = document.getElementById('q').value.trim();
+  const box = document.getElementById('q') || document.getElementById('mq');
+  const q = box.value.trim();
   if (!q) return;
   if (/^\d{6}$/.test(q)) { render(q); document.getElementById('hits').innerHTML = ''; return; }
   const all = Object.assign({}, D.names || {});
@@ -175,7 +174,7 @@ function search() {
     ? hit.map(([c, n]) => `<button data-c="${c}">${esc(c)} ${esc(n)}</button>`).join('')
     : '<span class="empty">没找到这个名字，试试代码</span>';
   document.querySelectorAll('.hits button').forEach(b =>
-    b.onclick = () => { document.getElementById('q').value = b.dataset.c; render(b.dataset.c); });
+    b.onclick = () => render(b.dataset.c));
 }
 
 (async () => {
@@ -186,8 +185,7 @@ function search() {
   document.getElementById('rules').innerHTML = '<h2>标签怎么判定</h2><ol>' +
     Object.entries(rules).map(([k, v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('') +
     '</ol><p class="note">规则都写死在脚本里，谁跑都一样。想加新标签，在 GitHub 提一个 Issue，写清怎么判定、用哪条公开数据验证。</p>';
-  document.getElementById('go').onclick = search;
-  document.getElementById('q').onkeydown = e => { if (e.key === 'Enter') search(); };
+
   const h = location.hash.replace('#', '');
   if (/^\d{6}$/.test(h)) { document.getElementById('q').value = h; render(h); }
 })();
@@ -198,7 +196,8 @@ function search() {
   m.onkeydown = e => { if (e.key !== 'Enter') return;
     const v = m.value.trim();
     if (/^[0-9]{6}$/.test(v)) location.href = 'stock.html#' + v;
-    else if (v) location.href = 'index.html'; }; })();
+    else if (v) { const box = document.getElementById('q'); if (box) { box.value = v; search(); }
+      else location.href = 'index.html'; } }; })();
 </script>
 </body>
 </html>
