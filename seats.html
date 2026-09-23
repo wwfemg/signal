@@ -53,7 +53,8 @@
     <div class="filters" id="fs"></div>
   </header>
   <div id="out"></div>
-  <footer>数据来自东方财富龙虎榜公开接口。<b>研究记录，不构成投资建议。</b></footer>
+  <footer>
+    <span id="nextupd"></span><br>数据来自东方财富龙虎榜公开接口。<b>研究记录，不构成投资建议。</b></footer>
 </div>
 <script>
 const esc=s=>String(s??'').replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
@@ -135,6 +136,25 @@ function paint(){
     if (/^[0-9]{6}$/.test(v)) return go(v);
     const first = box.querySelector('button'); if (first) go(first.dataset.c); };
   document.addEventListener('click', e => { if (!m.parentNode.contains(e.target)) box.innerHTML = ''; });
+})();
+</script>
+
+<script>
+// 数据更新时间与下次更新倒计时（每个交易日 23:10 北京时间由家里的机器跑）
+(() => {
+  const fmt = ms => { const m = Math.floor(ms/60000), h = Math.floor(m/60);
+    return h >= 1 ? `${h} 小时 ${m%60} 分后` : `${m} 分后`; };
+  const next = () => {
+    const now = new Date(Date.now() + (new Date().getTimezoneOffset()*60000) + 8*3600000); // 北京时间
+    const t = new Date(now); t.setHours(23,10,0,0);
+    if (now > t) t.setDate(t.getDate()+1);
+    while (t.getDay()===0 || t.getDay()===6) t.setDate(t.getDate()+1);
+    return t - now;
+  };
+  const el = document.getElementById('nextupd');
+  if (!el) return;
+  const tick = () => { el.textContent = `下次更新：每个交易日 23:10（北京时间），约 ${fmt(next())}`; };
+  tick(); setInterval(tick, 60000);
 })();
 </script>
 </body>

@@ -232,6 +232,7 @@
     <a href="https://github.com/wwfemg/signal/blob/main/docs/CHANGELOG.md">变更记录</a>
     <a href="https://github.com/wwfemg/signal">GitHub</a>
     <span style="font-family:'IBM Plex Mono',monospace" id="upd">—</span>
+    <span id="nextupd" style="display:block; margin-top:4px"></span>
   </span>
 </div>
 <script>
@@ -281,6 +282,24 @@ const HINTS = ['输入 600520，看这只票在等哪个公告',
   let i = 0, stop = false;
   el.addEventListener('focus', () => { stop = true; el.placeholder = '股票代码、名字，或者一个逻辑'; });
   setInterval(() => { if (!stop) el.placeholder = HINTS[++i % HINTS.length]; }, 3800);
+})();
+</script>
+<script>
+// 数据更新时间与下次更新倒计时（每个交易日 23:10 北京时间由家里的机器跑）
+(() => {
+  const fmt = ms => { const m = Math.floor(ms/60000), h = Math.floor(m/60);
+    return h >= 1 ? `${h} 小时 ${m%60} 分后` : `${m} 分后`; };
+  const next = () => {
+    const now = new Date(Date.now() + (new Date().getTimezoneOffset()*60000) + 8*3600000); // 北京时间
+    const t = new Date(now); t.setHours(23,10,0,0);
+    if (now > t) t.setDate(t.getDate()+1);
+    while (t.getDay()===0 || t.getDay()===6) t.setDate(t.getDate()+1);
+    return t - now;
+  };
+  const el = document.getElementById('nextupd');
+  if (!el) return;
+  const tick = () => { el.textContent = `下次更新：每个交易日 23:10（北京时间），约 ${fmt(next())}`; };
+  tick(); setInterval(tick, 60000);
 })();
 </script>
 </body>
