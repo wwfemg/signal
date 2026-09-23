@@ -175,6 +175,8 @@
   .acts button:hover{border-color:var(--line); box-shadow:0 1px 3px rgba(0,0,0,.08);}
   .tips{margin:clamp(26px,4.5vh,44px) 0 0; font-size:13px; color:var(--ink-3); font-weight:300;}
   .tips a{color:var(--accent); text-decoration:none; margin:0 7px; white-space:nowrap;}
+  .tips a i{font-style:normal; font-size:11px; color:var(--ink-3); font-family:"IBM Plex Mono",monospace;}
+  .muted{color:var(--ink-3);}
   .tips a:hover{text-decoration:underline;}
   .res{margin-top:20px; width:min(620px,100%); display:flex; flex-direction:column; gap:7px; text-align:left;}
   .res a{display:block; padding:13px 18px; background:var(--panel); border:1px solid var(--line);
@@ -205,7 +207,7 @@
     <button id="go">查这只票</button>
     <button id="rnd">随便看一只</button>
   </div>
-  <p class="tips">常看的：<a href="tag.html#%E8%A7%A3%E7%A6%81%E5%8E%8B%E5%8A%9B">解禁压力</a><a href="tag.html#%E8%BF%91%E6%9C%88%E8%A7%A3%E7%A6%81">近月解禁</a><a href="tag.html#%E9%BE%99%E8%99%8E%E6%A6%9C%E5%B8%B8%E5%AE%A2">龙虎榜常客</a></p>
+  <p class="tips" id="tips">常看的：<span class="muted">读取中…</span></p>
   <div class="res" id="res"></div>
 </main>
 <div class="pagefoot">
@@ -242,6 +244,14 @@ function ask(){
     ? hit.map(([c,n]) => `<a href="stock.html#${c}">${esc(n)}<span>${c}</span></a>`).join('')
     : `<a href="stock.html">没找到「${esc(v)}」，可以直接输 6 位代码<span>去查询页</span></a>`;
 }
+fetch('data/tags.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(d => {
+  if (!d) return;
+  const cnt = {};
+  for (const v of Object.values(d.stocks)) for (const x of v.tags) cnt[x] = (cnt[x] || 0) + 1;
+  const links = Object.keys(d.rules).filter(k => cnt[k])
+    .map(k => `<a href="tag.html#${encodeURIComponent(k)}">${esc(k)} <i>${cnt[k]}</i></a>`).join('');
+  if (links) document.getElementById('tips').innerHTML = '常看的：' + links;
+}).catch(() => {});
 document.getElementById('go').onclick = ask;
 document.getElementById('rnd').onclick = () => {
   if (!CODES.length) { location.href = 'tag.html'; return; }
