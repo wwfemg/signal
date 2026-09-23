@@ -1,4 +1,4 @@
-<title>Signal 台账</title>
+<title>Signal</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
   :root{
@@ -133,274 +133,67 @@
 
   a{color:var(--accent);}
   .nav{text-transform:none; letter-spacing:0; font-family:"Noto Sans SC", sans-serif; font-size:12px;}
-</style>
 
+  .search{display:flex; gap:8px; margin:14px 0 6px;}
+  .search input{flex:1; min-width:0; font-size:16px; padding:12px 14px; border-radius:3px;
+    border:1px solid var(--line); background:var(--panel); color:var(--ink); font-family:"IBM Plex Mono", monospace;}
+  .search button{padding:12px 20px; font-size:14px; border:none; border-radius:3px; cursor:pointer;
+    background:var(--accent); color:#fff;}
+  .entries{display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:10px;}
+  .entry{display:block; background:var(--panel); border:1px solid var(--line); border-radius:3px;
+    padding:13px 15px; text-decoration:none; color:var(--ink);}
+  .entry b{font-size:14.5px;} .entry span{float:right; font-family:"IBM Plex Mono",monospace;
+    font-size:12px; color:var(--ink-3);}
+  .entry p{margin:5px 0 0; font-size:12.5px; color:var(--ink-3); line-height:1.6;}
+</style>
 <div class="wrap">
   <header class="top">
-    <p class="kicker">Signal · A股研究记录　<a class="nav" href="stock.html">查一只票 →</a></p>
-    <h1>2026Q3 台账</h1>
-    <p class="sub">每只票记五件事：什么时候进入视野、触发它的事实（必须有公告出处）、在等什么节点、什么条件算看错、后来发生了什么。<b>只记录，不建议买卖，不写目标价。</b>看错的记录保留并标注，不删除。</p>
-    <div class="stats">
-      <span>更新 <b>2026-09-23</b></span>
-      <span>在跟 <b>9</b></span>
-      <span>已了结 <b>4</b></span>
-      <span>图谱 <b>156</b> 篇</span>
-      <span>✅ <b>131</b></span>
-      <span>🟡 <b>34</b></span>
-      <span>❓ <b>25</b></span>
+    <p class="kicker">Signal · A股研究记录</p>
+    <h1>按节点看票</h1>
+    <p class="sub">这里只记三件事：一只票在等哪个公告、什么条件算看错、后来发生了什么。买卖自己判断，我们不替任何人做决定。所有结论都能回到公告原文，看错的记录保留不删。</p>
+    <div class="search">
+      <input id="q" inputmode="numeric" placeholder="输入股票代码，如 600520">
+      <button id="go">查这只票</button>
     </div>
+    <p class="note">查得到标签、时间轴、机构持仓、近期龙虎榜。</p>
   </header>
 
   <section>
-    <h2>在跟的票</h2>
-    <p class="note">等的是具体公告，不是行情。公告一出，逻辑要么兑现要么作废。</p>
-    <div class="cards">
-      <article class="card">
-        <header class="card-top">
-          <h3>三佳科技 <span class="code">600520</span></h3>
-          <span class="pill p-blue">等公告</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-05　·　国资入主线</dd>
-          <dt>触发事实</dt><dd>合肥创新投2025-01完成控制权过户；2026-02-02定增预案、06-13改价、06-30股东会通过，创新投全额认购（发行期首日定价）。2026-09-05限制性股票激励草案，授予价12.66元。</dd>
-          <dt>在等什么</dt><dd>上交所受理定增申请</dd>
-          <dt>什么算看错</dt><dd>定增终止或撤回；创新投表决权比例再下降；受理迟迟不来且跌破20.35（7月低点）</dd>
-          <dt>结果回看</dt><dd>6-30股东会通过至今无受理，已拖两个多月，黄灯。7-24三佳集团表决权委托到期不续签，创新投直接控制降至17.04%，国资推定增动机更强。2026H1归母净利仅575万，股价不靠业绩。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 2 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">待定</span><span class="tl-kind">等公告</span><span class="tl-t">上交所受理定增申请</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-05</span><span class="tl-kind">激励回购</span><span class="tl-t">产投三佳(安徽)科技股份有限公司2026年限制性股票激励计划实施考核管理办法</span></li><li class="tl-p"><span class="tl-date">2026-07-24</span><span class="tl-kind">控制权</span><span class="tl-t">三佳科技简式权益变动报告书(三佳集团)</span></li><li class="tl-p"><span class="tl-date">2026-06-13</span><span class="tl-kind">重组定增</span><span class="tl-t">三佳科技关于2026年度向特定对象发行A股股票摊薄即期回报及填补措施和相关主体承诺(修订稿)的公</span></li><li class="tl-p"><span class="tl-date">2026-06-13</span><span class="tl-kind">控制权</span><span class="tl-t">三佳科技关于提请股东会批准认购对象免于发出要约的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-02</span><span class="tl-kind">重组定增</span><span class="tl-t">三佳科技年报问询函的回复【容诚专字[2026]230Z1213号】</span></li><li class="tl-p"><span class="tl-date">2026-05-27</span><span class="tl-kind">风险</span><span class="tl-t">三佳科技股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-02-02</span><span class="tl-kind">重组定增</span><span class="tl-t">三佳科技关于2026年度向特定对象发行A股股票摊薄即期回报及填补措施和相关主体承诺的公告</span></li><li class="tl-p"><span class="tl-date">2026-02-02</span><span class="tl-kind">控制权</span><span class="tl-t">三佳科技关于向特定对象发行A股股票导致股东权益变动的提示性公告</span></li><li class="tl-p"><span class="tl-date">2026-02-02</span><span class="tl-kind">风险</span><span class="tl-t">三佳科技关于最近五年被证券监管部门和交易所采取监管措施或处罚及整改情况的公告</span></li><li class="tl-p"><span class="tl-date">2025-11-14</span><span class="tl-kind">风险</span><span class="tl-t">三佳科技关于股东股份轮候冻结公告</span></li><li class="tl-p"><span class="tl-date">2025-11-05</span><span class="tl-kind">风险</span><span class="tl-t">三佳科技关于股东股份轮候冻结公告</span></li><li class="tl-p"><span class="tl-date">2025-11-04</span><span class="tl-kind">风险</span><span class="tl-t">三佳科技关于股东股份冻结、标记公告</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>震安科技 <span class="code">300767</span></h3>
-          <span class="pill p-blue">等公告</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2025-06　·　控制权变更线</dd>
-          <dt>触发事实</dt><dd>2025-06-18宁花香签约收购、10-30过户、11-11受让方派驻董事入董；2026-02-11定增认购协议、06-09改价、07-03深交所受理、07-16首轮问询、09-19交回复修订稿。发行对象宁花香与深圳东创，全额现金认购，不超6.30亿。</dd>
-          <dt>在等什么</dt><dd>深交所审核通过 → 证监会同意注册 → 发行期首日定价</dd>
-          <dt>什么算看错</dt><dd>定增被中止或终止；受让方派驻董事等控制权变更线董事退出</dd>
-          <dt>结果回看</dt><dd>按56单再融资样本中位推算，上会约10月中下旬—11月，注册约11—12月。批复后5天内96%会冲高一次（中位+4.5%），20天后涨幅多吐回——节点是兑现点不是起涨点。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 2 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">待定</span><span class="tl-kind">等公告</span><span class="tl-t">深交所审核通过 → 证监会同意注册 → 发行期首日定价</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-19</span><span class="tl-kind">重组定增</span><span class="tl-t">震安科技股份有限公司2026年度向特定对象发行股票募集说明书(修订稿)</span></li><li class="tl-p"><span class="tl-date">2026-08-25</span><span class="tl-kind">激励回购</span><span class="tl-t">震安科技股份有限公司关于向2026年限制性股票激励计划激励对象授予预留部分限制性股票的公告</span></li><li class="tl-p"><span class="tl-date">2026-08-08</span><span class="tl-kind">重组定增</span><span class="tl-t">关于震安科技股份有限公司申请向特定对象发行股票的审核问询函之回复报告</span></li><li class="tl-p"><span class="tl-date">2026-08-04</span><span class="tl-kind">重组定增</span><span class="tl-t">震安科技股份有限公司2026年度向特定对象发行股票方案论证分析报告(二次修订稿)</span></li><li class="tl-p"><span class="tl-date">2026-08-04</span><span class="tl-kind">控制权</span><span class="tl-t">震安科技股份有限公司关于向特定对象发行股票导致股东权益变动的提示性公告</span></li><li class="tl-p"><span class="tl-date">2026-07-03</span><span class="tl-kind">重组定增</span><span class="tl-t">震安科技股份有限公司关于2026年度向特定对象发行股票申请获得深圳证券交易所受理的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-09</span><span class="tl-kind">控制权</span><span class="tl-t">震安科技股份有限公司关于向特定对象发行股票导致股东权益变动的提示性公告</span></li><li class="tl-p"><span class="tl-date">2026-06-09</span><span class="tl-kind">重组定增</span><span class="tl-t">震安科技股份有限公司关于2026年度向特定对象发行股票预案(修订稿)披露的提示性公告</span></li><li class="tl-p"><span class="tl-date">2026-04-23</span><span class="tl-kind">激励回购</span><span class="tl-t">震安科技股份有限公司关于向2026年限制性股票激励计划激励对象授予限制性股票的公告</span></li><li class="tl-p"><span class="tl-date">2026-04-09</span><span class="tl-kind">控制权</span><span class="tl-t">震安科技股份有限公司关于变更公司权益变动项目财务顾问主办人的公告</span></li><li class="tl-p"><span class="tl-date">2026-03-07</span><span class="tl-kind">激励回购</span><span class="tl-t">震安科技股份有限公司关于2026年限制性股票激励计划内幕信息知情人及激励对象买卖公司股票情况的自</span></li><li class="tl-p"><span class="tl-date">2026-02-11</span><span class="tl-kind">重组定增</span><span class="tl-t">震安科技股份有限公司2026年度向特定对象发行股票方案论证分析报告</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>ST中装 <span class="code">002822</span></h3>
-          <span class="pill p-blue">等公告</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-05　·　控制权变更线</dd>
-          <dt>触发事实</dt><dd>新控股方通过受让入主，受让价原协议1.552元，补充协议上调至1.749元（以最新修订公告为准）。</dd>
-          <dt>在等什么</dt><dd>摘帽批复；之后才进入资产注入阶段</dd>
-          <dt>什么算看错</dt><dd>摘帽被否；控股方受让终止</dd>
-          <dt>结果回看</dt><dd>摘帽是前置条件，未完成前不展开。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 4 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">2027-02-15</span><span class="tl-kind">解禁</span><span class="tl-t">限售解禁 其他类型，占总股本 19.17%</span></li><li class="tl-f"><span class="tl-date">2029-01-02</span><span class="tl-kind">解禁</span><span class="tl-t">限售解禁 其他类型，占总股本 16.0%</span></li><li class="tl-f"><span class="tl-date">待定</span><span class="tl-kind">等公告</span><span class="tl-t">摘帽批复；之后才进入资产注入阶段</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-07-02</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-06-29</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-06-25</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-04-23</span><span class="tl-kind">重组定增</span><span class="tl-t">关于变更注册资本并修改《公司章程》的公告</span></li><li class="tl-p"><span class="tl-date">2026-04-08</span><span class="tl-kind">激励回购</span><span class="tl-t">关于回购专户库存股注销完成暨股份变动的公告</span></li><li class="tl-p"><span class="tl-date">2026-02-26</span><span class="tl-kind">重组定增</span><span class="tl-t">关于向重整财务投资人完成股票过户的公告</span></li><li class="tl-p"><span class="tl-date">2026-01-21</span><span class="tl-kind">重组定增</span><span class="tl-t">关于撤销退市风险警示并继续实施其他风险警示暨临时停牌的公告</span></li><li class="tl-p"><span class="tl-date">2026-01-17</span><span class="tl-kind">风险</span><span class="tl-t">关于公司控股股东股份质押的公告</span></li><li class="tl-p"><span class="tl-date">2026-01-17</span><span class="tl-kind">控制权</span><span class="tl-t">中证鹏元关于关注深圳市中装建设集团股份有限公司实际控制人变更等事项的公告</span></li><li class="tl-p"><span class="tl-date">2026-01-07</span><span class="tl-kind">重组定增</span><span class="tl-t">关于申请撤销公司股票因重整而被实施退市风险警示暨继续被实施其他风险警示的公告</span></li><li class="tl-p"><span class="tl-date">2026-01-05</span><span class="tl-kind">控制权</span><span class="tl-t">关于股东权益变动暨控股股东、实际控制人发生变更的提示性公告</span></li><li class="tl-p"><span class="tl-date">2025-12-31</span><span class="tl-kind">重组定增</span><span class="tl-t">关于公司重整计划执行完毕的公告</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>深圳新星 <span class="code">603978</span></h3>
-          <span class="pill p-blue">等公告</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-05-26　·　控制权变更线</dd>
-          <dt>触发事实</dt><dd>2026-05-25 陈学敏与深圳嘉泰智远（受让方实控人）签股权转让协议，作价5.5713亿，对应约18.95元/股；2026-09-02 岩代投资100%股权工商变更完成。</dd>
-          <dt>在等什么</dt><dd>嘉泰智远增持／改组董事会／控制权变更</dd>
-          <dt>什么算看错</dt><dd>嘉泰智远减持或协议解除；一年内无董事会席位变化</dd>
-          <dt>结果回看</dt><dd>过户完成但控制权未变：陈学敏仍持19.18%、仍是实控人，嘉泰智远13.93%。近20日+38%，已高于受让成本约四成，季末拉升需防季初兑现。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 2 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">待定</span><span class="tl-kind">等公告</span><span class="tl-t">嘉泰智远增持／改组董事会／控制权变更</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-02</span><span class="tl-kind">控制权</span><span class="tl-t">关于控股股东、实际控制人股权转让完成工商变更登记的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-22</span><span class="tl-kind">激励回购</span><span class="tl-t">关于2025年股票期权激励计划第一个行权期行权条件成就的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-21</span><span class="tl-kind">控制权</span><span class="tl-t">关于控股股东、实际控制人股份解除质押的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-08</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-06-23</span><span class="tl-kind">控制权</span><span class="tl-t">关于控股股东、实际控制人为公司提供财务资助的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-12</span><span class="tl-kind">风险</span><span class="tl-t">关于全资子公司涉及诉讼的进展公告</span></li><li class="tl-p"><span class="tl-date">2026-06-09</span><span class="tl-kind">激励回购</span><span class="tl-t">关于使用已终止募投项目部分剩余募集资金支付股权回购价款的公告</span></li><li class="tl-p"><span class="tl-date">2026-05-26</span><span class="tl-kind">控制权</span><span class="tl-t">深圳市新星轻合金材料股份有限公司简式权益变动报告书(股份增加)</span></li><li class="tl-p"><span class="tl-date">2026-05-26</span><span class="tl-kind">激励回购</span><span class="tl-t">关于控股子公司拟履行股权回购义务暨签署《回购协议》的公告</span></li><li class="tl-p"><span class="tl-date">2026-04-30</span><span class="tl-kind">风险</span><span class="tl-t">关于部分募投项目结项并将剩余募集资金永久补充流动资金、部分募投项目延期及部分募投项目终止的公告</span></li><li class="tl-p"><span class="tl-date">2026-04-30</span><span class="tl-kind">重组定增</span><span class="tl-t">容诚会计师事务所(特殊普通合伙)关于深圳市新星轻合金材料股份有限公司2025年度营业收入扣除情况</span></li><li class="tl-p"><span class="tl-date">2026-03-14</span><span class="tl-kind">风险</span><span class="tl-t">关于全资子公司及相关人员收到行政处罚决定书的公告</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>锋龙股份 <span class="code">002931</span></h3>
-          <span class="pill p-blue">等公告</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2025-12　·　外资通道样本</dd>
-          <dt>触发事实</dt><dd>2025-12-17停牌筹划控制权，优必选方入主；2026年通道资金完整走完一轮（巴克莱2025Q3低位新进→Q4增持→2026Q1集体消失→7-27回购名单再现）。8250万元关联交易公告。</dd>
-          <dt>在等什么</dt><dd>优必选把机器人业务落进上市公司的实质公告（资产收购／关联交易／订单）；三季报看8250万关联交易是否形成机电组件收入</dd>
-          <dt>什么算看错</dt><dd>三季报仍停在送样报价阶段且无新增关联交易</dd>
-          <dt>结果回看</dt><dd>7-07公告确认仍在送样报价阶段。股价从2月顶点116.45回落至40元一带；通道资金7-27在44.28进的那笔已亏损——它们也会错。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 2 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">待定</span><span class="tl-kind">等公告</span><span class="tl-t">优必选把机器人业务落进上市公司的实质公告（资产收购／关联交易／订单）；三季报看8250万关联交易是否形成机电组件收入</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-02</span><span class="tl-kind">激励回购</span><span class="tl-t">关于回购公司股份的进展公告</span></li><li class="tl-p"><span class="tl-date">2026-08-04</span><span class="tl-kind">激励回购</span><span class="tl-t">关于回购公司股份的进展公告</span></li><li class="tl-p"><span class="tl-date">2026-07-31</span><span class="tl-kind">激励回购</span><span class="tl-t">关于回购股份事项前十名股东和前十名无限售条件股东持股情况的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-29</span><span class="tl-kind">激励回购</span><span class="tl-t">关于首次回购公司股份的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-28</span><span class="tl-kind">激励回购</span><span class="tl-t">回购报告书</span></li><li class="tl-p"><span class="tl-date">2026-07-22</span><span class="tl-kind">激励回购</span><span class="tl-t">关于公司控股股东提议回购公司部分股份的提示性公告</span></li><li class="tl-p"><span class="tl-date">2026-07-10</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-07-07</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-06-09</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-05-28</span><span class="tl-kind">控制权</span><span class="tl-t">关于控股股东、持股5%以上股东及其一致行动人签订《股份转让协议》之补充协议的公告</span></li><li class="tl-p"><span class="tl-date">2026-05-25</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-04-28</span><span class="tl-kind">控制权</span><span class="tl-t">简式权益变动报告书(诚锋投资、董剑刚、锋驰投资、厉彩霞)</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>超声电子 <span class="code">000823</span></h3>
-          <span class="pill p-amber">观察</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-09-19　·　季末拉升观察</dd>
-          <dt>触发事实</dt><dd>2026-06-30十大流通股东：瑞银1.04%、小摩0.88%、大摩0.72%、巴克莱0.47%同季新进，巴克莱季度均价19.02；8-24跌破该成本线。</dd>
-          <dt>在等什么</dt><dd>9-30前后是否兑现；10月三季报外资是否仍扎堆</dd>
-          <dt>什么算看错</dt><dd>三季报外资退出而股价仍强，说明不是通道资金推动</dd>
-          <dt>结果回看</dt><dd>协作者按‘跌破通道资金成本买、接近成本线卖’操作，8-24跌破后反弹至25.50。此后继续走强，近20日+70%（9-22）。本项目统计：季末猛拉且外资扎堆的票，约40%在季初20个交易日内深跌超20%——当前只作观察，不作买入候选。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 10 件 · 今后 2 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">待定</span><span class="tl-kind">等公告</span><span class="tl-t">9-30前后是否兑现；10月三季报外资是否仍扎堆</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-17</span><span class="tl-kind">风险</span><span class="tl-t">超声电子股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-09-14</span><span class="tl-kind">风险</span><span class="tl-t">超声电子股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-06-29</span><span class="tl-kind">风险</span><span class="tl-t">超声电子股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-06-09</span><span class="tl-kind">控制权</span><span class="tl-t">超声电子关于控股股东因可转债转股持股比例被动稀释触及1%整数倍的权益变动公告</span></li><li class="tl-p"><span class="tl-date">2026-05-29</span><span class="tl-kind">控制权</span><span class="tl-t">超声电子关于控股股东因可转债转股持股比例被动稀释触及1%整数倍的权益变动公告</span></li><li class="tl-p"><span class="tl-date">2026-05-27</span><span class="tl-kind">控制权</span><span class="tl-t">超声电子关于控股股东因可转债转股持股比例被动稀释触及1%整数倍的权益变动公告</span></li><li class="tl-p"><span class="tl-date">2026-01-21</span><span class="tl-kind">风险</span><span class="tl-t">超声电子关于终止转让持有的四川超声印制板有限公司股权的公告</span></li><li class="tl-p"><span class="tl-date">2025-05-13</span><span class="tl-kind">增减持</span><span class="tl-t">超声电子关于控股股东增持公司股份计划实施完成的公告</span></li><li class="tl-p"><span class="tl-date">2025-04-26</span><span class="tl-kind">增减持</span><span class="tl-t">超声电子关于控股股东增持公司股份计划的公告</span></li><li class="tl-p"><span class="tl-date">2025-02-11</span><span class="tl-kind">风险</span><span class="tl-t">超声电子关于控股股东股份解除质押及重新设定质押的公告</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>国风新材 <span class="code">000859</span></h3>
-          <span class="pill p-blue">等公告</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-09-19　·　国资入主线</dd>
-          <dt>触发事实</dt><dd>发行股份及支付现金购买太湖金张58.33%，作价6.46亿（原7.00亿已调减），发股价5.14元；配套募资≤3.3亿，控股股东当地国资平台认购6000万—1亿并锁18个月。业绩承诺：金张2026年扣非≥9800万，三年累计≥3.476亿。</dd>
-          <dt>在等什么</dt><dd>深交所并购重组委上会</dd>
-          <dt>什么算看错</dt><dd>重组终止；金张2026年扣非低于承诺80%</dd>
-          <dt>结果回看</dt><dd>2024-12预案至今21个月仍在问询往返。现价9.73 vs 发股价5.14，重组预期已大部分反映。备考数据倒推金张2026H1净利约2840万，全年9800万压力大。对本项目的意义在于验证当地国资平台‘控股平台＋买民企＋自认配套’的模板。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 2 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">待定</span><span class="tl-kind">等公告</span><span class="tl-t">深交所并购重组委上会</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-21</span><span class="tl-kind">重组定增</span><span class="tl-t">2-1重大资产重组报告书(申报稿)(安徽国风新材料股份有限公司)</span></li><li class="tl-p"><span class="tl-date">2026-09-19</span><span class="tl-kind">重组定增</span><span class="tl-t">关于发行股份及支付现金购买资产并募集配套资金暨关联交易报告书(草案)(修订稿)修订说明的公告</span></li><li class="tl-p"><span class="tl-date">2026-09-01</span><span class="tl-kind">重组定增</span><span class="tl-t">关于发行股份及支付现金购买资产并募集配套资金暨关联交易报告书(草案)(修订稿)修订说明的公告</span></li><li class="tl-p"><span class="tl-date">2026-08-12</span><span class="tl-kind">风险</span><span class="tl-t">股票交易风险提示公告</span></li><li class="tl-p"><span class="tl-date">2026-06-30</span><span class="tl-kind">重组定增</span><span class="tl-t">2-1重大资产重组报告书(申报稿)(安徽国风新材料股份有限公司)</span></li><li class="tl-p"><span class="tl-date">2026-06-30</span><span class="tl-kind">风险</span><span class="tl-t">关于股票交易异常波动的公告</span></li><li class="tl-p"><span class="tl-date">2026-05-27</span><span class="tl-kind">重组定增</span><span class="tl-t">2-1重大资产重组报告书(申报稿)(安徽国风新材料股份有限公司)</span></li><li class="tl-p"><span class="tl-date">2026-05-26</span><span class="tl-kind">重组定增</span><span class="tl-t">安徽国风新材料股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易报告书(草案)(修订</span></li><li class="tl-p"><span class="tl-date">2026-04-10</span><span class="tl-kind">重组定增</span><span class="tl-t">2025年度营业收入扣除情况的专项审核意见</span></li><li class="tl-p"><span class="tl-date">2026-04-01</span><span class="tl-kind">重组定增</span><span class="tl-t">安徽国风新材料股份有限公司关于收到深圳证券交易所中止审核公司发行股份购买资产并募集配套资金暨关联</span></li><li class="tl-p"><span class="tl-date">2026-02-28</span><span class="tl-kind">重组定增</span><span class="tl-t">2-1重大资产重组报告书(申报稿)(安徽国风新材料股份有限公司)</span></li><li class="tl-p"><span class="tl-date">2026-02-27</span><span class="tl-kind">重组定增</span><span class="tl-t">安徽国风新材料股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易报告书(草案)(修订</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>华天科技 <span class="code">002185</span></h3>
-          <span class="pill p-red">超时</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-08　·　重组注册</dd>
-          <dt>触发事实</dt><dd>发行股份及支付现金购买控股股东旗下华羿微电子100%＋配套募资；2026-08-14过会、08-18与08-28披露注册稿。重组后控股股东持股由7.28亿股增至9.28亿股。</dd>
-          <dt>在等什么</dt><dd>证监会同意注册</dd>
-          <dt>什么算看错</dt><dd>出现‘中止/补充材料’或重组终止公告</dd>
-          <dt>结果回看</dt><dd>8-28提交注册，至9-23已26天。33单重组样本中，提交到批复中位11天、80%在14天内、最长18天——本单已超全部样本。统计上批复后1—5天内97%会冲高一次（中位+6.6%），20天后涨幅多吐回。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 2 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">待定</span><span class="tl-kind">等公告</span><span class="tl-t">证监会同意注册</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-08-28</span><span class="tl-kind">重组定增</span><span class="tl-t">2-1重大资产重组报告书(注册稿)(天水华天科技股份有限公司)</span></li><li class="tl-p"><span class="tl-date">2026-08-18</span><span class="tl-kind">重组定增</span><span class="tl-t">关于发行股份及支付现金购买资产并募集配套资金暨关联交易报告书(草案)(注册稿)修订说明的公告</span></li><li class="tl-p"><span class="tl-date">2026-08-14</span><span class="tl-kind">重组定增</span><span class="tl-t">关于公司发行股份及支付现金购买资产并募集配套资金暨关联交易事项获得深圳证券交易所并购重组审核委员</span></li><li class="tl-p"><span class="tl-date">2026-08-13</span><span class="tl-kind">重组定增</span><span class="tl-t">深交所并购重组审核委员会2026年第12次审议会议结果公告</span></li><li class="tl-p"><span class="tl-date">2026-08-07</span><span class="tl-kind">重组定增</span><span class="tl-t">关于收到深圳证券交易所并购重组审核委员会审核公司发行股份及支付现金购买资产并募集配套资金暨关联交</span></li><li class="tl-p"><span class="tl-date">2026-08-06</span><span class="tl-kind">重组定增</span><span class="tl-t">深交所并购重组审核委员会2026年第12次审议会议公告</span></li><li class="tl-p"><span class="tl-date">2026-08-05</span><span class="tl-kind">重组定增</span><span class="tl-t">关于深圳证券交易所上市审核中心审核公司发行股份及支付现金购买资产并募集配套资金暨关联交易事项会议</span></li><li class="tl-p"><span class="tl-date">2026-08-03</span><span class="tl-kind">重组定增</span><span class="tl-t">2-1重大资产重组报告书(申报稿)(天水华天科技股份有限公司)</span></li><li class="tl-p"><span class="tl-date">2026-07-31</span><span class="tl-kind">重组定增</span><span class="tl-t">天水华天科技股份公司关于深圳证券交易所《关于天水华天科技股份有限公司发行股份及支付现金购买资产并</span></li><li class="tl-p"><span class="tl-date">2026-07-10</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-06-25</span><span class="tl-kind">重组定增</span><span class="tl-t">2-1重大资产重组报告书(申报稿)(天水华天科技股份有限公司)</span></li><li class="tl-p"><span class="tl-date">2026-06-18</span><span class="tl-kind">重组定增</span><span class="tl-t">关于发行股份及支付现金购买资产并募集配套资金暨关联交易报告书(草案)修订说明的公告</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>ST亿晶 <span class="code">600537</span></h3>
-          <span class="pill p-blue">等公告</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-02　·　重整</dd>
-          <dt>触发事实</dt><dd>2026-02法院对债权人申请预重整予以备案登记；4-27与产业投资人宁波瑞廉、中润光能签预重整投资协议；6-16债权人会议、6-17出资人组会议均通过；9-22产业投资人承诺锁定期由36个月延至60个月，且须扣非盈利后方可减持。</dd>
-          <dt>在等什么</dt><dd>法院裁定受理重整（会叠加退市风险警示）</dd>
-          <dt>什么算看错</dt><dd>法院不予受理或宣告破产清算</dd>
-          <dt>结果回看</dt><dd>2026H1净资产-2.44亿，若年末仍为负可能终止上市。受理前不进场，受理公告才是观察起点。2026Q1十大流通股东前五全为外资通道，Q2已基本撤出——正是通道资金成群进出的样本。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 2 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">待定</span><span class="tl-kind">等公告</span><span class="tl-t">法院裁定受理重整（会叠加退市风险警示）</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-22</span><span class="tl-kind">重组定增</span><span class="tl-t">亿晶光电科技股份有限公司关于公司预重整进展及风险提示公告</span></li><li class="tl-p"><span class="tl-date">2026-08-05</span><span class="tl-kind">风险</span><span class="tl-t">亿晶光电科技股份有限公司关于涉及重大诉讼的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-21</span><span class="tl-kind">风险</span><span class="tl-t">亿晶光电科技股份有限公司关于累计诉讼、仲裁情况的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-18</span><span class="tl-kind">重组定增</span><span class="tl-t">亿晶光电科技股份有限公司关于公司签署重整投资协议事项的监管工作函的回复公告</span></li><li class="tl-p"><span class="tl-date">2026-07-07</span><span class="tl-kind">重组定增</span><span class="tl-t">天健会计师事务所(特殊普通合伙)关于亿晶光电科技股份有限公司2025年年度报告的信息披露监管问询</span></li><li class="tl-p"><span class="tl-date">2026-07-03</span><span class="tl-kind">风险</span><span class="tl-t">亿晶光电科技股份有限公司股票交易异常波动及风险提示公告</span></li><li class="tl-p"><span class="tl-date">2026-06-18</span><span class="tl-kind">风险</span><span class="tl-t">亿晶光电科技股份有限公司股票交易风险提示公告</span></li><li class="tl-p"><span class="tl-date">2026-06-17</span><span class="tl-kind">重组定增</span><span class="tl-t">亿晶光电科技股份有限公司关于公司及子公司预重整债权人会议表决结果的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-16</span><span class="tl-kind">风险</span><span class="tl-t">亿晶光电科技股份有限公司股票交易异常波动及风险提示公告</span></li><li class="tl-p"><span class="tl-date">2026-06-13</span><span class="tl-kind">风险</span><span class="tl-t">亿晶光电科技股份有限公司关于累计诉讼、仲裁情况的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-11</span><span class="tl-kind">重组定增</span><span class="tl-t">亿晶光电科技股份有限公司关于与重整投资人签署预重整投资协议的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-02</span><span class="tl-kind">重组定增</span><span class="tl-t">亿晶光电科技股份有限公司关于召开预重整债权人会议通知的提示性公告</span></li></ul></details>
-      </article>
+    <h2>看什么</h2>
+    <div class="entries">
+      <a class="entry" href="ledger.html"><b>台账</b><span>9 在跟</span><p>每只票在等哪个公告、什么算看错、结果回看。已了结 4 只，包括否决和作废的。</p></a>
+      <a class="entry" href="pool.html"><b>机构持仓池</b><span>按季更新</span><p>外资通道账户在哪些票里，估算成本多少，现价偏离多少。一键筛跌破、持平、上涨。</p></a>
+      <a class="entry" href="stock.html"><b>查一只票</b><span>输代码</span><p>标签、时间轴、机构持仓、龙虎榜，一页看完。</p></a>
+      <a class="entry" href="tag.html"><b>按标签找票</b><span>3 个标签</span><p>解禁压力、外资扎堆、成本倒挂、龙虎榜常客……点开看名单。</p></a>
     </div>
   </section>
 
   <section>
-    <h2>外资通道雷达</h2>
-    <p class="note">公司发回购公告时须附基准日前十大股东名单，距建仓只隔 2—3 天，比季报快 1—2 个月。每天自动扫描，扫到就记。</p>
-    <div class="rows" id="radar"><div class="row"><span class="when">—</span><span class="what">正在读取最新扫描结果…</span><span class="pill p-mute">radar</span></div></div>
-    <p class="warn"><b>这不是买入信号。</b>本项目统计 1453 只股票 × 14 个季度：名册上的外资名字多为国内资金借通道持股；一起新进的组合下季度 51% 一起消失；股价跌破其成本后留榜率仅 22%——离场与赚亏无关。它只说明“这只票上有人在做事件交易”。</p>
-  </section>
-
-  <section>
-    <h2>季末拉升观察</h2>
-    <p class="note">近 20 日涨幅。季末猛拉且外资扎堆的票，约四成在季初 20 个交易日内深跌超 20%。这是回避名单，不是买入名单。</p>
-    <div class="rows"><div class="move"><span><strong>超声电子</strong></span><span class="pct">+55%</span><p>季末前猛拉，季初兑现风险高；若季报再现外资扎堆，历史上40%会20日内深跌超20%</p></div><div class="move"><span><strong>剑桥科技</strong></span><span class="pct">+26%</span><p>留意季初兑现</p></div><div class="move"><span><strong>科创新源</strong></span><span class="pct">+25%</span><p>留意季初兑现</p></div><div class="move"><span><strong>深圳新星</strong></span><span class="pct">+20%</span><p>留意季初兑现</p></div></div>
-  </section>
-
-  <section>
-    <h2>成绩单</h2>
-    <p class="note">只统计已经有结论的记录。样本少的时候这张表没有意义，我们照样公开——它随时间变厚，也随时间打脸。</p>
-    <div class="score">
-      <div class="sc"><b>9</b><span>在跟</span></div>
-      <div class="sc"><b>1</b><span>应验</span></div>
-      <div class="sc"><b>1</b><span>作废</span></div>
-      <div class="sc"><b>2</b><span>看过否决</span></div>
-      <div class="sc"><b>50%</b><span>已了结中的应验比例</span></div>
-    </div>
-    <p class="note">“否决”不计入胜率：那是看过之后决定不做的票，对不对要另外回看（例：国货航否决后 9-28 解禁 47%）。</p>
-  </section>
-
-  <section>
-    <h2>已了结</h2>
-    <p class="note">否决和作废的记录一样保留——成绩单的价值在于把错的也留着。</p>
-    <div class="cards">
-      <article class="card">
-        <header class="card-top">
-          <h3>国货航 <span class="code">001391</span></h3>
-          <span class="pill p-mute">否决</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-09-22　·　解禁回避</dd>
-          <dt>触发事实</dt><dd>2026-09-22公告：9-28解禁首发前股份57.72亿股，占总股本47.28%（菜鸟、国泰航空货运、朗星、深国际、杭州国改双百），流通股由12.44%扩至59.72%；剩余40.28%于2027-12-30解禁。</dd>
-          <dt>在等什么</dt><dd>解禁后是否出现减持预披露，尤其杭州国改双百（与已连卖7个月的国风投同属中国国新）</dd>
-          <dt>什么算看错</dt><dd>一年内无一家发出减持计划，且股价站上发行价2.30以上</dd>
-          <dt>结果回看</dt><dd>按‘有减持压力默认回避’直接排除。上市首日炒到12.50（发行价2.30的5倍），此后21个月跌69%，股东户数从45.5万降到11.6万——典型的‘首日炒高＋解禁排队’。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 10 件 · 今后 3 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-09-28</span><span class="tl-kind">解禁</span><span class="tl-t">限售解禁 首发原股东限售股份，占总股本 47.28%</span></li><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-f"><span class="tl-date">2027-12-30</span><span class="tl-kind">解禁</span><span class="tl-t">限售解禁 首发原股东限售股份，占总股本 40.28%</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-22</span><span class="tl-kind">增减持</span><span class="tl-t">首次公开发行前部分已发行股份上市流通提示性公告</span></li><li class="tl-p"><span class="tl-date">2026-09-09</span><span class="tl-kind">增减持</span><span class="tl-t">关于股东减持股份实施情况暨期限届满的公告</span></li><li class="tl-p"><span class="tl-date">2026-08-27</span><span class="tl-kind">控制权</span><span class="tl-t">上市公司控股股东、实际控制人及其他关联方资金占用情况表</span></li><li class="tl-p"><span class="tl-date">2026-05-19</span><span class="tl-kind">增减持</span><span class="tl-t">关于股东减持股份计划预披露公告</span></li><li class="tl-p"><span class="tl-date">2026-05-14</span><span class="tl-kind">增减持</span><span class="tl-t">关于股东减持股份实施情况暨期限届满的公告</span></li><li class="tl-p"><span class="tl-date">2026-04-15</span><span class="tl-kind">控制权</span><span class="tl-t">关于股东权益变动的提示性公告</span></li><li class="tl-p"><span class="tl-date">2026-04-10</span><span class="tl-kind">控制权</span><span class="tl-t">中国国际货运航空股份有限公司2025年上市公司控股股东、实际控制人及其他关联方资金占用情况的专项</span></li><li class="tl-p"><span class="tl-date">2026-01-24</span><span class="tl-kind">增减持</span><span class="tl-t">关于股东及其一致行动人减持股份计划预披露公告</span></li><li class="tl-p"><span class="tl-date">2025-12-27</span><span class="tl-kind">增减持</span><span class="tl-t">关于首次公开发行战略配售限售股上市流通公告</span></li><li class="tl-p"><span class="tl-date">2025-06-25</span><span class="tl-kind">增减持</span><span class="tl-t">首次公开发行网下配售限售股份上市流通的提示性公告</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>合肥城建 <span class="code">002208</span></h3>
-          <span class="pill p-mute">否决</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-09-21　·　巴克莱Q2清单</dd>
-          <dt>触发事实</dt><dd>巴克莱2026Q2新进第5名占流通0.47%，量价均价17.88，现价约10.38（低42%）；控股股东合肥兴泰金融控股36.92%、二股东合肥工投21.67%。</dd>
-          <dt>在等什么</dt><dd>无（已否决）</dd>
-          <dt>什么算看错</dt><dd>—</dd>
-          <dt>结果回看</dt><dd>两大国资股东都在减持：兴泰9-11预披露10-12起减不超过1%，合肥工投Q2已由22.43%降至21.67%。与三佳的当地国资平台人事链无交汇，属兴泰/工投平台。巴克莱成本线只能当压力位参考，不是买点。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 1 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-15</span><span class="tl-kind">重组定增</span><span class="tl-t">关于全资子公司之间吸收合并的公告</span></li><li class="tl-p"><span class="tl-date">2026-09-11</span><span class="tl-kind">增减持</span><span class="tl-t">关于控股股东减持计划的预披露公告</span></li><li class="tl-p"><span class="tl-date">2026-09-11</span><span class="tl-kind">重组定增</span><span class="tl-t">关于控股子公司减少注册资本进展的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-08</span><span class="tl-kind">重组定增</span><span class="tl-t">关于控股子公司减少注册资本进展的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-04</span><span class="tl-kind">增减持</span><span class="tl-t">关于部分董事、高级管理人员减持计划实施完成的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-02</span><span class="tl-kind">控制权</span><span class="tl-t">关于持股5%以上股东权益变动触及1%整数倍的提示性公告</span></li><li class="tl-p"><span class="tl-date">2026-06-26</span><span class="tl-kind">重组定增</span><span class="tl-t">关于控股子公司减少注册资本的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-05</span><span class="tl-kind">增减持</span><span class="tl-t">关于持股5%以上股东及部分董事、高级管理人员减持计划的预披露公告</span></li><li class="tl-p"><span class="tl-date">2026-04-21</span><span class="tl-kind">重组定增</span><span class="tl-t">关于控股子公司拟减少注册资本的公告</span></li><li class="tl-p"><span class="tl-date">2026-03-28</span><span class="tl-kind">重组定增</span><span class="tl-t">关于控股孙公司减少注册资本进展的公告</span></li><li class="tl-p"><span class="tl-date">2026-03-03</span><span class="tl-kind">重组定增</span><span class="tl-t">关于全资子公司吸收合并全资孙公司进展的公告</span></li><li class="tl-p"><span class="tl-date">2026-01-31</span><span class="tl-kind">重组定增</span><span class="tl-t">关于全资子公司之间吸收合并进展的公告</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>英力股份 <span class="code">300956</span></h3>
-          <span class="pill p-mute">已作废</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-04　·　重组（已作废）</dd>
-          <dt>触发事实</dt><dd>发行股份及支付现金购买资产，2026-04-28恢复审核。</dd>
-          <dt>在等什么</dt><dd>—</dd>
-          <dt>什么算看错</dt><dd>—</dd>
-          <dt>结果回看</dt><dd>2026-06-12深交所终止审核，原逻辑作废。9-09将光伏募投剩余1.09亿改投金属结构件与笔记本结构件改造（待股东会）；9-17管理层在集体接待日称新业务‘暂无法确定未来一年形成收入增量’、美国项目‘暂无实质性进展’。记录保留，不删除。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 1 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-06-22</span><span class="tl-kind">重组定增</span><span class="tl-t">安徽英力电子科技股份有限公司关于终止发行股份及支付现金购买资产并募集配套资金事项相关主体买卖股票</span></li><li class="tl-p"><span class="tl-date">2026-06-12</span><span class="tl-kind">重组定增</span><span class="tl-t">关于收到深圳证券交易所《关于终止对安徽英力电子科技股份有限公司发行股份及支付现金购买资产并募集配</span></li><li class="tl-p"><span class="tl-date">2026-06-10</span><span class="tl-kind">重组定增</span><span class="tl-t">关于召开终止发行股份及支付现金购买资产并募集配套资金事项投资者说明会的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-10</span><span class="tl-kind">风险</span><span class="tl-t">关于全资子公司终止对外投资事项的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-02</span><span class="tl-kind">风险</span><span class="tl-t">股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-04-28</span><span class="tl-kind">重组定增</span><span class="tl-t">关于收到深圳证券交易所恢复审核发行股份及支付现金购买资产并募集配套资金事项的公告</span></li><li class="tl-p"><span class="tl-date">2026-04-27</span><span class="tl-kind">重组定增</span><span class="tl-t">关于发行股份及支付现金购买资产并募集配套资金的审核问询函回复更新的提示性公告</span></li><li class="tl-p"><span class="tl-date">2026-04-21</span><span class="tl-kind">风险</span><span class="tl-t">关于质押控股子公司股权进行贷款的公告</span></li><li class="tl-p"><span class="tl-date">2026-03-02</span><span class="tl-kind">重组定增</span><span class="tl-t">关于收到深圳证券交易所中止审核公司发行股份及支付现金购买资产并募集配套资金事项通知的公告</span></li><li class="tl-p"><span class="tl-date">2026-01-05</span><span class="tl-kind">重组定增</span><span class="tl-t">关于延期回复《关于安徽英力电子科技股份有限公司发行股份及支付现金购买资产并募集配套资金申请的审核</span></li><li class="tl-p"><span class="tl-date">2025-12-05</span><span class="tl-kind">重组定增</span><span class="tl-t">关于发行股份及支付现金购买资产并募集配套资金申请的审核问询函回复的提示性公告</span></li><li class="tl-p"><span class="tl-date">2025-11-05</span><span class="tl-kind">重组定增</span><span class="tl-t">关于发行股份及支付现金购买资产并募集配套资金的申请文件获得深圳证券交易所受理的公告</span></li></ul></details>
-      </article>
-      <article class="card">
-        <header class="card-top">
-          <h3>蒙娜丽莎 <span class="code">002918</span></h3>
-          <span class="pill p-green">应验</span>
-        </header>
-        <dl>
-          <dt>进入视野</dt><dd>2026-06-26　·　巴克莱</dd>
-          <dt>触发事实</dt><dd>2026-06-26回购公告附带的特殊名册显示巴克莱新进第10名（回购名单距基准日仅2—3天，比季报快1—2个月）。</dd>
-          <dt>在等什么</dt><dd>—（已了结）</dd>
-          <dt>什么算看错</dt><dd>—</dd>
-          <dt>结果回看</dt><dd>协作者按同一规则操作：跌破通道资金成本买入，在季度均价93%处（12.46）离场获利。与本项目回测一致——这类资金的成本线只能当卖点压力位，不能当买入理由；熊市环境下该规则胜率约五成。</dd>
-        </dl>
-<details class="tl"><summary>时间轴：过去 12 件 · 今后 1 件</summary><ul class="tl-list"><li class="tl-f"><span class="tl-date">2026-10-31</span><span class="tl-kind">财报</span><span class="tl-t">三季报法定截止</span></li><li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">以上是今后已知的日子，以下是已经发生的</span></li><li class="tl-p"><span class="tl-date">2026-09-02</span><span class="tl-kind">激励回购</span><span class="tl-t">关于回购公司股份的进展公告</span></li><li class="tl-p"><span class="tl-date">2026-08-04</span><span class="tl-kind">激励回购</span><span class="tl-t">关于回购公司股份的进展公告</span></li><li class="tl-p"><span class="tl-date">2026-07-22</span><span class="tl-kind">激励回购</span><span class="tl-t">关于回购股份比例达到1%的进展公告</span></li><li class="tl-p"><span class="tl-date">2026-07-11</span><span class="tl-kind">激励回购</span><span class="tl-t">关于取得金融机构股票回购专项贷款承诺函的公告</span></li><li class="tl-p"><span class="tl-date">2026-07-01</span><span class="tl-kind">激励回购</span><span class="tl-t">关于首次回购公司股份暨回购进展的公告</span></li><li class="tl-p"><span class="tl-date">2026-06-30</span><span class="tl-kind">激励回购</span><span class="tl-t">回购股份报告书</span></li><li class="tl-p"><span class="tl-date">2026-06-27</span><span class="tl-kind">激励回购</span><span class="tl-t">关于回购公司股份方案的公告</span></li><li class="tl-p"><span class="tl-date">2026-05-15</span><span class="tl-kind">风险</span><span class="tl-t">关于股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2026-05-13</span><span class="tl-kind">风险</span><span class="tl-t">关于股票交易异常波动公告</span></li><li class="tl-p"><span class="tl-date">2025-12-31</span><span class="tl-kind">控制权</span><span class="tl-t">关于实际控制人减持股份计划实施完成的公告</span></li><li class="tl-p"><span class="tl-date">2025-09-20</span><span class="tl-kind">控制权</span><span class="tl-t">关于实际控制人减持股份的预披露公告</span></li><li class="tl-p"><span class="tl-date">2025-09-13</span><span class="tl-kind">控制权</span><span class="tl-t">关于控股股东、实际控制人及其一致行动人持股比例变动触及1%及5%整数倍的公告</span></li></ul></details>
-      </article>
-    </div>
+    <h2>标签</h2>
+    <p class="note">规则写死在脚本里，谁跑都一样。想加新标签，去 GitHub 提，说清怎么判定、用哪条公开数据验证。</p>
+    <div class="entries"><a class="entry" href="tag.html#%E8%A7%A3%E7%A6%81%E5%8E%8B%E5%8A%9B"><b>解禁压力</b><span>408 只</span><p>未来12个月解禁股份合计超过流通股的20%</p></a><a class="entry" href="tag.html#%E8%BF%91%E6%9C%88%E8%A7%A3%E7%A6%81"><b>近月解禁</b><span>174 只</span><p>30天内有限售股解禁</p></a><a class="entry" href="tag.html#%E9%BE%99%E8%99%8E%E6%A6%9C%E5%B8%B8%E5%AE%A2"><b>龙虎榜常客</b><span>169 只</span><p>近30个自然日内上榜3次及以上</p></a></div>
   </section>
 
   <section class="rules">
-    <h2>方法与纪律</h2>
+    <h2>怎么参与</h2>
     <ol>
-      <li><b>证据分级</b>：✅ 公告原文证实｜🟡 间接迹象｜❓ 猜测。猜测可以提，下结论前必须回到公告原文。</li>
-      <li><b>只用于排雷的基本面</b>：核心看资本运作、题材、资金筹码；按节点交易——节点公告是兑现点，沉寂期才是布局窗口。</li>
-      <li><b>有减持压力默认回避</b>：上市前股东、员工持股、解禁在途的票，先放一边。</li>
-      <li><b>买之前先查解禁时间表</b>：未来一年有大比例解禁的不碰。</li>
-      <li><b>不从有节点的票抽钱去摊平没节点的亏损票</b>。</li>
-      <li><b>机构不是买入理由</b>：只看它们在节点上做了什么，不看它们进没进来。</li>
+      <li><b>提名一只票</b>：填四项——触发它的公告（标题＋日期）、在等哪个公告、什么算看错、证据等级。</li>
+      <li><b>提交一个打法</b>：写清触发条件和买卖规则，我们用历史数据跑一遍，<b>结果好坏都公开</b>。</li>
+      <li><b>改进工具</b>：<code>tools/</code> 下的脚本谁都能改，只用标准库、一条命令能跑。</li>
     </ol>
+    <p class="note">规矩在 <a href="https://github.com/wwfemg/signal/blob/main/docs/CONTRIBUTING.md">docs/CONTRIBUTING.md</a>：不写买卖建议和目标价、不收费带单、每条必须有公告出处、记录只增不删。</p>
   </section>
 
   <footer>
-    数据来源：交易所公告原文、十大流通股东名册、基金定期报告。<br>
-    <b>研究记录，不构成投资建议。</b>页面由脚本生成，不含任何持仓、成本与盈亏信息。
+    图谱 156 篇笔记（✅131 🟡34 ❓25）· 更新 2026-09-23<br>
+    数据来自交易所公告原文、十大流通股东名册、基金定期报告、龙虎榜。
+    <b>研究记录，不构成投资建议。</b><br>
+    <a href="https://github.com/wwfemg/signal">GitHub 仓库</a>
   </footer>
 </div>
 <script>
-(async () => {
-  const box = document.getElementById('radar');
-  try {
-    const r = await fetch('data/radar.json', {cache: 'no-store'});
-    if (!r.ok) throw new Error('no radar');
-    const rows = (await r.json()).hits || [];
-    if (!rows.length) { box.innerHTML = '<div class="row"><span class="when">—</span><span class="what">最近 30 天没有扫到新记录</span><span class="pill p-mute">静默</span></div>'; return; }
-    box.innerHTML = rows.slice(0, 12).map(h => `<div class="row"><span class="when">${h.date || ''}</span><span class="what"><strong>${h.name || ''}</strong> ${h.holder || ''}　占流通 ${h.ratio || ''}<p>${h.source || ''}</p></span><span class="pill p-amber">新进</span></div>`).join('');
-  } catch (e) {
-    box.innerHTML = '<div class="row"><span class="when">—</span><span class="what">雷达数据暂不可用</span><span class="pill p-mute">—</span></div>';
-  }
-})();
+  const go = () => { const v = document.getElementById('q').value.trim();
+    if (/^[0-9]{6}$/.test(v)) location.href = 'stock.html#' + v; else location.href = 'stock.html'; };
+  document.getElementById('go').onclick = go;
+  document.getElementById('q').onkeydown = e => { if (e.key === 'Enter') go(); };
 </script>
