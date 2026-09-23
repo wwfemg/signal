@@ -1,4 +1,4 @@
-<title>10-Signal 节点看板</title>
+<title>Signal 台账</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
   :root{
@@ -87,148 +87,252 @@
   footer{margin-top:40px; border-top:1px solid var(--line); padding-top:14px;
          font-size:12px; color:var(--ink-3);}
   .legend{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; font-size:12px; color:var(--ink-3);}
+
+  .cards{display:flex; flex-direction:column; gap:12px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:14px 16px;}
+  .card-top{display:flex; align-items:center; justify-content:space-between; gap:10px;
+            border-bottom:1px solid var(--line-soft); padding-bottom:9px; margin-bottom:10px;}
+  .card-top h3{font-size:15.5px; margin:0;}
+  .code{font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--ink-3); font-weight:400; margin-left:4px;}
+  .card dl{display:grid; grid-template-columns:76px 1fr; gap:7px 14px; margin:0;}
+  .card dt{font-size:12px; color:var(--ink-3); letter-spacing:.04em; white-space:nowrap;}
+  .card dd{margin:0; font-size:13.5px; color:var(--ink-2);}
+  @media (max-width:560px){
+    .card dl{grid-template-columns:1fr; gap:2px 0;}
+    .card dt{margin-top:7px;}
+  }
+  .warn{margin:12px 0 0; padding:11px 14px; font-size:12.5px; line-height:1.65;
+        background:var(--red-soft); color:var(--red); border-radius:2px;}
+  .warn b{font-weight:700;}
 </style>
 
 <div class="wrap">
   <header class="top">
-    <p class="kicker">10-Signal · 研究看板</p>
-    <h1>节点看板</h1>
-    <p class="sub">只按节点交易：公告是兑现点，节点之间的沉寂期才是布局窗口。本页只放研究与节点，不含任何持仓、成本与盈亏。</p>
+    <p class="kicker">Signal · A股研究记录</p>
+    <h1>2026Q3 台账</h1>
+    <p class="sub">每只票记五件事：什么时候进入视野、触发它的事实（必须有公告出处）、在等什么节点、什么条件算看错、后来发生了什么。<b>只记录，不建议买卖，不写目标价。</b>看错的记录保留并标注，不删除。</p>
     <div class="stats">
       <span>更新 <b>2026-09-23</b></span>
-      <span>图谱 <b>155</b> 篇</span>
-      <span>✅ 公告证实 <b>111</b></span>
-      <span>🟡 间接迹象 <b>22</b></span>
-      <span>❓ 待验证 <b>11</b></span>
-      <span>待核线索 <b>21</b></span>
+      <span>在跟 <b>9</b></span>
+      <span>已了结 <b>3</b></span>
+      <span>图谱 <b>156</b> 篇</span>
+      <span>✅ <b>131</b></span>
+      <span>🟡 <b>34</b></span>
+      <span>❓ <b>25</b></span>
     </div>
   </header>
 
   <section>
-    <h2>硬节点：等公告</h2>
-    <p class="note">这些日子是可证伪的。公告一出，逻辑要么兑现要么作废。</p>
-    <div class="rows">
-      <div class="row">
-        <span class="when">已第 26 天</span>
-        <span class="what"><strong>华天科技</strong> 等证监会同意注册
-          <p>8-28 提交注册稿。历史 33 单重组样本中，提交到批复中位 11 天、最长 18 天——本单已超全部样本。要么在补材料，要么出了问题。盯“同意注册”或“中止/补充材料”。</p>
-        </span>
-        <span class="pill p-red">超时</span>
-      </div>
-      <div class="row">
-        <span class="when">9-28</span>
-        <span class="what"><strong>国货航</strong> 首发前股份解禁 47.28%
-          <p>57.72 亿股解禁：菜鸟、国泰航空货运、朗星、深国际、杭州国改双百。流通股一次由 12.44% 扩到 59.72%。杭州双百与已连卖 7 个月的国风投同属中国国新，最可能接着卖。下一批 40.28% 要等 2027-12-30。</p>
-        </span>
-        <span class="pill p-red">抛压</span>
-      </div>
-      <div class="row">
-        <span class="when">9-30</span>
-        <span class="what"><strong>三季度结束</strong>
-          <p>季末拉升的票，季初常是兑现点。10 月下旬起三季报披露，看 Q2 那批外资通道资金是去是留。</p>
-        </span>
-        <span class="pill p-amber">观察</span>
-      </div>
-      <div class="row">
-        <span class="when">10-16</span>
-        <span class="what"><strong>股指期货交割日</strong>（每月第三个周五）
-          <p>交割周每个交易日早 8:10 自动提醒。另每月第四个周三是 ETF 期权到期日，尾盘常有异动。</p>
-        </span>
-        <span class="pill p-mute">日历</span>
-      </div>
-      <div class="row">
-        <span class="when">10 月下旬</span>
-        <span class="what"><strong>三季报</strong>：机构去留
-          <p>要看三件事：勤辰创赢成长 2 号（Q2 同季新进中泰、三佳、中天精装）在不在；景顺景气进取 6-30 仍持的 73.34 万股中泰是否清掉；三佳 Q2 那五家外资通道账户是否一起消失。</p>
-        </span>
-        <span class="pill p-blue">验证</span>
-      </div>
-      <div class="row">
-        <span class="when">无期限</span>
-        <span class="what"><strong>三佳科技</strong> 等上交所受理定增
-          <p>6-30 股东会通过至今无受理，黄灯。9-05 新增限制性股票激励草案（授予价 12.66 元，需国资批复＋股东会）。7-24 起控股方表决权委托到期不续签，国资推定增动机更强。</p>
-        </span>
-        <span class="pill p-amber">黄灯</span>
-      </div>
-      <div class="row">
-        <span class="when">10—12 月</span>
-        <span class="what"><strong>震安科技</strong> 定增：深交所审核通过 → 证监会注册
-          <p>7-02 受理、7-16 首问、9-19 已交问询回复修订稿。按 56 单样本中位推算，上会约 10 月中下旬—11 月，注册约 11—12 月。批复后 5 天内 96% 会冲高一次。</p>
-        </span>
-        <span class="pill p-blue">推进中</span>
-      </div>
-      <div class="row">
-        <span class="when">待定</span>
-        <span class="what"><strong>国风新材</strong> 上并购重组委
-          <p>2024-12 预案至今 21 个月仍在问询往返，9-19 又更新回复、9-21 补申报稿。买太湖金张 58.33%，作价 6.46 亿；发股价 5.14 元，现价 9.73，重组预期已大部分反映。合肥产投“控股平台＋买民企＋自认配套”的模板，可对照三佳。</p>
-        </span>
-        <span class="pill p-mute">慢</span>
-      </div>
-      <div class="row">
-        <span class="when">待定</span>
-        <span class="what"><strong>ST 中装</strong> 摘帽批复 ／ <strong>ST 亿晶</strong> 法院裁定受理重整
-          <p>ST 中装摘帽后才进入资产注入阶段。ST 亿晶 9-22 公告：产业投资人把锁定期从 36 个月延到 60 个月、且须扣非盈利才可减持，但法院仍未受理；2026H1 净资产 -2.44 亿，受理前有退市风险。</p>
-        </span>
-        <span class="pill p-amber">前置条件</span>
-      </div>
+    <h2>在跟的票</h2>
+    <p class="note">等的是具体公告，不是行情。公告一出，逻辑要么兑现要么作废。</p>
+    <div class="cards">
+      <article class="card">
+        <header class="card-top">
+          <h3>三佳科技 <span class="code">600520</span></h3>
+          <span class="pill p-blue">等公告</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-05　·　合肥国资</dd>
+          <dt>触发事实</dt><dd>合肥创新投2025-01完成控制权过户；2026-02-02定增预案、06-13改价、06-30股东会通过，创新投全额认购（发行期首日定价）。2026-09-05限制性股票激励草案，授予价12.66元。</dd>
+          <dt>在等什么</dt><dd>上交所受理定增申请</dd>
+          <dt>什么算看错</dt><dd>定增终止或撤回；创新投表决权比例再下降；受理迟迟不来且跌破20.35（7月低点）</dd>
+          <dt>结果回看</dt><dd>6-30股东会通过至今无受理，已拖两个多月，黄灯。7-24三佳集团表决权委托到期不续签，创新投直接控制降至17.04%，国资推定增动机更强。2026H1归母净利仅575万，股价不靠业绩。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>震安科技 <span class="code">300767</span></h3>
+          <span class="pill p-blue">等公告</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2025-06　·　亚商系</dd>
+          <dt>触发事实</dt><dd>2025-06-18宁花香签约收购、10-30过户、11-11叶文亦入董；2026-02-11定增认购协议、06-09改价、07-03深交所受理、07-16首轮问询、09-19交回复修订稿。发行对象宁花香与深圳东创，全额现金认购，不超6.30亿。</dd>
+          <dt>在等什么</dt><dd>深交所审核通过 → 证监会同意注册 → 发行期首日定价</dd>
+          <dt>什么算看错</dt><dd>定增被中止或终止；叶文亦等亚商系董事退出</dd>
+          <dt>结果回看</dt><dd>按56单再融资样本中位推算，上会约10月中下旬—11月，注册约11—12月。批复后5天内96%会冲高一次（中位+4.5%），20天后涨幅多吐回——节点是兑现点不是起涨点。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>ST中装 <span class="code">002822</span></h3>
+          <span class="pill p-blue">等公告</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-05　·　亚商系</dd>
+          <dt>触发事实</dt><dd>龙吉生/康恒控股入主；亚商为落选备选联合体。控股方受让价原协议1.552元，补充协议改为1.749元（以最新修订为准）。</dd>
+          <dt>在等什么</dt><dd>摘帽批复；之后才进入资产注入阶段</dd>
+          <dt>什么算看错</dt><dd>摘帽被否；控股方受让终止</dd>
+          <dt>结果回看</dt><dd>前置条件未完成前不展开。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>深圳新星 <span class="code">603978</span></h3>
+          <span class="pill p-blue">等公告</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-05-26　·　亚商系</dd>
+          <dt>触发事实</dt><dd>2026-05-25 陈学敏与深圳嘉泰智远（钟志辉）签股权转让协议，作价5.5713亿，对应约18.95元/股；2026-09-02 岩代投资100%股权工商变更完成。</dd>
+          <dt>在等什么</dt><dd>嘉泰智远增持／改组董事会／控制权变更</dd>
+          <dt>什么算看错</dt><dd>嘉泰智远减持或协议解除；一年内无董事会席位变化</dd>
+          <dt>结果回看</dt><dd>过户完成但控制权未变：陈学敏仍持19.18%、仍是实控人，嘉泰智远13.93%。近20日+38%，已高于受让成本约四成，季末拉升需防季初兑现。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>锋龙股份 <span class="code">002931</span></h3>
+          <span class="pill p-blue">等公告</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2025-12　·　外资通道样本</dd>
+          <dt>触发事实</dt><dd>2025-12-17停牌筹划控制权，优必选方入主；2026年通道资金完整走完一轮（巴克莱2025Q3低位新进→Q4加仓→2026Q1集体消失→7-27回购名单再现）。8250万元关联交易公告。</dd>
+          <dt>在等什么</dt><dd>优必选把机器人业务落进上市公司的实质公告（资产收购／关联交易／订单）；三季报看8250万关联交易是否形成机电组件收入</dd>
+          <dt>什么算看错</dt><dd>三季报仍停在送样报价阶段且无新增关联交易</dd>
+          <dt>结果回看</dt><dd>7-07公告确认仍在送样报价阶段。股价从2月顶点116.45回落至40元一带；通道资金7-27在44.28进的那笔已浮亏——它们也会错。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>超声电子 <span class="code">000823</span></h3>
+          <span class="pill p-amber">观察</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-09-19　·　季末拉升观察</dd>
+          <dt>触发事实</dt><dd>近20日+70%（9-22数据），2026Q2十大流通股东已有4家外资通道账户新进。</dd>
+          <dt>在等什么</dt><dd>9-30前后是否兑现；10月三季报外资是否仍扎堆</dd>
+          <dt>什么算看错</dt><dd>三季报外资退出而股价仍强，说明不是通道资金推动</dd>
+          <dt>结果回看</dt><dd>本项目统计：季末猛拉且外资扎堆的票，约40%在季初20个交易日内深跌超20%。此处只作观察，不作买入候选。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>国风新材 <span class="code">000859</span></h3>
+          <span class="pill p-blue">等公告</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-09-19　·　合肥国资</dd>
+          <dt>触发事实</dt><dd>发行股份及支付现金购买太湖金张58.33%，作价6.46亿（原7.00亿已调减），发股价5.14元；配套募资≤3.3亿，控股股东合肥产投认购6000万—1亿并锁18个月。业绩承诺：金张2026年扣非≥9800万，三年累计≥3.476亿。</dd>
+          <dt>在等什么</dt><dd>深交所并购重组委上会</dd>
+          <dt>什么算看错</dt><dd>重组终止；金张2026年扣非低于承诺80%</dd>
+          <dt>结果回看</dt><dd>2024-12预案至今21个月仍在问询往返。现价9.73 vs 发股价5.14，重组预期已大部分反映。备考数据倒推金张2026H1净利约2840万，全年9800万压力大。对本项目的意义在于验证合肥产投‘控股平台＋买民企＋自认配套’的模板。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>华天科技 <span class="code">002185</span></h3>
+          <span class="pill p-red">超时</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-08　·　重组注册</dd>
+          <dt>触发事实</dt><dd>发行股份及支付现金购买控股股东旗下华羿微电子100%＋配套募资；2026-08-14过会、08-18与08-28披露注册稿。重组后控股股东持股由7.28亿股增至9.28亿股。</dd>
+          <dt>在等什么</dt><dd>证监会同意注册</dd>
+          <dt>什么算看错</dt><dd>出现‘中止/补充材料’或重组终止公告</dd>
+          <dt>结果回看</dt><dd>8-28提交注册，至9-23已26天。33单重组样本中，提交到批复中位11天、80%在14天内、最长18天——本单已超全部样本。统计上批复后1—5天内97%会冲高一次（中位+6.6%），20天后涨幅多吐回。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>ST亿晶 <span class="code">600537</span></h3>
+          <span class="pill p-blue">等公告</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-02　·　重整</dd>
+          <dt>触发事实</dt><dd>2026-02法院对债权人申请预重整予以备案登记；4-27与产业投资人宁波瑞廉、中润光能签预重整投资协议；6-16债权人会议、6-17出资人组会议均通过；9-22产业投资人承诺锁定期由36个月延至60个月，且须扣非盈利后方可减持。</dd>
+          <dt>在等什么</dt><dd>法院裁定受理重整（会叠加退市风险警示）</dd>
+          <dt>什么算看错</dt><dd>法院不予受理或宣告破产清算</dd>
+          <dt>结果回看</dt><dd>2026H1净资产-2.44亿，若年末仍为负可能终止上市。受理前不进场，受理公告才是观察起点。2026Q1十大流通股东前五全为外资通道，Q2已基本撤出——正是通道资金成群进出的样本。</dd>
+        </dl>
+      </article>
     </div>
+  </section>
+
+  <section>
+    <h2>外资通道雷达</h2>
+    <p class="note">公司发回购公告时须附基准日前十大股东名单，距建仓只隔 2—3 天，比季报快 1—2 个月。每天自动扫描，扫到就记。</p>
+    <div class="rows" id="radar"><div class="row"><span class="when">—</span><span class="what">正在读取最新扫描结果…</span><span class="pill p-mute">radar</span></div></div>
+    <p class="warn"><b>这不是买入信号。</b>本项目统计 1453 只股票 × 14 个季度：名册上的外资名字多为国内资金借通道持股；一起新进的组合下季度 51% 一起消失；股价跌破其成本后留榜率仅 22%——离场与赚亏无关。它只说明“这只票上有人在做事件交易”。</p>
   </section>
 
   <section>
     <h2>季末拉升观察</h2>
-    <p class="note">近 20 日涨幅。季末前猛拉的票，历史上约四成会在季初 20 天内深跌超 20%。不是买入名单，是回避名单。</p>
-    <div class="rows">
-      <div class="move"><span><strong>超声电子</strong></span><span class="pct">+70%</span><p>Q2 已有 4 家外资通道账户新进，季报若仍扎堆，季初兑现风险更高</p></div>
-      <div class="move"><span><strong>深圳新星</strong></span><span class="pct">+38%</span><p>9-02 嘉泰智远（钟志辉）13.93% 过户完成，成本锚约 18.95；陈学敏仍是实控人，控制权未变</p></div>
-      <div class="move"><span><strong>剑桥科技</strong></span><span class="pct">+26%</span><p>8 月下旬以来密集接待机构调研</p></div>
-      <div class="move"><span><strong>科创新源</strong></span><span class="pct">+20%</span><p>留意季初兑现</p></div>
-      <div class="move"><span><strong>震安科技</strong></span><span class="pct">+19%</span><p>定增审核推进中，节点公告前后是兑现点</p></div>
-    </div>
+    <p class="note">近 20 日涨幅。季末猛拉且外资扎堆的票，约四成在季初 20 个交易日内深跌超 20%。这是回避名单，不是买入名单。</p>
+    <div class="rows"><div class="move"><span><strong>超声电子</strong></span><span class="pct">+55%</span><p>季末前猛拉，季初兑现风险高；若季报再现外资扎堆，历史上40%会20日内深跌超20%</p></div><div class="move"><span><strong>剑桥科技</strong></span><span class="pct">+26%</span><p>留意季初兑现</p></div><div class="move"><span><strong>科创新源</strong></span><span class="pct">+25%</span><p>留意季初兑现</p></div><div class="move"><span><strong>深圳新星</strong></span><span class="pct">+20%</span><p>留意季初兑现</p></div></div>
   </section>
 
   <section>
-    <h2>本周核实</h2>
-    <p class="note">全部回到公告原文与股东名册，标注证据等级。</p>
-
-    <div class="finding">
-      <h3>外资名字多数不是外资</h3>
-      <p><span class="tag">✅ 1453 只 × 14 季度统计</span><br>名册上的高盛、瑞银、大摩、小摩、巴克莱，多为国内交易型资金借通道持仓：一起新进的组合，下季度 51% 一起消失；跌破其成本后留榜率仅 22%——离场与赚亏无关，只看背后客户平不平仓。它们不是买入信号，只是“这只票上有人在做事件交易”的指示灯。</p>
-    </div>
-
-    <div class="finding">
-      <h3>三佳、中泰的机构筹码：下有托底，上有解套压力</h3>
-      <p><span class="tag">✅ 十大流通股东＋基金中报</span><br>中泰的金百合八号 2023 年建仓、成本约 15 元，今年股价冲到 36.5 也没卖反而小加；景顺景气进取 Q1 新进 194.58 万股，Q2 减到 73.34 万股（F10 显示的“退出”只是掉出前十，并非清仓）；勤辰、招商证券均为 Q2 新进，成本落在 22—23 元。结论：低位有人托，20 元以上全是等解套的筹码。</p>
-    </div>
-
-    <div class="finding">
-      <h3>福石控股：排雷一票否决</h3>
-      <p><span class="tag">✅ 公告原文</span><br>实控人留置后改责令候查；控股股东重整承诺三年扣非≥3.6 亿、实际 -1.99 亿，补偿未付，被北京证监局责令改正；控股方质押率 88.66%；2025 年归母净利 -1.22 亿。公司在 7 月异动公告里自称“估值较高、与业绩不匹配”。</p>
-    </div>
-
-    <div class="finding">
-      <h3>合肥城建：同属合肥国资，但不是同一条线</h3>
-      <p><span class="tag">✅ 公告原文</span><br>控股股东兴泰金融控股 36.92%、二股东合肥工投 21.67%，与三佳的合肥产投人事链（杨林、李中亚、尹秋实）无交汇。两大国资股东都在减持，兴泰 10-12 起再减不超过 1%。按“有减持压力默认回避”直接否决——巴克莱成本线 17.88 只能当压力位参考。</p>
+    <h2>已了结</h2>
+    <p class="note">否决和作废的记录一样保留——成绩单的价值在于把错的也留着。</p>
+    <div class="cards">
+      <article class="card">
+        <header class="card-top">
+          <h3>国货航 <span class="code">001391</span></h3>
+          <span class="pill p-mute">否决</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-09-22　·　解禁回避</dd>
+          <dt>触发事实</dt><dd>2026-09-22公告：9-28解禁首发前股份57.72亿股，占总股本47.28%（菜鸟、国泰航空货运、朗星、深国际、杭州国改双百），流通股由12.44%扩至59.72%；剩余40.28%于2027-12-30解禁。</dd>
+          <dt>在等什么</dt><dd>解禁后是否出现减持预披露，尤其杭州国改双百（与已连卖7个月的国风投同属中国国新）</dd>
+          <dt>什么算看错</dt><dd>一年内无一家发出减持计划，且股价站上发行价2.30以上</dd>
+          <dt>结果回看</dt><dd>按‘有减持压力默认回避’直接排除。上市首日炒到12.50（发行价2.30的5倍），此后21个月跌69%，股东户数从45.5万降到11.6万——典型的‘首日炒高＋解禁排队’。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>合肥城建 <span class="code">002208</span></h3>
+          <span class="pill p-mute">否决</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-09-21　·　巴克莱Q2清单</dd>
+          <dt>触发事实</dt><dd>巴克莱2026Q2新进第5名占流通0.47%，量价均价17.88，现价约10.38（低42%）；控股股东合肥兴泰金融控股36.92%、二股东合肥工投21.67%。</dd>
+          <dt>在等什么</dt><dd>无（已否决）</dd>
+          <dt>什么算看错</dt><dd>—</dd>
+          <dt>结果回看</dt><dd>两大国资股东都在减持：兴泰9-11预披露10-12起减不超过1%，合肥工投Q2已由22.43%降至21.67%。与三佳的合肥产投人事链无交汇，属兴泰/工投平台。巴克莱成本线只能当压力位参考，不是买点。</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <header class="card-top">
+          <h3>英力股份 <span class="code">300956</span></h3>
+          <span class="pill p-mute">已作废</span>
+        </header>
+        <dl>
+          <dt>进入视野</dt><dd>2026-04　·　重组（已作废）</dd>
+          <dt>触发事实</dt><dd>发行股份及支付现金购买资产，2026-04-28恢复审核。</dd>
+          <dt>在等什么</dt><dd>—</dd>
+          <dt>什么算看错</dt><dd>—</dd>
+          <dt>结果回看</dt><dd>2026-06-12深交所终止审核，原逻辑作废。9-09将光伏募投剩余1.09亿改投金属结构件与笔记本结构件改造（待股东会）；9-17管理层在集体接待日称新业务‘暂无法确定未来一年形成收入增量’、美国项目‘暂无实质性进展’。记录保留，不删除。</dd>
+        </dl>
+      </article>
     </div>
   </section>
 
   <section class="rules">
-    <h2>研究纪律</h2>
-    <p class="note">每条都是用亏损换来的。</p>
+    <h2>方法与纪律</h2>
     <ol>
-      <li><b>证据分级</b>：✅ 公告原文证实｜🟡 间接迹象｜❓ 猜测。猜测可以大胆提，下结论前必须回到公告原文。</li>
-      <li><b>A 股尺子</b>：基本面只用来排雷，核心看资本运作、题材、资金筹码；按节点交易——节点公告是兑现点，沉寂期才是布局窗口。</li>
+      <li><b>证据分级</b>：✅ 公告原文证实｜🟡 间接迹象｜❓ 猜测。猜测可以提，下结论前必须回到公告原文。</li>
+      <li><b>只用于排雷的基本面</b>：核心看资本运作、题材、资金筹码；按节点交易——节点公告是兑现点，沉寂期才是布局窗口。</li>
       <li><b>有减持压力默认回避</b>：上市前股东、员工持股、解禁在途的票，先放一边。</li>
-      <li><b>买之前先查解禁时间表</b>：未来一年有大比例解禁的不碰。国货航是反面教材：上市首日炒到发行价的 5 倍，之后 21 个月还这笔账。</li>
-      <li><b>不从有节点的票抽钱去摊平没节点的亏损票</b>：越跌越补只会把最大的钱压在最没动力涨的地方。</li>
-      <li><b>机构不是买入理由</b>：他们亏得起、时间长、拿的是客户的钱；判断只看他们在节点上做了什么，不看他们进没进来。</li>
+      <li><b>买之前先查解禁时间表</b>：未来一年有大比例解禁的不碰。</li>
+      <li><b>不从有节点的票抽钱去摊平没节点的亏损票</b>。</li>
+      <li><b>机构不是买入理由</b>：只看它们在节点上做了什么，不看它们进没进来。</li>
     </ol>
   </section>
 
   <footer>
-    数据来源：交易所公告原文、十大流通股东名册、基金定期报告。研究记录，不构成投资建议。<br>
-    本页由 10-Signal 项目生成，已剔除全部持仓、成本与盈亏信息。
-    <div class="legend">
-      <span>🔴 超时／抛压</span><span>🟠 观察</span><span>🔵 验证窗口</span><span>⚪️ 日历</span>
-    </div>
+    数据来源：交易所公告原文、十大流通股东名册、基金定期报告。<br>
+    <b>研究记录，不构成投资建议。</b>页面由脚本生成，不含任何持仓、成本与盈亏信息。
   </footer>
 </div>
+<script>
+(async () => {
+  const box = document.getElementById('radar');
+  try {
+    const r = await fetch('radar.json', {cache: 'no-store'});
+    if (!r.ok) throw new Error('no radar');
+    const rows = (await r.json()).hits || [];
+    if (!rows.length) { box.innerHTML = '<div class="row"><span class="when">—</span><span class="what">最近 30 天没有扫到新记录</span><span class="pill p-mute">静默</span></div>'; return; }
+    box.innerHTML = rows.slice(0, 12).map(h => `<div class="row"><span class="when">${h.date || ''}</span><span class="what"><strong>${h.name || ''}</strong> ${h.holder || ''}　占流通 ${h.ratio || ''}<p>${h.source || ''}</p></span><span class="pill p-amber">新进</span></div>`).join('');
+  } catch (e) {
+    box.innerHTML = '<div class="row"><span class="when">—</span><span class="what">雷达数据暂不可用</span><span class="pill p-mute">—</span></div>';
+  }
+})();
+</script>
