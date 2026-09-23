@@ -391,7 +391,7 @@
 (async () => {
   const box = document.getElementById('radar');
   try {
-    const r = await fetch('radar.json', {cache: 'no-store'});
+    const r = await fetch('data/radar.json', {cache: 'no-store'});
     if (!r.ok) throw new Error('no radar');
     const rows = (await r.json()).hits || [];
     if (!rows.length) { box.innerHTML = '<div class="row"><span class="when">—</span><span class="what">最近 30 天没有扫到新记录</span><span class="pill p-mute">静默</span></div>'; return; }

@@ -3,6 +3,16 @@
 A 股研究记录：每只票在等哪个公告、什么条件算看错、后来发生了什么。
 台账页面：https://wwfemg.github.io/signal/
 
+## 目录
+
+```
+index.html      台账页面（脚本生成，别手改）
+data/           数据：台账 ledger.json、时间轴 timeline.json、机构持仓池 pool.json
+tools/          命令行工具
+docs/           投稿规矩 CONTRIBUTING.md、变更记录 CHANGELOG.md
+assets/         页面样式
+```
+
 ## 工具（不用装任何库，下载就能跑）
 
 ```
@@ -23,10 +33,10 @@ python3 unlock.py 001391       # 查一只票的解禁时间表
 
 ## 台账
 
-`ledger.json` 是台账数据，页面由它生成。每只票记五件事：进入视野的时间、触发它的事实
+`data/ledger.json` 是台账数据，页面由它生成。每只票记五件事：进入视野的时间、触发它的事实
 （必须有公告标题和日期）、在等哪个公告、什么条件算看错、后来发生了什么。
 
-想加一只票或者补进展，看 [CONTRIBUTING.md](CONTRIBUTING.md)。不会用 Git 也可以开
+想加一只票或者补进展，看 [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)。不会用 Git 也可以开
 一个 Issue 提名。
 
 ## 记录改过没有，自己可以查
@@ -35,16 +45,16 @@ python3 unlock.py 001391       # 查一只票的解禁时间表
 改不掉也删不掉。想核对某只票当初写的是什么：
 
 ```
-git log --follow -p ledger.json      # 看台账每一次改动
+git log --follow -p data/ledger.json      # 看台账每一次改动
 git tag                              # 看有哪些季度快照
-git show 2026Q3:ledger.json          # 看某个季度当时的原样
+git show 2026Q3:data/ledger.json          # 看某个季度当时的原样
 ```
 
 每季度打一个标签存档，看错的记录标成"作废"保留，不删。
 
 ## 变更记录
 
-见 [CHANGELOG.md](CHANGELOG.md)。
+见 [docs/CHANGELOG.md](docs/CHANGELOG.md)。
 
 ## 说明
 
