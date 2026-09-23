@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>Signal</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>  *,*::before,*::after{box-sizing:border-box;}
 
   :root{
@@ -145,105 +145,109 @@
 
   html, body{height:100%;}
   body{display:flex; flex-direction:column;}
-  .home{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-        text-align:center; width:100%; padding-inline:20px;
-        padding-block:clamp(36px, 8vh, 96px) clamp(24px, 5vh, 56px);}
+  .bar{display:flex; justify-content:flex-end; align-items:center; gap:clamp(14px,2.4vw,26px);
+       padding:16px clamp(16px,3vw,28px); font-size:13.5px;}
+  .bar a{color:var(--ink-2); text-decoration:none;}
+  .bar a:hover{color:var(--accent); text-decoration:underline;}
+  .bar a.btn{background:var(--accent); color:#fff; padding:9px 20px; border-radius:999px; font-weight:500;}
+  .bar a.btn:hover{opacity:.88; text-decoration:none; color:#fff;}
+  main{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+       text-align:center; padding:0 20px clamp(40px,10vh,110px); width:100%;}
   .mark{font-family:"IBM Plex Serif", Georgia, serif; font-weight:600;
-        font-size:clamp(46px, 9vw, 92px); letter-spacing:-.022em; line-height:1;
-        margin:0 0 clamp(16px, 2.4vh, 26px); color:var(--ink);}
+        font-size:clamp(52px, 10vw, 104px); letter-spacing:-.025em; line-height:1;
+        margin:0 0 6px; color:var(--ink);}
   .mark em{font-style:italic; font-weight:400; color:var(--accent);}
-  .tagline{font-family:"IBM Plex Serif", Georgia, serif; font-weight:400;
-        font-size:clamp(17px, 2.5vw, 25px); line-height:1.55; color:var(--ink);
-        margin:0 0 10px; max-width:20em; text-wrap:balance;}
-  .sub2{font-size:clamp(12.5px, 1.5vw, 14.5px); color:var(--ink-3); font-weight:300;
-        margin:0 0 clamp(24px, 4vh, 42px); max-width:30em; line-height:1.8;}
-  .ask{display:flex; gap:10px; width:min(680px, 100%); border:1px solid var(--line);
-        background:var(--panel); border-radius:999px; padding:8px 8px 8px clamp(18px, 3vw, 28px);
-        text-align:left; transition:border-color .15s, box-shadow .15s;}
-  .ask:focus-within{border-color:var(--accent); box-shadow:0 4px 18px rgba(0,0,0,.08);}
+  .tagline{font-size:clamp(13px,1.7vw,15.5px); color:var(--ink-3); font-weight:300;
+        margin:0 0 clamp(26px,4.5vh,44px); letter-spacing:.02em;}
+  .ask{display:flex; align-items:center; gap:12px; width:min(620px,100%);
+        border:1px solid var(--line); background:var(--panel); border-radius:999px;
+        padding:4px 6px 4px 20px; transition:box-shadow .15s, border-color .15s;}
+  .ask:hover, .ask:focus-within{box-shadow:0 2px 14px rgba(0,0,0,.10); border-color:var(--line);}
+  .ask svg{flex:none; width:19px; height:19px; stroke:var(--ink-3); fill:none; stroke-width:2;}
   .ask input{flex:1; min-width:0; border:none; outline:none; background:transparent; color:var(--ink);
-        font-size:clamp(16px, 1.8vw, 18px); padding:clamp(11px, 1.4vw, 15px) 0;
-        font-family:"Noto Sans SC", sans-serif; font-weight:400;}
+        font-size:16px; padding:14px 0; font-family:"Noto Sans SC", sans-serif;}
   .ask input::placeholder{color:var(--ink-3); font-weight:300;}
-  .ask button{border:none; border-radius:999px; background:var(--accent); color:#fff; font-weight:500;
-        font-size:clamp(14px, 1.6vw, 16px); padding:0 clamp(20px, 3vw, 32px); cursor:pointer;
-        font-family:"Noto Sans SC", sans-serif; transition:opacity .15s;}
-  .ask button:hover{opacity:.88;}
-  .hint{margin:clamp(12px, 2vh, 18px) 0 0; font-size:12.5px; color:var(--ink-3); font-weight:300;
-        max-width:34em; line-height:1.9;}
-  .chips{display:flex; flex-wrap:wrap; justify-content:center; gap:9px;
-        margin-top:clamp(14px, 2.4vh, 22px); width:min(760px, 100%);}
-  .chip{font-size:13.5px; padding:9px 18px; border:1px solid var(--line); border-radius:999px;
-        background:var(--panel); color:var(--ink-2); cursor:pointer; font-family:"Noto Sans SC", sans-serif;
-        transition:all .15s;}
-  .chip i{font-style:normal; font-family:"IBM Plex Mono", monospace; color:var(--ink-3);
-        font-size:11.5px; margin-left:3px;}
-  .chip:hover{border-color:var(--accent); color:var(--accent);}
-  .nav-chips{margin-top:clamp(20px, 3.4vh, 34px); padding-top:clamp(18px, 3vh, 30px);
-        border-top:1px solid var(--line-soft);}
-  .chip.go{text-decoration:none; color:var(--ink); font-weight:500;}
-  .chip.go:hover{background:var(--accent); border-color:var(--accent); color:#fff;}
-  .chip.go i{color:rgba(255,255,255,0); }
-  .res{margin-top:22px; width:min(680px, 100%); display:flex; flex-direction:column; gap:7px; text-align:left;}
-  .res a{display:block; padding:14px 18px; background:var(--panel); border:1px solid var(--line);
+  .acts{display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:26px;}
+  .acts button{font-family:"Noto Sans SC", sans-serif; font-size:14px; padding:11px 22px;
+        border:1px solid transparent; border-radius:6px; cursor:pointer;
+        background:var(--line-soft); color:var(--ink); transition:all .15s;}
+  .acts button:hover{border-color:var(--line); box-shadow:0 1px 3px rgba(0,0,0,.08);}
+  .tips{margin:clamp(26px,4.5vh,44px) 0 0; font-size:13px; color:var(--ink-3); font-weight:300;}
+  .tips a{color:var(--accent); text-decoration:none; margin:0 7px; white-space:nowrap;}
+  .tips a:hover{text-decoration:underline;}
+  .res{margin-top:20px; width:min(620px,100%); display:flex; flex-direction:column; gap:7px; text-align:left;}
+  .res a{display:block; padding:13px 18px; background:var(--panel); border:1px solid var(--line);
         border-radius:10px; text-decoration:none; color:var(--ink); font-size:14.5px;}
   .res a:hover{border-color:var(--accent);}
   .res a span{color:var(--ink-3); font-size:12px; margin-left:10px; font-family:"IBM Plex Mono", monospace;}
-  .foot{text-align:center; padding:0 20px clamp(28px, 5vh, 48px); font-size:12px;
-        color:var(--ink-3); line-height:2; font-weight:300;}
+  .pagefoot{background:var(--line-soft); border-top:1px solid var(--line);
+        padding:16px clamp(16px,3vw,28px); font-size:12.5px; color:var(--ink-3); font-weight:300;
+        display:flex; flex-wrap:wrap; gap:8px 20px; justify-content:space-between; align-items:center;}
+  .pagefoot a{color:var(--ink-3); text-decoration:none; margin-right:18px;}
+  .pagefoot a:hover{color:var(--accent); text-decoration:underline;}
   @media (max-width:520px){
-    .mark{letter-spacing:-.015em;}
-    .chips{gap:7px;} .chip{font-size:12.5px; padding:8px 14px;}
-    .ask{padding-left:18px;} .ask button{padding:0 18px;}
+    .bar{justify-content:center; gap:16px; font-size:13px;}
+    .bar a.btn{padding:8px 16px;}
+    .pagefoot{justify-content:center; text-align:center;}
   }
 </style>
 </head>
 <body>
-<div class="home">
+<nav class="bar">
+  <a href="ledger.html">台账</a>
+  <a href="pool.html">机构持仓池</a>
+  <a href="tag.html">标签</a>
+  <a href="stock.html" class="btn">查一只票</a>
+</nav>
+<main>
   <h1 class="mark">Sig<em>nal</em></h1>
-  <p class="tagline">按节点看票：一只票在等哪个公告，什么条件算看错。</p>
-  <p class="sub2">结论都能回到公告原文，看错的记录保留不删。买卖自己判断。</p>
+  <p class="tagline">一只票在等哪个公告，什么条件算看错</p>
   <div class="ask">
-    <input id="q" placeholder="输入股票代码、名字，或者你想看的逻辑" autocomplete="off">
-    <button id="go">查</button>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+    <input id="q" placeholder="股票代码、名字，或者一个逻辑" autocomplete="off" aria-label="搜索">
   </div>
-  <p class="hint" id="hint">试试：600520　·　三佳　·　解禁　·　龙虎榜　·　外资扎堆　·　成本倒挂</p>
-  <div class="chips"><button class="chip" data-tag="解禁压力">解禁压力 <i>408</i></button><button class="chip" data-tag="近月解禁">近月解禁 <i>174</i></button><button class="chip" data-tag="龙虎榜常客">龙虎榜常客 <i>169</i></button></div>
-  <div class="chips nav-chips">
-    <a class="chip go" href="ledger.html">台账 <i>9</i></a>
-    <a class="chip go" href="pool.html">机构持仓池</a>
-    <a class="chip go" href="stock.html">查一只票</a>
-    <a class="chip go" href="tag.html">标签</a>
-    <a class="chip go" href="https://github.com/wwfemg/signal">GitHub</a>
+  <div class="acts">
+    <button id="go">查这只票</button>
+    <button id="rnd">随便看一只</button>
   </div>
+  <p class="tips">常看的：<a href="tag.html#%E8%A7%A3%E7%A6%81%E5%8E%8B%E5%8A%9B">解禁压力</a><a href="tag.html#%E8%BF%91%E6%9C%88%E8%A7%A3%E7%A6%81">近月解禁</a><a href="tag.html#%E9%BE%99%E8%99%8E%E6%A6%9C%E5%B8%B8%E5%AE%A2">龙虎榜常客</a></p>
   <div class="res" id="res"></div>
-</div>
-<div class="foot">
-  数据来自交易所公告、十大流通股东名册、龙虎榜。研究记录，不构成投资建议。更新 2026-09-23
+</main>
+<div class="pagefoot">
+  <span>数据来自交易所公告、十大流通股东名册、龙虎榜　·　研究记录，不构成投资建议</span>
+  <span>
+    <a href="https://github.com/wwfemg/signal/blob/main/docs/CONTRIBUTING.md">投稿规矩</a>
+    <a href="https://github.com/wwfemg/signal/blob/main/docs/CHANGELOG.md">变更记录</a>
+    <a href="https://github.com/wwfemg/signal">GitHub</a>
+    <span style="font-family:'IBM Plex Mono',monospace">2026-09-23</span>
+  </span>
 </div>
 <script>
 const esc = s => String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
-const KEY = {'解禁':'解禁压力','近月解禁':'近月解禁','外资':'外资扎堆','扎堆':'外资扎堆',
-  '成本':'成本倒挂','倒挂':'成本倒挂','龙虎榜':'龙虎榜常客','游资':'龙虎榜常客','拉升':'季末拉升'};
-let NAMES = {};
+const KEY = {'解禁':'解禁压力','外资':'外资扎堆','扎堆':'外资扎堆','成本':'成本倒挂','倒挂':'成本倒挂',
+  '龙虎榜':'龙虎榜常客','游资':'龙虎榜常客','拉升':'季末拉升'};
+let NAMES = {}, CODES = [];
 Promise.all(['data/names.json','data/tags.json'].map(u =>
   fetch(u, {cache:'no-store'}).then(r => r.ok ? r.json() : null).catch(() => null)))
   .then(([nm, tg]) => {
     if (nm) Object.assign(NAMES, nm);
-    if (tg) for (const [c, v] of Object.entries(tg.stocks)) if (v.name) NAMES[c] = v.name;
+    if (tg) { for (const [c, v] of Object.entries(tg.stocks)) { if (v.name) NAMES[c] = v.name; CODES.push(c); } }
   });
 function ask(){
   const v = document.getElementById('q').value.trim();
-  const res = document.getElementById('res');
   if (!v) return;
   if (/^[0-9]{6}$/.test(v)) { location.href = 'stock.html#' + v; return; }
   for (const k in KEY) if (v.includes(k)) { location.href = 'tag.html#' + encodeURIComponent(KEY[k]); return; }
   const hit = Object.entries(NAMES).filter(([c,n]) => n.includes(v)).slice(0,8);
-  res.innerHTML = hit.length
-    ? hit.map(([c,n])=>`<a href="stock.html#${c}">${esc(n)}<span>${c}</span></a>`).join('')
+  document.getElementById('res').innerHTML = hit.length
+    ? hit.map(([c,n]) => `<a href="stock.html#${c}">${esc(n)}<span>${c}</span></a>`).join('')
     : `<a href="stock.html">没找到「${esc(v)}」，可以直接输 6 位代码<span>去查询页</span></a>`;
 }
 document.getElementById('go').onclick = ask;
+document.getElementById('rnd').onclick = () => {
+  if (!CODES.length) { location.href = 'tag.html'; return; }
+  location.href = 'stock.html#' + CODES[Math.floor(Math.random() * CODES.length)];
+};
 document.getElementById('q').onkeydown = e => { if (e.key === 'Enter') ask(); };
 </script>
 </body>

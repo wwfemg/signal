@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>Signal 台账</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>  *,*::before,*::after{box-sizing:border-box;}
 
   :root{
@@ -162,6 +162,19 @@
   </header>
 
   <section>
+    <h2>成绩单</h2>
+    <p class="note">只统计已经有结论的记录。样本少的时候这张表没有意义，我们照样公开——它随时间变厚，也随时间打脸。</p>
+    <div class="score">
+      <div class="sc"><b>9</b><span>在跟</span></div>
+      <div class="sc"><b>1</b><span>应验</span></div>
+      <div class="sc"><b>1</b><span>作废</span></div>
+      <div class="sc"><b>2</b><span>看过否决</span></div>
+      <div class="sc"><b>50%</b><span>已了结中的应验比例</span></div>
+    </div>
+    <p class="note">“否决”不计入胜率：那是看过之后决定不做的票，对不对要另外回看。</p>
+  </section>
+
+  <section>
     <h2>在跟的票</h2>
     <p class="note">等的是具体公告，不是行情。公告一出，逻辑要么兑现要么作废。</p>
     <div class="cards">
@@ -295,29 +308,9 @@
   </section>
 
   <section>
-    <h2>外资通道雷达</h2>
-    <p class="note">公司发回购公告时须附基准日前十大股东名单，距建仓只隔 2—3 天，比季报快 1—2 个月。每天自动扫描，扫到就记。</p>
-    <div class="rows" id="radar"><div class="row"><span class="when">—</span><span class="what">正在读取最新扫描结果…</span><span class="pill p-mute">radar</span></div></div>
-    <p class="warn"><b>这不是买入信号。</b>本项目统计 1453 只股票 × 14 个季度：名册上的外资名字多为国内资金借通道持股；一起新进的组合下季度 51% 一起消失；股价跌破其成本后留榜率仅 22%——离场与赚亏无关。它只说明“这只票上有人在做事件交易”。</p>
-  </section>
-
-  <section>
     <h2>季末拉升观察</h2>
     <p class="note">近 20 日涨幅。季末猛拉且外资扎堆的票，约四成在季初 20 个交易日内深跌超 20%。这是回避名单，不是买入名单。</p>
     <div class="rows"><div class="move"><span><strong>超声电子</strong></span><span class="pct">+55%</span><p>季末前猛拉，季初兑现风险高；若季报再现外资扎堆，历史上40%会20日内深跌超20%</p></div><div class="move"><span><strong>剑桥科技</strong></span><span class="pct">+26%</span><p>留意季初兑现</p></div><div class="move"><span><strong>科创新源</strong></span><span class="pct">+25%</span><p>留意季初兑现</p></div><div class="move"><span><strong>深圳新星</strong></span><span class="pct">+20%</span><p>留意季初兑现</p></div></div>
-  </section>
-
-  <section>
-    <h2>成绩单</h2>
-    <p class="note">只统计已经有结论的记录。样本少的时候这张表没有意义，我们照样公开——它随时间变厚，也随时间打脸。</p>
-    <div class="score">
-      <div class="sc"><b>9</b><span>在跟</span></div>
-      <div class="sc"><b>1</b><span>应验</span></div>
-      <div class="sc"><b>1</b><span>作废</span></div>
-      <div class="sc"><b>2</b><span>看过否决</span></div>
-      <div class="sc"><b>50%</b><span>已了结中的应验比例</span></div>
-    </div>
-    <p class="note">“否决”不计入胜率：那是看过之后决定不做的票，对不对要另外回看（例：国货航否决后 9-28 解禁 47%）。</p>
   </section>
 
   <section>
@@ -387,7 +380,7 @@
     <h2>方法与纪律</h2>
     <ol>
       <li><b>证据分级</b>：✅ 公告原文证实｜🟡 间接迹象｜❓ 猜测。猜测可以提，下结论前必须回到公告原文。</li>
-      <li><b>只用于排雷的基本面</b>：核心看资本运作、题材、资金筹码；按节点交易——节点公告是兑现点，沉寂期才是布局窗口。</li>
+      <li><b>基本面只用来排雷</b>：核心看资本运作、题材、资金筹码；按节点交易——节点公告是兑现点，沉寂期才是布局窗口。</li>
       <li><b>有减持压力默认回避</b>：上市前股东、员工持股、解禁在途的票，先放一边。</li>
       <li><b>买之前先查解禁时间表</b>：未来一年有大比例解禁的不碰。</li>
       <li><b>不从有节点的票抽钱去摊平没节点的亏损票</b>。</li>
@@ -400,19 +393,5 @@
     <b>研究记录，不构成投资建议。</b>页面由脚本生成，不含任何持仓、成本与盈亏信息。
   </footer>
 </div>
-<script>
-(async () => {
-  const box = document.getElementById('radar');
-  try {
-    const r = await fetch('data/radar.json', {cache: 'no-store'});
-    if (!r.ok) throw new Error('no radar');
-    const rows = (await r.json()).hits || [];
-    if (!rows.length) { box.innerHTML = '<div class="row"><span class="when">—</span><span class="what">最近 30 天没有扫到新记录</span><span class="pill p-mute">静默</span></div>'; return; }
-    box.innerHTML = rows.slice(0, 12).map(h => `<div class="row"><span class="when">${h.date || ''}</span><span class="what"><strong>${h.name || ''}</strong> ${h.holder || ''}　占流通 ${h.ratio || ''}<p>${h.source || ''}</p></span><span class="pill p-amber">新进</span></div>`).join('');
-  } catch (e) {
-    box.innerHTML = '<div class="row"><span class="when">—</span><span class="what">雷达数据暂不可用</span><span class="pill p-mute">—</span></div>';
-  }
-})();
-</script>
 </body>
 </html>
