@@ -134,66 +134,66 @@
   a{color:var(--accent);}
   .nav{text-transform:none; letter-spacing:0; font-family:"Noto Sans SC", sans-serif; font-size:12px;}
 
-  .search{display:flex; gap:8px; margin:14px 0 6px;}
-  .search input{flex:1; min-width:0; font-size:16px; padding:12px 14px; border-radius:3px;
-    border:1px solid var(--line); background:var(--panel); color:var(--ink); font-family:"IBM Plex Mono", monospace;}
-  .search button{padding:12px 20px; font-size:14px; border:none; border-radius:3px; cursor:pointer;
-    background:var(--accent); color:#fff;}
-  .entries{display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:10px;}
-  .entry{display:block; background:var(--panel); border:1px solid var(--line); border-radius:3px;
-    padding:13px 15px; text-decoration:none; color:var(--ink);}
-  .entry b{font-size:14.5px;} .entry span{float:right; font-family:"IBM Plex Mono",monospace;
-    font-size:12px; color:var(--ink-3);}
-  .entry p{margin:5px 0 0; font-size:12.5px; color:var(--ink-3); line-height:1.6;}
+  body{display:flex; flex-direction:column; min-height:100%;}
+  .home{max-width:640px; margin:0 auto; padding-inline:16px; padding-block:64px 32px; flex:1;}
+  .home h1{font-size:30px; margin:0 0 6px;}
+  .home .sub{font-size:13.5px; color:var(--ink-3); margin:0 0 26px; line-height:1.7;}
+  .ask{display:flex; gap:8px; border:1px solid var(--line); background:var(--panel);
+        border-radius:6px; padding:6px 6px 6px 14px;}
+  .ask:focus-within{border-color:var(--accent);}
+  .ask input{flex:1; min-width:0; border:none; outline:none; background:transparent; color:var(--ink);
+        font-size:16px; padding:10px 0; font-family:"Noto Sans SC", sans-serif;}
+  .ask button{border:none; border-radius:4px; background:var(--accent); color:#fff;
+        font-size:14px; padding:0 18px; cursor:pointer;}
+  .hint{margin:10px 2px 0; font-size:12px; color:var(--ink-3);}
+  .chips{display:flex; flex-wrap:wrap; gap:7px; margin-top:14px;}
+  .chip{font-size:12.5px; padding:6px 12px; border:1px solid var(--line); border-radius:99px;
+        background:var(--panel); color:var(--ink-2); cursor:pointer;}
+  .chip i{font-style:normal; font-family:"IBM Plex Mono",monospace; color:var(--ink-3); font-size:11px;}
+  .chip:hover{border-color:var(--accent); color:var(--accent);}
+  .res{margin-top:18px; display:flex; flex-direction:column; gap:6px;}
+  .res a{display:block; padding:10px 13px; background:var(--panel); border:1px solid var(--line);
+        border-radius:4px; text-decoration:none; color:var(--ink); font-size:13.5px;}
+  .res a span{color:var(--ink-3); font-size:12px; margin-left:8px;}
+  .foot{max-width:640px; margin:0 auto; padding:0 16px 40px; font-size:12px; color:var(--ink-3); line-height:1.9;}
+  .foot a{margin-right:14px;}
 </style>
-<div class="wrap">
-  <header class="top">
-    <p class="kicker">Signal · A股研究记录</p>
-    <h1>按节点看票</h1>
-    <p class="sub">这里只记三件事：一只票在等哪个公告、什么条件算看错、后来发生了什么。买卖自己判断，我们不替任何人做决定。所有结论都能回到公告原文，看错的记录保留不删。</p>
-    <div class="search">
-      <input id="q" inputmode="numeric" placeholder="输入股票代码，如 600520">
-      <button id="go">查这只票</button>
-    </div>
-    <p class="note">查得到标签、时间轴、机构持仓、近期龙虎榜。</p>
-  </header>
-
-  <section>
-    <h2>看什么</h2>
-    <div class="entries">
-      <a class="entry" href="ledger.html"><b>台账</b><span>9 在跟</span><p>每只票在等哪个公告、什么算看错、结果回看。已了结 4 只，包括否决和作废的。</p></a>
-      <a class="entry" href="pool.html"><b>机构持仓池</b><span>按季更新</span><p>外资通道账户在哪些票里，估算成本多少，现价偏离多少。一键筛跌破、持平、上涨。</p></a>
-      <a class="entry" href="stock.html"><b>查一只票</b><span>输代码</span><p>标签、时间轴、机构持仓、龙虎榜，一页看完。</p></a>
-      <a class="entry" href="tag.html"><b>按标签找票</b><span>3 个标签</span><p>解禁压力、外资扎堆、成本倒挂、龙虎榜常客……点开看名单。</p></a>
-    </div>
-  </section>
-
-  <section>
-    <h2>标签</h2>
-    <p class="note">规则写死在脚本里，谁跑都一样。想加新标签，去 GitHub 提，说清怎么判定、用哪条公开数据验证。</p>
-    <div class="entries"><a class="entry" href="tag.html#%E8%A7%A3%E7%A6%81%E5%8E%8B%E5%8A%9B"><b>解禁压力</b><span>408 只</span><p>未来12个月解禁股份合计超过流通股的20%</p></a><a class="entry" href="tag.html#%E8%BF%91%E6%9C%88%E8%A7%A3%E7%A6%81"><b>近月解禁</b><span>174 只</span><p>30天内有限售股解禁</p></a><a class="entry" href="tag.html#%E9%BE%99%E8%99%8E%E6%A6%9C%E5%B8%B8%E5%AE%A2"><b>龙虎榜常客</b><span>169 只</span><p>近30个自然日内上榜3次及以上</p></a></div>
-  </section>
-
-  <section class="rules">
-    <h2>怎么参与</h2>
-    <ol>
-      <li><b>提名一只票</b>：填四项——触发它的公告（标题＋日期）、在等哪个公告、什么算看错、证据等级。</li>
-      <li><b>提交一个打法</b>：写清触发条件和买卖规则，我们用历史数据跑一遍，<b>结果好坏都公开</b>。</li>
-      <li><b>改进工具</b>：<code>tools/</code> 下的脚本谁都能改，只用标准库、一条命令能跑。</li>
-    </ol>
-    <p class="note">规矩在 <a href="https://github.com/wwfemg/signal/blob/main/docs/CONTRIBUTING.md">docs/CONTRIBUTING.md</a>：不写买卖建议和目标价、不收费带单、每条必须有公告出处、记录只增不删。</p>
-  </section>
-
-  <footer>
-    图谱 156 篇笔记（✅131 🟡34 ❓25）· 更新 2026-09-23<br>
-    数据来自交易所公告原文、十大流通股东名册、基金定期报告、龙虎榜。
-    <b>研究记录，不构成投资建议。</b><br>
-    <a href="https://github.com/wwfemg/signal">GitHub 仓库</a>
-  </footer>
+<div class="home">
+  <h1>按节点看票</h1>
+  <p class="sub">一只票在等哪个公告、什么条件算看错、后来发生了什么。买卖自己判断。</p>
+  <div class="ask">
+    <input id="q" placeholder="输入股票代码、名字，或者你想看的逻辑" autocomplete="off">
+    <button id="go">查</button>
+  </div>
+  <p class="hint" id="hint">比如：600520 ／ 三佳 ／ 解禁 ／ 龙虎榜 ／ 外资</p>
+  <div class="chips"><button class="chip" data-tag="解禁压力">解禁压力 <i>408</i></button><button class="chip" data-tag="近月解禁">近月解禁 <i>174</i></button><button class="chip" data-tag="龙虎榜常客">龙虎榜常客 <i>169</i></button></div>
+  <div class="res" id="res"></div>
+</div>
+<div class="foot">
+  <a href="ledger.html">台账 9</a><a href="pool.html">机构持仓池</a><a href="stock.html">查一只票</a><a href="tag.html">标签</a><a href="https://github.com/wwfemg/signal">GitHub</a><br>
+  数据来自交易所公告、十大流通股东名册、龙虎榜。研究记录，不构成投资建议。更新 2026-09-23
 </div>
 <script>
-  const go = () => { const v = document.getElementById('q').value.trim();
-    if (/^[0-9]{6}$/.test(v)) location.href = 'stock.html#' + v; else location.href = 'stock.html'; };
-  document.getElementById('go').onclick = go;
-  document.getElementById('q').onkeydown = e => { if (e.key === 'Enter') go(); };
+const esc = s => String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+const KEY = {'解禁':'解禁压力','近月解禁':'近月解禁','外资':'外资扎堆','扎堆':'外资扎堆',
+  '成本':'成本倒挂','倒挂':'成本倒挂','龙虎榜':'龙虎榜常客','游资':'龙虎榜常客','拉升':'季末拉升'};
+let NAMES = {};
+fetch('data/tags.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{
+  if (d) for (const [c,v] of Object.entries(d.stocks)) if (v.name) NAMES[c]=v.name;
+}).catch(()=>{});
+function ask(){
+  const v = document.getElementById('q').value.trim();
+  const res = document.getElementById('res');
+  if (!v) return;
+  if (/^[0-9]{6}$/.test(v)) { location.href = 'stock.html#' + v; return; }
+  for (const k in KEY) if (v.includes(k)) { location.href = 'tag.html#' + encodeURIComponent(KEY[k]); return; }
+  const hit = Object.entries(NAMES).filter(([c,n]) => n.includes(v)).slice(0,8);
+  res.innerHTML = hit.length
+    ? hit.map(([c,n])=>`<a href="stock.html#${c}">${esc(n)}<span>${c}</span></a>`).join('')
+    : `<a href="stock.html">没找到「${esc(v)}」。可以直接输 6 位代码，或者点上面的标签看名单<span>去查询页</span></a>`;
+}
+document.getElementById('go').onclick = ask;
+document.getElementById('q').onkeydown = e => { if (e.key === 'Enter') ask(); };
+document.querySelectorAll('.chip').forEach(b => b.onclick = () =>
+  location.href = 'tag.html#' + encodeURIComponent(b.dataset.tag));
 </script>
