@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
 <title>查一只票</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="assets/style.css">
@@ -25,7 +31,8 @@
   .tblwrap{overflow-x:auto;}
   .empty{font-size:13px; color:var(--ink-3);}
 </style>
-
+</head>
+<body>
 <div class="wrap">
   <header class="top">
     <p class="kicker">Signal · 查一只票</p>
@@ -149,3 +156,5 @@ function search() {
   if (/^\d{6}$/.test(h)) { document.getElementById('q').value = h; render(h); }
 })();
 </script>
+</body>
+</html>

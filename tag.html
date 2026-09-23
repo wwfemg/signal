@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
 <title>按标签找票</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="assets/style.css">
@@ -13,6 +19,8 @@
   .code{font-family:"IBM Plex Mono",monospace;}
   .empty{font-size:13px;color:var(--ink-3);}
 </style>
+</head>
+<body>
 <div class="wrap">
   <header class="top">
     <p class="kicker">Signal　<a class="nav" href="index.html">← 首页</a>　<a class="nav" href="stock.html">查一只票 →</a></p>
@@ -49,3 +57,5 @@ function show(tag){
   show(T.rules[h] ? h : Object.keys(T.rules).find(t=>counts[t]));
 })();
 </script>
+</body>
+</html>
