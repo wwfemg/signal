@@ -134,38 +134,47 @@
   a{color:var(--accent);}
   .nav{text-transform:none; letter-spacing:0; font-family:"Noto Sans SC", sans-serif; font-size:12px;}
 
-  body{display:flex; flex-direction:column; min-height:100%;}
-  .home{max-width:640px; margin:0 auto; padding-inline:16px; padding-block:64px 32px; flex:1;}
-  .home h1{font-size:30px; margin:0 0 6px;}
-  .home .sub{font-size:13.5px; color:var(--ink-3); margin:0 0 26px; line-height:1.7;}
-  .ask{display:flex; gap:8px; border:1px solid var(--line); background:var(--panel);
-        border-radius:6px; padding:6px 6px 6px 14px;}
-  .ask:focus-within{border-color:var(--accent);}
+  html, body{height:100%;}
+  body{display:flex; flex-direction:column;}
+  .home{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+        text-align:center; padding-inline:16px; padding-block:48px 24px;}
+  .mark{font-family:"IBM Plex Mono", monospace; font-size:clamp(44px, 11vw, 76px); font-weight:600;
+        letter-spacing:-.03em; line-height:1; margin:0 0 14px; color:var(--ink);}
+  .mark em{font-style:normal; color:var(--accent);}
+  .tagline{font-size:clamp(14px, 3.6vw, 17px); color:var(--ink-2); margin:0 0 6px; line-height:1.7;}
+  .tagline b{color:var(--ink); font-weight:500;}
+  .sub2{font-size:12.5px; color:var(--ink-3); margin:0 0 30px;}
+  .ask{display:flex; gap:8px; width:min(620px, 100%); border:1px solid var(--line);
+        background:var(--panel); border-radius:999px; padding:7px 7px 7px 22px; text-align:left;
+        box-shadow:0 1px 2px rgba(0,0,0,.04);}
+  .ask:focus-within{border-color:var(--accent); box-shadow:0 2px 10px rgba(0,0,0,.07);}
   .ask input{flex:1; min-width:0; border:none; outline:none; background:transparent; color:var(--ink);
-        font-size:16px; padding:10px 0; font-family:"Noto Sans SC", sans-serif;}
-  .ask button{border:none; border-radius:4px; background:var(--accent); color:#fff;
-        font-size:14px; padding:0 18px; cursor:pointer;}
-  .hint{margin:10px 2px 0; font-size:12px; color:var(--ink-3);}
-  .chips{display:flex; flex-wrap:wrap; gap:7px; margin-top:14px;}
-  .chip{font-size:12.5px; padding:6px 12px; border:1px solid var(--line); border-radius:99px;
+        font-size:16.5px; padding:12px 0; font-family:"Noto Sans SC", sans-serif;}
+  .ask button{border:none; border-radius:999px; background:var(--accent); color:#fff;
+        font-size:14.5px; padding:0 24px; cursor:pointer;}
+  .hint{margin:14px 0 0; font-size:12.5px; color:var(--ink-3);}
+  .chips{display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:20px;
+        width:min(680px, 100%);}
+  .chip{font-size:13px; padding:8px 16px; border:1px solid var(--line); border-radius:999px;
         background:var(--panel); color:var(--ink-2); cursor:pointer;}
-  .chip i{font-style:normal; font-family:"IBM Plex Mono",monospace; color:var(--ink-3); font-size:11px;}
+  .chip i{font-style:normal; font-family:"IBM Plex Mono",monospace; color:var(--ink-3); font-size:11.5px;}
   .chip:hover{border-color:var(--accent); color:var(--accent);}
-  .res{margin-top:18px; display:flex; flex-direction:column; gap:6px;}
-  .res a{display:block; padding:10px 13px; background:var(--panel); border:1px solid var(--line);
-        border-radius:4px; text-decoration:none; color:var(--ink); font-size:13.5px;}
+  .res{margin-top:22px; width:min(620px, 100%); display:flex; flex-direction:column; gap:6px; text-align:left;}
+  .res a{display:block; padding:12px 16px; background:var(--panel); border:1px solid var(--line);
+        border-radius:8px; text-decoration:none; color:var(--ink); font-size:14px;}
   .res a span{color:var(--ink-3); font-size:12px; margin-left:8px;}
-  .foot{max-width:640px; margin:0 auto; padding:0 16px 40px; font-size:12px; color:var(--ink-3); line-height:1.9;}
-  .foot a{margin-right:14px;}
+  .foot{text-align:center; padding:0 16px 38px; font-size:12px; color:var(--ink-3); line-height:2;}
+  .foot a{margin:0 9px;}
 </style>
 <div class="home">
-  <h1>按节点看票</h1>
-  <p class="sub">一只票在等哪个公告、什么条件算看错、后来发生了什么。买卖自己判断。</p>
+  <h1 class="mark">Sig<em>nal</em></h1>
+  <p class="tagline"><b>按节点看票</b>：一只票在等哪个公告、什么条件算看错、后来发生了什么。</p>
+  <p class="sub2">结论都能回到公告原文。看错的记录保留不删。买卖自己判断。</p>
   <div class="ask">
     <input id="q" placeholder="输入股票代码、名字，或者你想看的逻辑" autocomplete="off">
     <button id="go">查</button>
   </div>
-  <p class="hint" id="hint">比如：600520 ／ 三佳 ／ 解禁 ／ 龙虎榜 ／ 外资</p>
+  <p class="hint" id="hint">试试：600520　·　三佳　·　解禁　·　龙虎榜　·　外资扎堆　·　成本倒挂</p>
   <div class="chips"><button class="chip" data-tag="解禁压力">解禁压力 <i>408</i></button><button class="chip" data-tag="近月解禁">近月解禁 <i>174</i></button><button class="chip" data-tag="龙虎榜常客">龙虎榜常客 <i>169</i></button></div>
   <div class="res" id="res"></div>
 </div>
