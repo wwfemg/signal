@@ -51,6 +51,18 @@
   @media (max-width:520px){ .topbar .tnav a{margin-left:10px; font-size:12.5px;} }
   tbody tr.clk{cursor:pointer;}
   tbody tr.clk:hover{background:var(--line-soft);}
+
+  .topbar .mini{position:relative;}
+  .msug{position:absolute; left:0; right:0; top:calc(100% + 6px); z-index:20;
+    display:flex; flex-direction:column; background:var(--panel);
+    border-radius:8px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,.18);}
+  .msug:empty{display:none;}
+  .msug button{text-align:left; padding:10px 16px; border:none; border-bottom:1px solid var(--line-soft);
+    background:transparent; color:var(--ink); font-size:14px; cursor:pointer;
+    font-family:"Noto Sans SC",sans-serif;}
+  .msug button:hover{background:var(--line-soft);}
+  .msug button i{font-style:normal; color:var(--ink-3); font-size:12px;
+    font-family:"IBM Plex Mono",monospace; margin-left:6px;}
 </style>
 </head>
 <body>
@@ -196,12 +208,31 @@ function search() {
 </script>
 
 <script>
-(() => { const m = document.getElementById('mq'); if (!m) return;
-  m.onkeydown = e => { if (e.key !== 'Enter') return;
+(() => {
+  const m = document.getElementById('mq'); if (!m) return;
+  const box = document.createElement('div'); box.className = 'msug'; m.parentNode.appendChild(box);
+  let NM = {};
+  fetch('data/names.json', {cache:'force-cache'}).then(r => r.ok ? r.json() : {}).then(d => NM = d).catch(() => {});
+  const esc2 = s => String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+  const go = c => { if (location.pathname.endsWith('stock.html')) { location.hash = c; }
+                    else location.href = 'stock.html#' + c; box.innerHTML=''; };
+  const sug = () => {
+    const v = m.value.trim(); box.innerHTML = '';
+    if (!v || /^[0-9]{6}$/.test(v)) return;
+    const hit = Object.entries(NM).filter(([c, n]) => n.includes(v) || c.startsWith(v)).slice(0, 8);
+    box.innerHTML = hit.map(([c, n]) => `<button data-c="${c}">${esc2(n)} <i>${c}</i></button>`).join('');
+    box.querySelectorAll('button').forEach(b => b.onclick = () => go(b.dataset.c));
+  };
+  m.oninput = sug;
+  m.onkeydown = e => {
+    if (e.key !== 'Enter') return;
     const v = m.value.trim();
-    if (/^[0-9]{6}$/.test(v)) location.href = 'stock.html#' + v;
-    else if (v) { const box = document.getElementById('q'); if (box) { box.value = v; search(); }
-      else location.href = 'index.html'; } }; })();
+    if (/^[0-9]{6}$/.test(v)) return go(v);
+    const first = box.querySelector('button');
+    if (first) go(first.dataset.c);
+  };
+  document.addEventListener('click', e => { if (!m.parentNode.contains(e.target)) box.innerHTML = ''; });
+})();
 </script>
 </body>
 </html>
