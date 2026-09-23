@@ -1,5 +1,5 @@
 <title>Signal</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   :root{
     color-scheme: light;
@@ -42,13 +42,13 @@
   header.top{border-bottom:2px solid var(--ink); padding-bottom:14px; margin-bottom:26px;}
   .kicker{font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:11px; letter-spacing:.16em;
           text-transform:uppercase; color:var(--accent); margin:0 0 6px;}
-  h1{font-size:26px; line-height:1.25; margin:0 0 8px; text-wrap:balance; letter-spacing:.01em;}
+  h1{font-family:"IBM Plex Serif", Georgia, serif; font-weight:600; font-size:clamp(24px,3.4vw,32px); line-height:1.25; margin:0 0 8px; text-wrap:balance; letter-spacing:.01em;}
   .sub{color:var(--ink-3); font-size:13px; margin:0;}
   .stats{display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:14px;
          font-family:"IBM Plex Mono", monospace; font-size:12.5px; color:var(--ink-2); font-variant-numeric:tabular-nums;}
   .stats b{color:var(--ink); font-weight:600;}
   section{margin-bottom:34px;}
-  h2{font-size:16px; margin:0 0 4px; letter-spacing:.02em;}
+  h2{font-family:"IBM Plex Serif", Georgia, serif; font-weight:600; font-size:17px; margin:0 0 4px; letter-spacing:.02em;}
   .note{color:var(--ink-3); font-size:12.5px; margin:0 0 14px;}
   .rows{display:flex; flex-direction:column; gap:1px; background:var(--line-soft);
         border:1px solid var(--line); border-radius:3px; overflow:hidden;}
@@ -134,50 +134,72 @@
   a{color:var(--accent);}
   .nav{text-transform:none; letter-spacing:0; font-family:"Noto Sans SC", sans-serif; font-size:12px;}
 
+  .wrap{max-width:min(920px, 100%);}
+
   html, body{height:100%;}
   body{display:flex; flex-direction:column;}
   .home{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-        text-align:center; padding-inline:16px; padding-block:48px 24px;}
-  .mark{font-family:"IBM Plex Mono", monospace; font-size:clamp(44px, 11vw, 76px); font-weight:600;
-        letter-spacing:-.03em; line-height:1; margin:0 0 14px; color:var(--ink);}
-  .mark em{font-style:normal; color:var(--accent);}
-  .tagline{font-size:clamp(14px, 3.6vw, 17px); color:var(--ink-2); margin:0 0 6px; line-height:1.7;}
-  .tagline b{color:var(--ink); font-weight:500;}
-  .sub2{font-size:12.5px; color:var(--ink-3); margin:0 0 30px;}
-  .ask{display:flex; gap:8px; width:min(620px, 100%); border:1px solid var(--line);
-        background:var(--panel); border-radius:999px; padding:7px 7px 7px 22px; text-align:left;
-        box-shadow:0 1px 2px rgba(0,0,0,.04);}
-  .ask:focus-within{border-color:var(--accent); box-shadow:0 2px 10px rgba(0,0,0,.07);}
+        text-align:center; width:100%; padding-inline:20px;
+        padding-block:clamp(36px, 8vh, 96px) clamp(24px, 5vh, 56px);}
+  .mark{font-family:"IBM Plex Serif", Georgia, serif; font-weight:600;
+        font-size:clamp(46px, 9vw, 92px); letter-spacing:-.022em; line-height:1;
+        margin:0 0 clamp(16px, 2.4vh, 26px); color:var(--ink);}
+  .mark em{font-style:italic; font-weight:400; color:var(--accent);}
+  .tagline{font-family:"IBM Plex Serif", Georgia, serif; font-weight:400;
+        font-size:clamp(17px, 2.5vw, 25px); line-height:1.55; color:var(--ink);
+        margin:0 0 10px; max-width:20em; text-wrap:balance;}
+  .sub2{font-size:clamp(12.5px, 1.5vw, 14.5px); color:var(--ink-3); font-weight:300;
+        margin:0 0 clamp(24px, 4vh, 42px); max-width:30em; line-height:1.8;}
+  .ask{display:flex; gap:10px; width:min(680px, 100%); border:1px solid var(--line);
+        background:var(--panel); border-radius:999px; padding:8px 8px 8px clamp(18px, 3vw, 28px);
+        text-align:left; transition:border-color .15s, box-shadow .15s;}
+  .ask:focus-within{border-color:var(--accent); box-shadow:0 4px 18px rgba(0,0,0,.08);}
   .ask input{flex:1; min-width:0; border:none; outline:none; background:transparent; color:var(--ink);
-        font-size:16.5px; padding:12px 0; font-family:"Noto Sans SC", sans-serif;}
-  .ask button{border:none; border-radius:999px; background:var(--accent); color:#fff;
-        font-size:14.5px; padding:0 24px; cursor:pointer;}
-  .hint{margin:14px 0 0; font-size:12.5px; color:var(--ink-3);}
-  .chips{display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:20px;
-        width:min(680px, 100%);}
-  .chip{font-size:13px; padding:8px 16px; border:1px solid var(--line); border-radius:999px;
-        background:var(--panel); color:var(--ink-2); cursor:pointer;}
-  .chip i{font-style:normal; font-family:"IBM Plex Mono",monospace; color:var(--ink-3); font-size:11.5px;}
+        font-size:clamp(16px, 1.8vw, 18px); padding:clamp(11px, 1.4vw, 15px) 0;
+        font-family:"Noto Sans SC", sans-serif; font-weight:400;}
+  .ask input::placeholder{color:var(--ink-3); font-weight:300;}
+  .ask button{border:none; border-radius:999px; background:var(--accent); color:#fff; font-weight:500;
+        font-size:clamp(14px, 1.6vw, 16px); padding:0 clamp(20px, 3vw, 32px); cursor:pointer;
+        font-family:"Noto Sans SC", sans-serif; transition:opacity .15s;}
+  .ask button:hover{opacity:.88;}
+  .hint{margin:clamp(12px, 2vh, 18px) 0 0; font-size:12.5px; color:var(--ink-3); font-weight:300;
+        max-width:34em; line-height:1.9;}
+  .chips{display:flex; flex-wrap:wrap; justify-content:center; gap:9px;
+        margin-top:clamp(14px, 2.4vh, 22px); width:min(760px, 100%);}
+  .chip{font-size:13.5px; padding:9px 18px; border:1px solid var(--line); border-radius:999px;
+        background:var(--panel); color:var(--ink-2); cursor:pointer; font-family:"Noto Sans SC", sans-serif;
+        transition:all .15s;}
+  .chip i{font-style:normal; font-family:"IBM Plex Mono", monospace; color:var(--ink-3);
+        font-size:11.5px; margin-left:3px;}
   .chip:hover{border-color:var(--accent); color:var(--accent);}
-  .nav-chips{margin-top:18px;}
-  .chip.go{text-decoration:none; color:var(--ink); border-color:var(--line);}
+  .nav-chips{margin-top:clamp(20px, 3.4vh, 34px); padding-top:clamp(18px, 3vh, 30px);
+        border-top:1px solid var(--line-soft);}
+  .chip.go{text-decoration:none; color:var(--ink); font-weight:500;}
   .chip.go:hover{background:var(--accent); border-color:var(--accent); color:#fff;}
-  .res{margin-top:22px; width:min(620px, 100%); display:flex; flex-direction:column; gap:6px; text-align:left;}
-  .res a{display:block; padding:12px 16px; background:var(--panel); border:1px solid var(--line);
-        border-radius:8px; text-decoration:none; color:var(--ink); font-size:14px;}
-  .res a span{color:var(--ink-3); font-size:12px; margin-left:8px;}
-  .foot{text-align:center; padding:0 16px 38px; font-size:12px; color:var(--ink-3); line-height:2;}
-  .foot a{margin:0 9px;}
+  .chip.go i{color:rgba(255,255,255,0); }
+  .res{margin-top:22px; width:min(680px, 100%); display:flex; flex-direction:column; gap:7px; text-align:left;}
+  .res a{display:block; padding:14px 18px; background:var(--panel); border:1px solid var(--line);
+        border-radius:10px; text-decoration:none; color:var(--ink); font-size:14.5px;}
+  .res a:hover{border-color:var(--accent);}
+  .res a span{color:var(--ink-3); font-size:12px; margin-left:10px; font-family:"IBM Plex Mono", monospace;}
+  .foot{text-align:center; padding:0 20px clamp(28px, 5vh, 48px); font-size:12px;
+        color:var(--ink-3); line-height:2; font-weight:300;}
+  @media (max-width:520px){
+    .mark{letter-spacing:-.015em;}
+    .chips{gap:7px;} .chip{font-size:12.5px; padding:8px 14px;}
+    .ask{padding-left:18px;} .ask button{padding:0 18px;}
+  }
 </style>
 <div class="home">
   <h1 class="mark">Sig<em>nal</em></h1>
-  <p class="tagline"><b>按节点看票</b>：一只票在等哪个公告、什么条件算看错、后来发生了什么。</p>
-  <p class="sub2">结论都能回到公告原文。看错的记录保留不删。买卖自己判断。</p>
+  <p class="tagline">按节点看票：一只票在等哪个公告，什么条件算看错。</p>
+  <p class="sub2">结论都能回到公告原文，看错的记录保留不删。买卖自己判断。</p>
   <div class="ask">
     <input id="q" placeholder="输入股票代码、名字，或者你想看的逻辑" autocomplete="off">
     <button id="go">查</button>
   </div>
   <p class="hint" id="hint">试试：600520　·　三佳　·　解禁　·　龙虎榜　·　外资扎堆　·　成本倒挂</p>
+  <div class="chips"><button class="chip" data-tag="解禁压力">解禁压力 <i>408</i></button><button class="chip" data-tag="近月解禁">近月解禁 <i>174</i></button><button class="chip" data-tag="龙虎榜常客">龙虎榜常客 <i>169</i></button></div>
   <div class="chips nav-chips">
     <a class="chip go" href="ledger.html">台账 <i>9</i></a>
     <a class="chip go" href="pool.html">机构持仓池</a>
@@ -185,7 +207,6 @@
     <a class="chip go" href="tag.html">标签</a>
     <a class="chip go" href="https://github.com/wwfemg/signal">GitHub</a>
   </div>
-  <div class="chips"><button class="chip" data-tag="解禁压力">解禁压力 <i>408</i></button><button class="chip" data-tag="近月解禁">近月解禁 <i>174</i></button><button class="chip" data-tag="龙虎榜常客">龙虎榜常客 <i>169</i></button></div>
   <div class="res" id="res"></div>
 </div>
 <div class="foot">
@@ -196,9 +217,12 @@ const esc = s => String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;',
 const KEY = {'解禁':'解禁压力','近月解禁':'近月解禁','外资':'外资扎堆','扎堆':'外资扎堆',
   '成本':'成本倒挂','倒挂':'成本倒挂','龙虎榜':'龙虎榜常客','游资':'龙虎榜常客','拉升':'季末拉升'};
 let NAMES = {};
-fetch('data/tags.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{
-  if (d) for (const [c,v] of Object.entries(d.stocks)) if (v.name) NAMES[c]=v.name;
-}).catch(()=>{});
+Promise.all(['data/names.json','data/tags.json'].map(u =>
+  fetch(u, {cache:'no-store'}).then(r => r.ok ? r.json() : null).catch(() => null)))
+  .then(([nm, tg]) => {
+    if (nm) Object.assign(NAMES, nm);
+    if (tg) for (const [c, v] of Object.entries(tg.stocks)) if (v.name) NAMES[c] = v.name;
+  });
 function ask(){
   const v = document.getElementById('q').value.trim();
   const res = document.getElementById('res');
@@ -208,10 +232,8 @@ function ask(){
   const hit = Object.entries(NAMES).filter(([c,n]) => n.includes(v)).slice(0,8);
   res.innerHTML = hit.length
     ? hit.map(([c,n])=>`<a href="stock.html#${c}">${esc(n)}<span>${c}</span></a>`).join('')
-    : `<a href="stock.html">没找到「${esc(v)}」。可以直接输 6 位代码，或者点上面的标签看名单<span>去查询页</span></a>`;
+    : `<a href="stock.html">没找到「${esc(v)}」，可以直接输 6 位代码<span>去查询页</span></a>`;
 }
 document.getElementById('go').onclick = ask;
 document.getElementById('q').onkeydown = e => { if (e.key === 'Enter') ask(); };
-document.querySelectorAll('.chip').forEach(b => b.onclick = () =>
-  location.href = 'tag.html#' + encodeURIComponent(b.dataset.tag));
 </script>
