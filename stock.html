@@ -186,8 +186,12 @@ function search() {
     Object.entries(rules).map(([k, v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('') +
     '</ol><p class="note">规则都写死在脚本里，谁跑都一样。想加新标签，在 GitHub 提一个 Issue，写清怎么判定、用哪条公开数据验证。</p>';
 
-  const h = location.hash.replace('#', '');
-  if (/^\d{6}$/.test(h)) { document.getElementById('q').value = h; render(h); }
+  const hash = location.hash.replace('#', '');
+  if (/^[0-9]{6}$/.test(hash)) render(hash);
+  addEventListener('hashchange', () => {
+    const v = location.hash.replace('#', '');
+    if (/^[0-9]{6}$/.test(v)) render(v);
+  });
 })();
 </script>
 
