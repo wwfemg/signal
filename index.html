@@ -1,0 +1,234 @@
+<title>10-Signal 节点看板</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --ground:#f6f5f2; --panel:#ffffff; --line:#e2ded6; --line-soft:#eeebe5;
+    --ink:#1c1b18; --ink-2:#4a473f; --ink-3:#7c7768;
+    --accent:#9a5b18; --accent-soft:#f3e7d8;
+    --red:#a32b25; --red-soft:#f7e2e0;
+    --amber:#8a6a12; --amber-soft:#f6ecd2;
+    --green:#25604a; --green-soft:#e0eee7;
+    --blue:#2a4e77; --blue-soft:#e2eaf3;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --ground:#17161a; --panel:#201f24; --line:#35333a; --line-soft:#2a2930;
+      --ink:#efece6; --ink-2:#c0bcb3; --ink-3:#8b867c;
+      --accent:#e2a662; --accent-soft:#3a2d1c;
+      --red:#e98b84; --red-soft:#3b2220;
+      --amber:#d9b45a; --amber-soft:#362f18;
+      --green:#7dc3a4; --green-soft:#1d3029;
+      --blue:#8db4de; --blue-soft:#1d2a3a;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --ground:#17161a; --panel:#201f24; --line:#35333a; --line-soft:#2a2930;
+    --ink:#efece6; --ink-2:#c0bcb3; --ink-3:#8b867c;
+    --accent:#e2a662; --accent-soft:#3a2d1c;
+    --red:#e98b84; --red-soft:#3b2220;
+    --amber:#d9b45a; --amber-soft:#362f18;
+    --green:#7dc3a4; --green-soft:#1d3029;
+    --blue:#8db4de; --blue-soft:#1d2a3a;
+  }
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    font-size:15px; line-height:1.7;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding-inline:16px; padding-block:28px 56px;}
+  header.top{border-bottom:2px solid var(--ink); padding-bottom:14px; margin-bottom:26px;}
+  .kicker{font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:11px; letter-spacing:.16em;
+          text-transform:uppercase; color:var(--accent); margin:0 0 6px;}
+  h1{font-size:26px; line-height:1.25; margin:0 0 8px; text-wrap:balance; letter-spacing:.01em;}
+  .sub{color:var(--ink-3); font-size:13px; margin:0;}
+  .stats{display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:14px;
+         font-family:"IBM Plex Mono", monospace; font-size:12.5px; color:var(--ink-2); font-variant-numeric:tabular-nums;}
+  .stats b{color:var(--ink); font-weight:600;}
+  section{margin-bottom:34px;}
+  h2{font-size:16px; margin:0 0 4px; letter-spacing:.02em;}
+  .note{color:var(--ink-3); font-size:12.5px; margin:0 0 14px;}
+  .rows{display:flex; flex-direction:column; gap:1px; background:var(--line-soft);
+        border:1px solid var(--line); border-radius:3px; overflow:hidden;}
+  .row{display:grid; grid-template-columns:96px 1fr auto; gap:6px 14px; align-items:baseline;
+       background:var(--panel); padding:12px 14px;}
+  .when{font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--ink-3);
+        font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .what{min-width:0;}
+  .what strong{font-weight:700;}
+  .what p{margin:3px 0 0; font-size:13px; color:var(--ink-2);}
+  .pill{font-size:11.5px; font-weight:500; padding:2px 9px; border-radius:2px; white-space:nowrap;}
+  .p-red{background:var(--red-soft); color:var(--red);}
+  .p-amber{background:var(--amber-soft); color:var(--amber);}
+  .p-green{background:var(--green-soft); color:var(--green);}
+  .p-blue{background:var(--blue-soft); color:var(--blue);}
+  .p-mute{background:var(--line-soft); color:var(--ink-3);}
+  @media (max-width:560px){
+    .row{grid-template-columns:1fr auto; }
+    .when{grid-column:1 / -1; order:-1;}
+  }
+  .move{display:grid; grid-template-columns:1fr 78px 1fr; gap:6px 14px; align-items:baseline;
+        background:var(--panel); padding:11px 14px;}
+  .move .pct{font-family:"IBM Plex Mono", monospace; font-weight:600; font-size:13.5px;
+              color:var(--red); text-align:right; font-variant-numeric:tabular-nums;}
+  .move p{margin:0; font-size:12.5px; color:var(--ink-2);}
+  @media (max-width:560px){ .move{grid-template-columns:1fr auto;} .move p{grid-column:1 / -1;} }
+  .finding{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent);
+           border-radius:2px; padding:13px 15px; margin-bottom:10px;}
+  .finding h3{font-size:14.5px; margin:0 0 5px;}
+  .finding p{margin:0; font-size:13.5px; color:var(--ink-2);}
+  .finding .tag{font-family:"IBM Plex Mono", monospace; font-size:11px; color:var(--ink-3); letter-spacing:.06em;}
+  .rules{border-top:1px solid var(--line); padding-top:16px;}
+  .rules ol{margin:0; padding-left:20px;}
+  .rules li{margin-bottom:9px; font-size:13.5px; color:var(--ink-2);}
+  .rules li b{color:var(--ink);}
+  footer{margin-top:40px; border-top:1px solid var(--line); padding-top:14px;
+         font-size:12px; color:var(--ink-3);}
+  .legend{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; font-size:12px; color:var(--ink-3);}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="kicker">10-Signal · 研究看板</p>
+    <h1>节点看板</h1>
+    <p class="sub">只按节点交易：公告是兑现点，节点之间的沉寂期才是布局窗口。本页只放研究与节点，不含任何持仓、成本与盈亏。</p>
+    <div class="stats">
+      <span>更新 <b>2026-09-23</b></span>
+      <span>图谱 <b>155</b> 篇</span>
+      <span>✅ 公告证实 <b>111</b></span>
+      <span>🟡 间接迹象 <b>22</b></span>
+      <span>❓ 待验证 <b>11</b></span>
+      <span>待核线索 <b>21</b></span>
+    </div>
+  </header>
+
+  <section>
+    <h2>硬节点：等公告</h2>
+    <p class="note">这些日子是可证伪的。公告一出，逻辑要么兑现要么作废。</p>
+    <div class="rows">
+      <div class="row">
+        <span class="when">已第 26 天</span>
+        <span class="what"><strong>华天科技</strong> 等证监会同意注册
+          <p>8-28 提交注册稿。历史 33 单重组样本中，提交到批复中位 11 天、最长 18 天——本单已超全部样本。要么在补材料，要么出了问题。盯“同意注册”或“中止/补充材料”。</p>
+        </span>
+        <span class="pill p-red">超时</span>
+      </div>
+      <div class="row">
+        <span class="when">9-28</span>
+        <span class="what"><strong>国货航</strong> 首发前股份解禁 47.28%
+          <p>57.72 亿股解禁：菜鸟、国泰航空货运、朗星、深国际、杭州国改双百。流通股一次由 12.44% 扩到 59.72%。杭州双百与已连卖 7 个月的国风投同属中国国新，最可能接着卖。下一批 40.28% 要等 2027-12-30。</p>
+        </span>
+        <span class="pill p-red">抛压</span>
+      </div>
+      <div class="row">
+        <span class="when">9-30</span>
+        <span class="what"><strong>三季度结束</strong>
+          <p>季末拉升的票，季初常是兑现点。10 月下旬起三季报披露，看 Q2 那批外资通道资金是去是留。</p>
+        </span>
+        <span class="pill p-amber">观察</span>
+      </div>
+      <div class="row">
+        <span class="when">10-16</span>
+        <span class="what"><strong>股指期货交割日</strong>（每月第三个周五）
+          <p>交割周每个交易日早 8:10 自动提醒。另每月第四个周三是 ETF 期权到期日，尾盘常有异动。</p>
+        </span>
+        <span class="pill p-mute">日历</span>
+      </div>
+      <div class="row">
+        <span class="when">10 月下旬</span>
+        <span class="what"><strong>三季报</strong>：机构去留
+          <p>要看三件事：勤辰创赢成长 2 号（Q2 同季新进中泰、三佳、中天精装）在不在；景顺景气进取 6-30 仍持的 73.34 万股中泰是否清掉；三佳 Q2 那五家外资通道账户是否一起消失。</p>
+        </span>
+        <span class="pill p-blue">验证</span>
+      </div>
+      <div class="row">
+        <span class="when">无期限</span>
+        <span class="what"><strong>三佳科技</strong> 等上交所受理定增
+          <p>6-30 股东会通过至今无受理，黄灯。9-05 新增限制性股票激励草案（授予价 12.66 元，需国资批复＋股东会）。7-24 起控股方表决权委托到期不续签，国资推定增动机更强。</p>
+        </span>
+        <span class="pill p-amber">黄灯</span>
+      </div>
+      <div class="row">
+        <span class="when">10—12 月</span>
+        <span class="what"><strong>震安科技</strong> 定增：深交所审核通过 → 证监会注册
+          <p>7-02 受理、7-16 首问、9-19 已交问询回复修订稿。按 56 单样本中位推算，上会约 10 月中下旬—11 月，注册约 11—12 月。批复后 5 天内 96% 会冲高一次。</p>
+        </span>
+        <span class="pill p-blue">推进中</span>
+      </div>
+      <div class="row">
+        <span class="when">待定</span>
+        <span class="what"><strong>国风新材</strong> 上并购重组委
+          <p>2024-12 预案至今 21 个月仍在问询往返，9-19 又更新回复、9-21 补申报稿。买太湖金张 58.33%，作价 6.46 亿；发股价 5.14 元，现价 9.73，重组预期已大部分反映。合肥产投“控股平台＋买民企＋自认配套”的模板，可对照三佳。</p>
+        </span>
+        <span class="pill p-mute">慢</span>
+      </div>
+      <div class="row">
+        <span class="when">待定</span>
+        <span class="what"><strong>ST 中装</strong> 摘帽批复 ／ <strong>ST 亿晶</strong> 法院裁定受理重整
+          <p>ST 中装摘帽后才进入资产注入阶段。ST 亿晶 9-22 公告：产业投资人把锁定期从 36 个月延到 60 个月、且须扣非盈利才可减持，但法院仍未受理；2026H1 净资产 -2.44 亿，受理前有退市风险。</p>
+        </span>
+        <span class="pill p-amber">前置条件</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>季末拉升观察</h2>
+    <p class="note">近 20 日涨幅。季末前猛拉的票，历史上约四成会在季初 20 天内深跌超 20%。不是买入名单，是回避名单。</p>
+    <div class="rows">
+      <div class="move"><span><strong>超声电子</strong></span><span class="pct">+70%</span><p>Q2 已有 4 家外资通道账户新进，季报若仍扎堆，季初兑现风险更高</p></div>
+      <div class="move"><span><strong>深圳新星</strong></span><span class="pct">+38%</span><p>9-02 嘉泰智远（钟志辉）13.93% 过户完成，成本锚约 18.95；陈学敏仍是实控人，控制权未变</p></div>
+      <div class="move"><span><strong>剑桥科技</strong></span><span class="pct">+26%</span><p>8 月下旬以来密集接待机构调研</p></div>
+      <div class="move"><span><strong>科创新源</strong></span><span class="pct">+20%</span><p>留意季初兑现</p></div>
+      <div class="move"><span><strong>震安科技</strong></span><span class="pct">+19%</span><p>定增审核推进中，节点公告前后是兑现点</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>本周核实</h2>
+    <p class="note">全部回到公告原文与股东名册，标注证据等级。</p>
+
+    <div class="finding">
+      <h3>外资名字多数不是外资</h3>
+      <p><span class="tag">✅ 1453 只 × 14 季度统计</span><br>名册上的高盛、瑞银、大摩、小摩、巴克莱，多为国内交易型资金借通道持仓：一起新进的组合，下季度 51% 一起消失；跌破其成本后留榜率仅 22%——离场与赚亏无关，只看背后客户平不平仓。它们不是买入信号，只是“这只票上有人在做事件交易”的指示灯。</p>
+    </div>
+
+    <div class="finding">
+      <h3>三佳、中泰的机构筹码：下有托底，上有解套压力</h3>
+      <p><span class="tag">✅ 十大流通股东＋基金中报</span><br>中泰的金百合八号 2023 年建仓、成本约 15 元，今年股价冲到 36.5 也没卖反而小加；景顺景气进取 Q1 新进 194.58 万股，Q2 减到 73.34 万股（F10 显示的“退出”只是掉出前十，并非清仓）；勤辰、招商证券均为 Q2 新进，成本落在 22—23 元。结论：低位有人托，20 元以上全是等解套的筹码。</p>
+    </div>
+
+    <div class="finding">
+      <h3>福石控股：排雷一票否决</h3>
+      <p><span class="tag">✅ 公告原文</span><br>实控人留置后改责令候查；控股股东重整承诺三年扣非≥3.6 亿、实际 -1.99 亿，补偿未付，被北京证监局责令改正；控股方质押率 88.66%；2025 年归母净利 -1.22 亿。公司在 7 月异动公告里自称“估值较高、与业绩不匹配”。</p>
+    </div>
+
+    <div class="finding">
+      <h3>合肥城建：同属合肥国资，但不是同一条线</h3>
+      <p><span class="tag">✅ 公告原文</span><br>控股股东兴泰金融控股 36.92%、二股东合肥工投 21.67%，与三佳的合肥产投人事链（杨林、李中亚、尹秋实）无交汇。两大国资股东都在减持，兴泰 10-12 起再减不超过 1%。按“有减持压力默认回避”直接否决——巴克莱成本线 17.88 只能当压力位参考。</p>
+    </div>
+  </section>
+
+  <section class="rules">
+    <h2>研究纪律</h2>
+    <p class="note">每条都是用亏损换来的。</p>
+    <ol>
+      <li><b>证据分级</b>：✅ 公告原文证实｜🟡 间接迹象｜❓ 猜测。猜测可以大胆提，下结论前必须回到公告原文。</li>
+      <li><b>A 股尺子</b>：基本面只用来排雷，核心看资本运作、题材、资金筹码；按节点交易——节点公告是兑现点，沉寂期才是布局窗口。</li>
+      <li><b>有减持压力默认回避</b>：上市前股东、员工持股、解禁在途的票，先放一边。</li>
+      <li><b>买之前先查解禁时间表</b>：未来一年有大比例解禁的不碰。国货航是反面教材：上市首日炒到发行价的 5 倍，之后 21 个月还这笔账。</li>
+      <li><b>不从有节点的票抽钱去摊平没节点的亏损票</b>：越跌越补只会把最大的钱压在最没动力涨的地方。</li>
+      <li><b>机构不是买入理由</b>：他们亏得起、时间长、拿的是客户的钱；判断只看他们在节点上做了什么，不看他们进没进来。</li>
+    </ol>
+  </section>
+
+  <footer>
+    数据来源：交易所公告原文、十大流通股东名册、基金定期报告。研究记录，不构成投资建议。<br>
+    本页由 10-Signal 项目生成，已剔除全部持仓、成本与盈亏信息。
+    <div class="legend">
+      <span>🔴 超时／抛压</span><span>🟠 观察</span><span>🔵 验证窗口</span><span>⚪️ 日历</span>
+    </div>
+  </footer>
+</div>
