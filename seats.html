@@ -18,6 +18,8 @@
   table.t th{font-size:11.5px; color:var(--ink-3); font-weight:500; cursor:pointer;}
   td.num,th.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; text-align:right;}
   .down{color:var(--red);} .up{color:var(--green);}
+  table.t td:nth-child(1),table.t td:nth-child(2){white-space:nowrap;}
+  table.t td:nth-child(2){min-width:5.5em;}
   .tblwrap{overflow-x:auto;}
   .empty{font-size:13px;color:var(--ink-3);}
   .seatname{cursor:pointer; color:var(--ink);}
@@ -35,16 +37,13 @@
     .topbar .tnav a{font-size:12.5px;}
   }
 
-  .stat{position:fixed; top:env(safe-area-inset-top, 0px); right:0; z-index:30;
-    display:flex; align-items:center; gap:7px; padding:6px 12px;
-    background:var(--panel); border:1px solid var(--line); border-top:none; border-right:none;
-    border-bottom-left-radius:8px; font-size:12px; color:var(--ink-3); line-height:1.5;}
+  .stat{display:flex; align-items:center; gap:7px; padding:5px 11px; flex:none;
+    background:var(--line-soft); border:1px solid var(--line); border-radius:999px;
+    font-size:11.5px; color:var(--ink-3); line-height:1.5; white-space:nowrap;}
   .stat b{color:var(--ink); font-weight:500; font-family:"IBM Plex Mono",monospace;}
   .stat .dot{width:7px; height:7px; border-radius:50%; background:var(--green); flex:none;}
   @media (max-width:640px){
-    .stat{position:static; width:100%; justify-content:center; border:none;
-      border-bottom:1px solid var(--line); border-radius:0; font-size:11.5px; padding:6px 10px;
-      background:var(--line-soft);}
+    .stat{order:4; flex-basis:100%; justify-content:center; border-radius:6px;}
   }
 
   .loading{display:flex; align-items:center; gap:10px; padding:18px 2px; color:var(--ink-3); font-size:13px;}
@@ -165,7 +164,8 @@ function paint(){
   const el = document.createElement('div');
   el.className = 'stat';
   el.innerHTML = '<span class="dot"></span><span>数据 <b id="stD">—</b></span><span class="nx" id="stN"></span>';
-  document.body.insertBefore(el, document.body.firstChild);
+  const bar = document.querySelector('.topbar');
+  if (bar) bar.appendChild(el); else document.body.insertBefore(el, document.body.firstChild);
   const bj = () => new Date(Date.now() + new Date().getTimezoneOffset()*60000 + 8*3600000);
   const next = () => { const n = bj(), t = new Date(n); t.setHours(23,10,0,0);
     if (n > t) t.setDate(t.getDate()+1);
