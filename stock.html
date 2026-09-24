@@ -26,6 +26,12 @@
   .whylist li{font-size:13px; color:var(--ink-2); border-left:2px solid var(--line); padding-left:10px;}
   .whylist b{color:var(--ink);}
   .ruletip{font-size:12px; color:var(--ink-3);}
+  .secnav{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 16px;}
+  .secnav a{font-size:12.5px; padding:5px 12px; border:1px solid var(--line); border-radius:999px;
+    color:var(--ink-2); text-decoration:none; background:var(--panel);}
+  .secnav a:hover{border-color:var(--accent); color:var(--accent);}
+  tr.hl td{background:var(--accent-soft);}
+  section[id^="sec-"]{scroll-margin-top:70px;}
   table.t{width:100%; border-collapse:collapse; font-size:13px;}
   table.t th, table.t td{padding:7px 9px; border-bottom:1px solid var(--line-soft); text-align:left;}
   table.t th{font-size:11.5px; color:var(--ink-3); font-weight:500;}
@@ -160,7 +166,11 @@ async function render(code) {
   document.title = (name ? name + ' ' + code : code) + '｜Signal';
   const h1 = document.querySelector('h1'); if (h1) h1.textContent = name ? `${name} ${code}` : code;
   const lead = document.getElementById('lead'); if (lead) lead.remove();
-  let h = `<section>`;
+  const soe = sh?.soe?.[code] || [], evs = sh?.ev?.[code] || [], lifts = sh?.lift?.[code] || [];
+  const has = {标签: !!t?.tags?.length, 台账: !!led, 国资: soe.length, 外资: pool.length,
+               龙虎榜: lhb.length, 公告事件: evs.length, 解禁: lifts.length, 时间轴: !!tl};
+  let h = `<nav class="secnav">${Object.entries(has).filter(([k,v])=>v)
+      .map(([k]) => `<a href="#sec-${encodeURIComponent(k)}">${k}</a>`).join('')}</nav><section id="sec-标签">`;
   const ups = [sh?.updated, D.timeline?.updated].filter(Boolean).sort();
   h += `<p class="note">数据更新 ${esc(ups[ups.length-1] || '')}　·　台账 ${esc(D.ledger?.updated || '—')}</p>`;
   if (t?.tags?.length) {
@@ -173,7 +183,7 @@ async function render(code) {
   h += `</section>`;
 
   if (led) {
-    h += `<section><h2>台账</h2><div class="cards"><article class="card">
+    h += `<section id="sec-台账"><h2>台账</h2><div class="cards"><article class="card">
       <header class="card-top"><h3>状态：${esc(led.status)}</h3></header><dl>
       <dt>触发事实</dt><dd>${esc(led.trigger)}</dd>
       <dt>在等什么</dt><dd>${esc(led.waiting)}</dd>
@@ -181,11 +191,42 @@ async function render(code) {
       <dt>结果回看</dt><dd>${esc(led.review)}</dd></dl></article></div></section>`;
   }
 
+  if (soe.length) {
+    const latest = soe.reduce((a, r) => r.q > a ? r.q : a, '');
+    h += `<section id="sec-国资"><h2>国资持股</h2>
+      <p class="note">按股东名称判断，需人工确认。地区来自名称里的地名，名称不带地名的标“未标注”。</p>
+      <div class="tblwrap"><table class="t"><thead><tr><th>报告期</th><th>股东</th><th>地区</th><th>名次</th><th>占流通</th><th>变动</th></tr></thead><tbody>` +
+      soe.sort((a,b) => b.q.localeCompare(a.q)).map(r => `<tr${r.q === latest ? ' class="hl"' : ''}>
+        <td>${esc(r.q)}</td><td>${esc(r.holder)}</td><td>${esc(r.area)}</td>
+        <td class="num">${r.rank}</td><td class="num">${r.ratio}%</td><td>${esc(r.chg)}</td></tr>`).join('') +
+      `</tbody></table></div></section>`;
+  }
+
+  if (evs.length) {
+    h += `<section id="sec-公告事件"><h2>公告事件</h2>
+      <p class="note">全市场公告标题与相关正文的自动扫描。✅＝写明客户或文件名｜🟡＝措辞含糊｜⛔＝已终止或撤回。大厂定点会标出阶段：量产＞定点＞验厂＞送样试制＞只是意向。</p>
+      <ul class="whylist">` +
+      evs.map(r => `<li><b>${esc(r.kind)}</b>　${esc(r.date)}　${esc(r.grade)}　${esc(r.title)}
+        ${r.seg ? `<br><span class="ruletip">原文：…${esc(r.seg)}…</span>` : ''}</li>`).join('') +
+      `</ul></section>`;
+  }
+
+  if (lifts.length) {
+    const soon = lifts.filter(x => x.date >= new Date().toISOString().slice(0,10));
+    h += `<section id="sec-解禁"><h2>解禁时间表</h2>
+      <p class="note">解禁不等于马上卖：持股5%以上的股东要在集中竞价减持前15个交易日公告，每人每3个月竞价不超过总股本1%、大宗不超过2%。要盯的是减持预披露公告。</p>
+      <div class="tblwrap"><table class="t"><thead><tr><th>日期</th><th>占流通股</th><th>占总股本</th><th>状态</th></tr></thead><tbody>` +
+      lifts.map(r => `<tr${soon[0] && r.date === soon[0].date ? ' class="hl"' : ''}>
+        <td>${esc(r.date)}</td><td class="num">${r.free_ratio}%</td><td class="num">${r.total_ratio}%</td>
+        <td>${r.date >= new Date().toISOString().slice(0,10) ? '未解禁' : '已解禁'}</td></tr>`).join('') +
+      `</tbody></table></div></section>`;
+  }
+
   if (pool.length) {
     const byDate = {};
     pool.forEach(r => (byDate[r.q] = byDate[r.q] || []).push(r));
     const dates = Object.keys(byDate).sort().reverse();
-    h += `<section><h2>机构持仓（外资通道账户）</h2>
+    h += `<section id="sec-外资"><h2>机构持仓（外资通道账户）</h2>
       <p class="note">${CAVEAT}最新的排在最前面。“快照”来自公司回购公告附带的股东名单，基准日离披露只有 2—3 天；“季报”是定期报告，滞后 1—2 个月。</p>`;
     dates.forEach((d, i) => {
       const rows = byDate[d], kind = rows[0].kind || '季报';
@@ -202,7 +243,7 @@ async function render(code) {
   }
 
   if (lhb.length) {
-    h += `<section><h2>近30天龙虎榜</h2><div class="tblwrap"><table class="t">
+    h += `<section id="sec-龙虎榜"><h2>近30天龙虎榜</h2><div class="tblwrap"><table class="t">
       <thead><tr><th>日期</th><th>当日涨跌</th><th>上榜原因</th></tr></thead><tbody>` +
       lhb.map(r => `<tr><td>${esc(r.date)}</td>
         <td class="num ${r.chg < 0 ? 'down' : 'up'}">${r.chg > 0 ? '+' : ''}${r.chg}%</td>
@@ -211,7 +252,7 @@ async function render(code) {
 
   if (tl) {
     const li = (e, f) => `<li class="${f ? 'tl-f' : 'tl-p'}"><span class="tl-date">${esc(e.date || '待定')}</span><span class="tl-kind">${esc(e.kind)}</span><span class="tl-t">${esc(e.title)}</span></li>`;
-    h += `<section><h2>时间轴</h2><ul class="tl-list">` +
+    h += `<section id="sec-时间轴"><h2>时间轴</h2><ul class="tl-list">` +
       (tl.future || []).map(e => li(e, true)).join('') +
       `<li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">上面是今后已知的日子，下面是已经发生的</span></li>` +
       (tl.past || []).map(e => li(e, false)).join('') + `</ul></section>`;
