@@ -110,7 +110,7 @@ function paint(){
       <td>${esc(r.holder)}</td><td>${esc(r.q)}</td><td>${esc(r.kind||'季报')}</td>
       <td class="num">${r.ratio}%</td><td>${esc(r.chg)}</td>
       <td class="num">${r.cost}</td><td class="num">${r.price}</td>
-      <td class="num ${r.dev<0?'down':'up'}">${r.dev>0?'+':''}${r.dev}%</td></tr>`).join('')+
+      <td class="num ${r.dev<0?'down':'up'}">${r.dev>0?'+':''}${r.dev}%${r.susp?' <span title="偏离过大，多半是除权或长期停牌，需核对" style="color:var(--amber)">⚠</span>':''}</td></tr>`).join('')+
     `</tbody></table></div>${rows.length>400?'<p class="note">只显示前 400 条，缩小筛选范围可看全</p>':''}</section>`
     : '<section><p class="empty">没有符合条件的记录</p></section>';
   document.querySelectorAll('tbody tr.clk').forEach(tr=>tr.onclick=e=>{ if(e.target.tagName!=='A') location.href='stock.html#'+tr.dataset.c; });

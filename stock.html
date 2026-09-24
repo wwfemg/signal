@@ -158,7 +158,7 @@ function render(code) {
         rows.map(r => `<tr><td>${esc(r.holder)}</td><td class="num">${r.rank}</td>
           <td class="num">${r.ratio}%</td><td>${esc(r.chg)}</td>
           <td class="num">${r.cost}</td><td class="num">${r.price}</td>
-          <td class="num ${r.dev < 0 ? 'down' : 'up'}">${r.dev > 0 ? '+' : ''}${r.dev}%</td></tr>`).join('') +
+          <td class="num ${r.dev < 0 ? 'down' : 'up'}">${r.dev > 0 ? '+' : ''}${r.dev}%${r.susp ? ' <span style="color:var(--amber)" title="偏离过大，多半是除权或长期停牌，需核对">⚠ 需核对</span>' : ''}</td></tr>`).join('') +
         `</tbody></table></div>`;
     });
     h += `</section>`;

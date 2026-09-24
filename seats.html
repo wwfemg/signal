@@ -46,7 +46,8 @@
   <header class="top">
     <h1>龙虎榜席位</h1>
     <p class="sub" id="sub">把每个席位当成一个操作者来看：上榜多少次、买了多少、买入之后 1／5／10 个交易日平均涨跌多少、有多少次是涨的。</p>
-    <p class="warn"><b>看的是统计倾向，不是预测。</b>龙虎榜是结果不是预告，它只告诉你昨天谁买了。一个营业部席位背后可能有好几拨人，也可能换了人；“机构专用”不具名，只知道是机构，不知道是谁。胜率按买入日之后 5 个交易日的复权涨跌算，样本次数一并列出，次数少的别当回事。</p>
+    <p class="note">默认只看上榜 10 次以上的席位——次数太少算出来的胜率没意义。想看全部点“次数：全部”。</p>
+  <p class="warn"><b>看的是统计倾向，不是预测。</b>龙虎榜是结果不是预告，它只告诉你昨天谁买了。一个营业部席位背后可能有好几拨人，也可能换了人；“机构专用”不具名，只知道是机构，不知道是谁。胜率按买入日之后 5 个交易日的复权涨跌算，样本次数一并列出，次数少的别当回事。</p>
     <div class="score" id="sum"></div>
     <p class="note" id="sumnote"></p>
     <div class="filters" id="ft"></div>
@@ -58,7 +59,7 @@
 </div>
 <script>
 const esc=s=>String(s??'').replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
-let S=[], ft='营业部', sort='n', minN='全部';
+let S=[], ft='营业部', sort='n', minN='上榜≥10次';
 const MIN={'全部':0,'上榜≥10次':10,'上榜≥30次':30,'上榜≥60次':60};
 function chips(id,list,cur,label,pick){
   const b=document.getElementById(id);
