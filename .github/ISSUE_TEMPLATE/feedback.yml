@@ -1,0 +1,41 @@
+name: 提意见或建议
+description: 页面不好用、数据有错、想要什么功能，都往这里提。不用客气，说重点。
+title: "[意见] "
+labels: ["意见"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        我们每月汇总一次，公开答复三类结果：**会做**、**已经有了**（会告诉你在哪）、**不做**（会说明为什么）。
+        涉及股票推荐、求推票的不收——这个项目只记录节点，不给买卖建议。
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 哪一类
+      options:
+        - 数据有错（某只票的信息不对）
+        - 页面不好用（看不懂、点不到、手机上有问题）
+        - 想要新功能
+        - 判定规则有问题（某个标签打错了）
+        - 其他
+    validations: { required: true }
+  - type: input
+    id: where
+    attributes:
+      label: 在哪里发现的
+      placeholder: "例：查一只票 600520；或 机构持仓池 页面"
+  - type: textarea
+    id: detail
+    attributes:
+      label: 具体说说
+      placeholder: |
+        数据有错的话，写清楚：你看到的是什么、应该是什么、依据是哪份公告（标题＋日期）。
+        页面问题的话，写清楚：什么设备、什么浏览器、点了哪里、发生了什么。
+    validations: { required: true }
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: 确认
+      options:
+        - label: 我知道这个项目不提供买卖建议，也不接受求推票
+          required: true

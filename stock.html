@@ -96,7 +96,7 @@
 <div class="topbar">
   <a class="brand" href="index.html">Signal</a>
   <div class="mini"><input id="mq" placeholder="输入代码跳转，如 600520" aria-label="跳转到某只票"></div>
-  <nav class="tnav"><a href="ledger.html">台账</a><a href="pool.html">机构池</a><a href="tag.html">标签</a><a href="seats.html">席位</a></nav>
+  <nav class="tnav"><a href="ledger.html">台账</a><a href="pool.html">机构池</a><a href="tag.html">标签</a><a href="seats.html">席位</a><a href="https://github.com/wwfemg/signal/issues/new?template=feedback.yml" target="_blank">提建议</a></nav>
 </div>
 <div class="wrap">
   <header class="top">
@@ -208,6 +208,9 @@ async function render(code) {
       `<li class="tl-now"><span class="tl-date">今天</span><span class="tl-kind">—</span><span class="tl-t">上面是今后已知的日子，下面是已经发生的</span></li>` +
       (tl.past || []).map(e => li(e, false)).join('') + `</ul></section>`;
   }
+  const rep = 'https://github.com/wwfemg/signal/issues/new?template=feedback.yml&title=' +
+    encodeURIComponent(`[意见] ${code} ${name} 数据有误`);
+  h += `<p class="note"><a href="${rep}" target="_blank">这条数据有错？告诉我们 →</a>　需要写清楚：你看到的是什么、应该是什么、依据哪份公告。</p>`;
   document.getElementById('out').innerHTML = h;
   location.hash = code;
 }
