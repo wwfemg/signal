@@ -6,7 +6,13 @@
 <meta name="color-scheme" content="light dark">
 <title>Signal</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<style>
+<style>  /* 筛选行：所有名单共用 */
+  .filters{display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 12px; align-items:center;}
+  .filters button{font-size:12.5px; padding:6px 12px; border:1px solid var(--line); border-radius:2px;
+    background:var(--panel); color:var(--ink-2); cursor:pointer; white-space:nowrap;}
+  .filters button.on{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .flab{font-size:12px; color:var(--ink-3); margin-right:4px; min-width:4.6em;}
+
   /* 顶栏：所有页面共用一份 */
   .topbar{display:flex; align-items:center; gap:12px;
     padding:10px clamp(14px,3vw,26px); border-bottom:1px solid var(--line); background:var(--panel);
