@@ -108,10 +108,19 @@ const j = async n => { try { const r = await fetch('data/' + n, {cache:'no-store
 const CAVEAT = '机构成本是估算的：按它持股那个季度的量价均价算。季报滞后一到两个月，它可能早已离场。只能当参考，不是买入理由。';
 const esc = s => String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
 
-function render(code) {
-  const t = D.tags?.stocks?.[code], tl = D.timeline?.stocks?.[code];
-  const pool = (D.pool?.rows || []).filter(r => r.code === code);
-  const lhb = D.lhb?.stocks?.[code] || [];
+async function shard(code) {                 // 只下载这只票所在的那一份（约 25 万字节）
+  const k = code.slice(-1);
+  if (!D.shards) D.shards = {};
+  if (!D.shards[k]) D.shards[k] = await j(`s${k}.json`);
+  return D.shards[k];
+}
+
+async function render(code) {
+  const sh = await shard(code);
+  const t = sh?.tags?.[code], tl = D.timeline?.stocks?.[code];
+  const pool = sh?.pool?.[code] || [];
+  const lhb = sh?.lhb?.[code] || [];
+  D.tags = {rules: sh?.rules || {}, updated: sh?.updated};
   const led = (D.ledger?.entries || []).find(e => e.code === code);
   const name = t?.name || tl?.name || pool[0]?.name || led?.name || '';
   if (!t && !tl && !pool.length && !lhb.length && !led) {
@@ -135,11 +144,11 @@ function render(code) {
   const h1 = document.querySelector('h1'); if (h1) h1.textContent = name ? `${name} ${code}` : code;
   const lead = document.getElementById('lead'); if (lead) lead.remove();
   let h = `<section>`;
-  const ups = [D.tags?.updated, D.pool?.updated, D.lhb?.updated, D.timeline?.updated].filter(Boolean).sort();
+  const ups = [sh?.updated, D.timeline?.updated].filter(Boolean).sort();
   h += `<p class="note">数据更新 ${esc(ups[ups.length-1] || '')}　·　台账 ${esc(D.ledger?.updated || '—')}</p>`;
   if (t?.tags?.length) {
     h += `<div class="tagrow">${t.tags.map(x => `<a class="tag" href="tag.html#${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}</div>`;
-    const RULES = D.tags?.rules || {};
+    const RULES = sh?.rules || {};
     h += `<ul class="whylist">${Object.entries(t.why || {}).map(([k,v]) =>
       `<li><b>${esc(k)}</b>：${esc(v)}<br><span class="ruletip">判定规则：${esc(RULES[k] || '')}</span></li>`).join('')}</ul>
       <p class="note"><a href="tag.html">看全部标签怎么判定 →</a></p>`;
@@ -211,9 +220,9 @@ function search() {
 }
 
 (async () => {
-  const [tags, timeline, pool, lhb, ledger, names] = await Promise.all(
-    ['tags.json','timeline.json','pool.json','lhb.json','ledger.json','names.json'].map(j));
-  Object.assign(D, {tags, timeline, pool, lhb, ledger, names});
+  const [timeline, ledger, names] = await Promise.all(
+    ['timeline.json','ledger.json','names.json'].map(j));
+  Object.assign(D, {timeline, ledger, names});
 
   const hash = location.hash.replace('#', '');
   if (/^[0-9]{6}$/.test(hash)) render(hash);
