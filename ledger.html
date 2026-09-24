@@ -161,12 +161,19 @@
   @media (max-width:640px){
     .stat{order:4; flex-basis:100%; justify-content:center; border-radius:6px;}
   }
+  @media (max-width:900px){ .stat .nx{display:none;} }
+  .topbar .mini input{min-width:80px;}
+  .topbar .mini{flex:1 1 140px; min-width:100px;}
 </style>
 </head>
 <body>
+<div class="topbar">
+  <a class="brand" href="index.html">Signal</a>
+  <div class="mini"><input id="mq" placeholder="输入代码或名字" aria-label="跳转到某只票"></div>
+  <nav class="tnav"><a href="pool.html">机构池</a><a href="tag.html">标签</a><a href="seats.html">席位</a><a href="stock.html">查一只票</a></nav>
+</div>
 <div class="wrap">
   <header class="top">
-    <p class="kicker">Signal　<a class="nav" href="index.html">← 首页</a>　<a class="nav" href="stock.html">查一只票 →</a>　<a class="nav" href="tag.html">按标签找票 →</a></p>
     <h1>2026Q3 台账</h1>
     <p class="sub">每只票记五件事：什么时候进入视野、触发它的事实（必须有公告出处）、在等什么节点、什么条件算看错、后来发生了什么。<b>只记录，不建议买卖，不写目标价。</b>看错的记录保留并标注，不删除。</p>
     <div class="stats">
@@ -471,6 +478,26 @@ fetch('data/status.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).
     const today = bj().toISOString().slice(0,10);
     if (d.updated !== today) document.querySelector('.stat .dot').style.background = 'var(--amber)';
   }).catch(() => {});
+})();
+</script>
+<script>
+(() => {
+  const m = document.getElementById('mq'); if (!m) return;
+  const box = document.createElement('div'); box.className = 'msug'; m.parentNode.appendChild(box);
+  let NM = {};
+  fetch('data/names.json', {cache:'force-cache'}).then(r => r.ok ? r.json() : {}).then(d => NM = d).catch(() => {});
+  const go = c => { location.href = 'stock.html#' + c; };
+  m.oninput = () => {
+    const v = m.value.trim(); box.innerHTML = '';
+    if (!v || /^[0-9]{6}$/.test(v)) return;
+    box.innerHTML = Object.entries(NM).filter(([c, n]) => n.includes(v) || c.startsWith(v)).slice(0, 8)
+      .map(([c, n]) => `<button data-c="${c}">${n} <i>${c}</i></button>`).join('');
+    box.querySelectorAll('button').forEach(b => b.onclick = () => go(b.dataset.c));
+  };
+  m.onkeydown = e => { if (e.key !== 'Enter') return;
+    const v = m.value.trim();
+    if (/^[0-9]{6}$/.test(v)) return go(v);
+    const f = box.querySelector('button'); if (f) go(f.dataset.c); };
 })();
 </script>
 </body>
