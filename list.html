@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light dark">
 <title>名单</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=20260925a">
+<link rel="stylesheet" href="assets/style.css?v=20260925b">
 <style>
   .modes{display:flex; flex-wrap:wrap;}
   .modes button{cursor:pointer; font-family:"Noto Sans SC",sans-serif;}
@@ -64,7 +64,7 @@
 <script>
 const esc = s => String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
 const j = async n => { try { const r = await fetch('data/' + n, {cache:'no-store'}); return r.ok ? await r.json() : null; } catch(e) { return null; } };
-const D = {}, S = {mode:'tag', tag:'', pool:{q:'', holder:'全部', band:'全部', sort:'q'}, seats:{type:'营业部', min:'上榜≥10次', sort:'n'}};
+const D = {}, S = {mode:'tag', tag:'', limit:100, pool:{q:'', holder:'全部', band:'全部', sort:'q'}, seats:{type:'营业部', min:'上榜≥10次', sort:'n'}};
 const BANDS = {'全部':()=>true,'低于估算成本20%以上':r=>r.dev<=-20,'低于10—20%':r=>r.dev>-20&&r.dev<=-10,
   '相差10%以内':r=>r.dev>-10&&r.dev<10,'高出10—30%':r=>r.dev>=10&&r.dev<30,'高出30%以上':r=>r.dev>=30};
 const MIN = {'全部':0,'上榜≥10次':10,'上榜≥30次':30,'上榜≥60次':60};
@@ -88,16 +88,20 @@ function drawTag() {
   const tags = Object.keys(T.rules).filter(t => counts[t]);
   if (!S.tag || !counts[S.tag]) S.tag = tags[0];
   chips('f1', tags.map(t => `${t} ${counts[t]}`), `${S.tag} ${counts[S.tag]}`, '标签',
-    v => { S.tag = v.replace(/\s\d+$/, ''); location.hash = 'tag=' + encodeURIComponent(S.tag); draw(); });
+    v => { S.tag = v.replace(/\s\d+$/, ''); S.limit = 100; location.hash = 'tag=' + encodeURIComponent(S.tag); draw(); });
   document.getElementById('sub').textContent = '判定规则：' + (T.rules[S.tag] || '');
-  const rows = Object.entries(T.stocks).filter(([c, v]) => v.tags.includes(S.tag));
-  document.getElementById('out').innerHTML = `<section><p class="note">共 ${rows.length} 只　数据更新 ${esc(T.updated)}</p>
+  const all = Object.entries(T.stocks).filter(([c, v]) => v.tags.includes(S.tag));
+  const rows = all.slice(0, S.limit);
+  document.getElementById('out').innerHTML = `<section><p class="note">共 ${all.length} 只，显示前 ${rows.length}　数据更新 ${esc(T.updated)}</p>
     <div class="tblwrap"><table class="t"><thead><tr><th>代码</th><th>名称</th><th>为什么</th><th>其他标签</th></tr></thead><tbody>` +
     rows.map(([c, v]) => `<tr class="clk" data-c="${c}"><td><a href="stock.html#${c}">${c}</a></td>
       <td>${esc(v.name)}</td><td>${esc(v.why[S.tag] || '')}</td>
       <td>${esc(v.tags.filter(x => x !== S.tag).join('、'))}</td></tr>`).join('') +
-    `</tbody></table></div></section>`;
+    `</tbody></table></div>${all.length > rows.length ?
+      `<p class="note"><button class="more" id="more">显示更多（还有 ${all.length - rows.length} 只）</button></p>` : ''}</section>`;
   rowClicks();
+  const mb = document.getElementById('more');
+  if (mb) mb.onclick = () => { S.limit += 200; draw(); };
 }
 
 function drawPool() {

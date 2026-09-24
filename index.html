@@ -208,6 +208,20 @@
     border-bottom-color:var(--accent) !important;}
   .modes button:hover{color:var(--ink-2) !important;}
 
+  /* 手机：筛选按钮横向滑动，表格让出空间 */
+  @media (max-width:640px){
+    .filters{flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      padding-bottom:4px; scrollbar-width:none;}
+    .filters::-webkit-scrollbar{display:none;}
+    .filters button{flex:none;}
+    .flab{position:sticky; left:0; background:var(--ground); padding-right:6px; z-index:1;}
+    table.t th:nth-child(4), table.t td:nth-child(4){display:none;}
+    table.t th, table.t td{padding:7px 6px; font-size:12.5px;}
+  }
+  .more{font-size:13px; padding:8px 18px; border:1px solid var(--line); border-radius:999px;
+    background:var(--panel); color:var(--ink-2); cursor:pointer;}
+  .more:hover{border-color:var(--accent); color:var(--accent);}
+
   html, body{height:100%;}
   body{display:flex; flex-direction:column;}
   .bar{display:flex; justify-content:flex-end; align-items:center; gap:clamp(14px,2.4vw,26px);
