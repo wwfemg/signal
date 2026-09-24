@@ -23,7 +23,6 @@
   table.t td:nth-child(1),table.t td:nth-child(2){white-space:nowrap;}
   table.t td:nth-child(2){min-width:5.5em;}
   td.num,th.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; text-align:right;}
-  .down{color:var(--red);} .up{color:var(--green);}
   .tblwrap{overflow-x:auto;}
   .empty{font-size:13px;color:var(--ink-3);}
   tbody tr.clk{cursor:pointer;}
@@ -108,8 +107,11 @@ function drawPool() {
   if (!P) return document.getElementById('out').innerHTML = '<p class="empty">机构池数据暂不可用</p>';
   const dates = Array.from(new Set(P.map(r => r.q))).sort().reverse();
   const holders = ['全部', ...Array.from(new Set(P.map(r => r.holder))).sort()];
-  if (!S.pool.q) S.pool.q = dates[0];
-  chips('f1', ['全部', ...dates], S.pool.q, '日期', v => { S.pool.q = v; draw(); });
+  if (!S.pool.q) {           // 默认选最新的季报，而不是只有一两只票的快照
+    const rep = dates.find(d => P.some(r => r.q === d && (r.kind || '季报') === '季报'));
+    S.pool.q = rep || dates[0];
+  }
+  chips('f1', ['全部', ...dates.map(d => d + (P.some(r => r.q === d && r.kind === '快照') ? ' 快照' : ''))], S.pool.q + (P.some(r => r.q === S.pool.q && r.kind === '快照') ? ' 快照' : ''), '日期', v => { S.pool.q = v.replace(' 快照',''); draw(); });
   chips('f2', holders, S.pool.holder, '机构', v => { S.pool.holder = v; draw(); });
   chips('f3', Object.keys(BANDS), S.pool.band, '现价 vs 成本', v => { S.pool.band = v; draw(); });
   document.getElementById('sub').textContent = CAVEAT;

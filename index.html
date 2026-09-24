@@ -10,12 +10,13 @@
 
   :root{
     color-scheme: light;
-    --ground:#f6f5f2; --panel:#ffffff; --line:#e2ded6; --line-soft:#eeebe5;
-    --ink:#1c1b18; --ink-2:#4a473f; --ink-3:#7c7768;
-    --accent:#9a5b18; --accent-soft:#f3e7d8;
-    --red:#a32b25; --red-soft:#f7e2e0;
+    --ground:#f7f7f5; --panel:#ffffff; --line:#e6e3dd; --line-soft:#f0eee9;
+    --ink:#1f1f1d; --ink-2:#4a4843; --ink-3:#7a776f;
+    --accent:#9a5b18; --accent-soft:#f5e9da;
+    --rise:#c9352b; --fall:#1e8e5a;            /* A股习惯：红涨绿跌 */
+    --red:#c9352b; --red-soft:#fae9e6;
     --amber:#8a6a12; --amber-soft:#f6ecd2;
-    --green:#25604a; --green-soft:#e0eee7;
+    --green:#1e8e5a; --green-soft:#e2f1ea;
     --blue:#2a4e77; --blue-soft:#e2eaf3;
   }
   @media (prefers-color-scheme: dark){
@@ -24,9 +25,10 @@
       --ground:#17161a; --panel:#201f24; --line:#35333a; --line-soft:#2a2930;
       --ink:#efece6; --ink-2:#c0bcb3; --ink-3:#8b867c;
       --accent:#e2a662; --accent-soft:#3a2d1c;
-      --red:#e98b84; --red-soft:#3b2220;
+      --rise:#f1675b; --fall:#4fbe8b;
+      --red:#f1675b; --red-soft:#3b2220;
       --amber:#d9b45a; --amber-soft:#362f18;
-      --green:#7dc3a4; --green-soft:#1d3029;
+      --green:#4fbe8b; --green-soft:#1d3029;
       --blue:#8db4de; --blue-soft:#1d2a3a;
     }
   }
@@ -35,9 +37,10 @@
     --ground:#17161a; --panel:#201f24; --line:#35333a; --line-soft:#2a2930;
     --ink:#efece6; --ink-2:#c0bcb3; --ink-3:#8b867c;
     --accent:#e2a662; --accent-soft:#3a2d1c;
-    --red:#e98b84; --red-soft:#3b2220;
+    --rise:#f1675b; --fall:#4fbe8b;
+    --red:#f1675b; --red-soft:#3b2220;
     --amber:#d9b45a; --amber-soft:#362f18;
-    --green:#7dc3a4; --green-soft:#1d3029;
+    --green:#4fbe8b; --green-soft:#1d3029;
     --blue:#8db4de; --blue-soft:#1d2a3a;
   }
   body{
@@ -173,6 +176,23 @@
     .topbar .mini{order:4; flex-basis:100%;}
   }
   @media (min-width:1301px){ .topbar{flex-wrap:nowrap;} }
+
+  /* A股习惯：红涨绿跌。正数＝涨＝红，负数＝跌＝绿 */
+  .up{color:var(--rise) !important;}
+  .down{color:var(--fall) !important;}
+  /* 表头：小一号、加字间距 */
+  table.t th{letter-spacing:.04em; text-transform:none;}
+  /* 区块之间用留白分层，不用四边框 */
+  .card, .det{box-shadow:0 1px 2px rgba(0,0,0,.05);}
+  :root:not([data-theme="light"]) .card, :root[data-theme="dark"] .card{box-shadow:none;}
+  /* 名单页切换：下划线式，不用填充按钮 */
+  .modes{gap:0 !important; border-bottom:1px solid var(--line); margin-bottom:18px !important;}
+  .modes button{border:none !important; border-radius:0 !important; background:transparent !important;
+    color:var(--ink-3) !important; padding:10px 18px !important; font-size:14.5px !important;
+    border-bottom:2px solid transparent !important; margin-bottom:-1px;}
+  .modes button.on{color:var(--ink) !important; font-weight:500 !important;
+    border-bottom-color:var(--accent) !important;}
+  .modes button:hover{color:var(--ink-2) !important;}
 
   html, body{height:100%;}
   body{display:flex; flex-direction:column;}
