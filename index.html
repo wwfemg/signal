@@ -6,7 +6,21 @@
 <meta name="color-scheme" content="light dark">
 <title>Signal</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<style>  *,*::before,*::after{box-sizing:border-box;}
+<style>
+  /* 顶栏：所有页面共用一份 */
+  .topbar{display:flex; align-items:center; gap:12px;
+    padding:10px clamp(14px,3vw,26px); border-bottom:1px solid var(--line); background:var(--panel);
+    position:sticky; top:env(safe-area-inset-top, 0px); z-index:9;}
+  .topbar .brand{font-family:"IBM Plex Serif",Georgia,serif; font-size:19px; font-weight:600;
+    color:var(--ink); text-decoration:none; letter-spacing:-.01em; flex:none;}
+  .topbar .mini{position:relative; flex:1 1 140px; min-width:100px;}
+  .topbar .mini input{width:100%; border:1px solid var(--line); background:var(--ground); color:var(--ink);
+    border-radius:999px; padding:8px 16px; font-size:14px; outline:none; font-family:"Noto Sans SC",sans-serif;}
+  .topbar .mini input:focus{border-color:var(--accent);}
+  .topbar .tnav{display:flex; gap:14px; flex:none;}
+  .topbar .tnav a{font-size:13px; color:var(--ink-2); text-decoration:none; white-space:nowrap;}
+  .topbar .tnav a:hover{color:var(--accent);}
+  *,*::before,*::after{box-sizing:border-box;}
 
   :root{
     color-scheme: light;
