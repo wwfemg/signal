@@ -465,6 +465,31 @@ fetch('data/status.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).
 
 
 <script>
+// 右上角状态条：数据是哪天的、下次什么时候更新
+(() => {
+  const el = document.createElement('div');
+  el.className = 'stat';
+  el.innerHTML = '<span class="dot"></span><span>数据 <b id="stD">—</b></span><span class="nx" id="stN"></span>';
+  const bar = document.querySelector('.topbar');
+  if (bar) bar.appendChild(el); else document.body.insertBefore(el, document.body.firstChild);
+  const bj = () => new Date(Date.now() + new Date().getTimezoneOffset()*60000 + 8*3600000);
+  const next = () => { const n = bj(), t = new Date(n); t.setHours(23,10,0,0);
+    if (n > t) t.setDate(t.getDate()+1);
+    while (t.getDay()===0 || t.getDay()===6) t.setDate(t.getDate()+1);
+    return {t, ms: t - n}; };
+  const tick = () => { const {t, ms} = next(); const h = Math.floor(ms/3600000), m = Math.floor(ms%3600000/60000);
+    document.getElementById('stN').textContent =
+      `· 下次 ${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}（${h>0?h+' 小时':''}${m} 分后）`; };
+  tick(); setInterval(tick, 60000);
+  fetch('data/tags.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(d => {
+    if (!d) return;
+    const el2 = document.getElementById('stD'); el2.textContent = d.updated;
+    const today = bj().toISOString().slice(0,10);
+    if (d.updated !== today) document.querySelector('.stat .dot').style.background = 'var(--amber)';
+  }).catch(() => {});
+})();
+</script>
+<script>
 (() => {
   const m = document.getElementById('mq'); if (!m) return;
   const box = document.createElement('div'); box.className = 'msug'; m.parentNode.appendChild(box);
