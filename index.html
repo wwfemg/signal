@@ -245,10 +245,10 @@
   <span>数据来自交易所公告、十大流通股东名册、龙虎榜　·　研究记录，不构成投资建议</span>
   <span>
     <a href="ledger.html">台账</a>
-    <a href="pool.html">机构持仓池</a>
-    <a href="tag.html">标签</a>
-    <a href="seats.html">龙虎榜席位</a>
-    <a href="stock.html">查一只票</a>
+    <a href="list.html#pool">机构持仓池</a>
+    <a href="list.html#tag">标签</a>
+    <a href="list.html#seats">龙虎榜席位</a>
+    
     <a href="https://github.com/wwfemg/signal/blob/main/docs/CONTRIBUTING.md">投稿规矩</a>
     <a href="https://github.com/wwfemg/signal/blob/main/docs/CHANGELOG.md">变更记录</a>
     <a href="https://github.com/wwfemg/signal/issues/new?template=feedback.yml">提意见</a>
@@ -271,7 +271,7 @@ function ask(){
   const v = document.getElementById('q').value.trim();
   if (!v) return;
   if (/^[0-9]{6}$/.test(v)) { location.href = 'stock.html#' + v; return; }
-  for (const k in KEY) if (v.includes(k)) { location.href = 'tag.html#' + encodeURIComponent(KEY[k]); return; }
+  for (const k in KEY) if (v.includes(k)) { location.href = 'list.html#tag=' + encodeURIComponent(KEY[k]); return; }
   const hit = Object.entries(NAMES).filter(([c,n]) => n.includes(v)).slice(0,8);
   document.getElementById('res').innerHTML = hit.length
     ? hit.map(([c,n]) => `<a href="stock.html#${c}">${esc(n)}<span>${c}</span></a>`).join('')
@@ -283,7 +283,7 @@ fetch('data/tags.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).th
   const cnt = {};
   for (const v of Object.values(d.stocks)) for (const x of v.tags) cnt[x] = (cnt[x] || 0) + 1;
   const links = Object.keys(d.rules).filter(k => cnt[k])
-    .map(k => `<a href="tag.html#${encodeURIComponent(k)}">${esc(k)} <i>${cnt[k]}</i></a>`).join('');
+    .map(k => `<a href="list.html#${encodeURIComponent(k)}">${esc(k)} <i>${cnt[k]}</i></a>`).join('');
   if (links) document.getElementById('tips').innerHTML = '常看的：' + links;
 }).catch(() => {});
 document.getElementById('go').onclick = ask;

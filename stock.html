@@ -110,7 +110,7 @@
 <div class="topbar">
   <a class="brand" href="index.html">Signal</a>
   <div class="mini"><input id="mq" placeholder="输入代码跳转，如 600520" aria-label="跳转到某只票"></div>
-  <nav class="tnav"><a href="ledger.html">台账</a><a href="pool.html">机构池</a><a href="tag.html">标签</a><a href="seats.html">席位</a><a href="stock.html">查一只票</a><a href="https://github.com/wwfemg/signal/issues/new?template=feedback.yml" target="_blank">提建议</a></nav>
+  <nav class="tnav"><a href="list.html#tag">名单</a><a href="ledger.html">台账</a><a href="https://github.com/wwfemg/signal/issues/new?template=feedback.yml" target="_blank">提建议</a></nav>
 </div>
 <div class="wrap">
   <header class="top">
@@ -174,11 +174,11 @@ async function render(code) {
   const ups = [sh?.updated, D.timeline?.updated].filter(Boolean).sort();
   h += `<p class="note">数据更新 ${esc(ups[ups.length-1] || '')}　·　台账 ${esc(D.ledger?.updated || '—')}</p>`;
   if (t?.tags?.length) {
-    h += `<div class="tagrow">${t.tags.map(x => `<a class="tag" href="tag.html#${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}</div>`;
+    h += `<div class="tagrow">${t.tags.map(x => `<a class="tag" href="list.html#tag=${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}</div>`;
     const RULES = sh?.rules || {};
     h += `<ul class="whylist">${Object.entries(t.why || {}).map(([k,v]) =>
       `<li><b>${esc(k)}</b>：${esc(v)}<br><span class="ruletip">判定规则：${esc(RULES[k] || '')}</span></li>`).join('')}</ul>
-      <p class="note"><a href="tag.html">看全部标签怎么判定 →</a></p>`;
+      <p class="note"><a href="list.html#tag">看全部标签怎么判定 →</a></p>`;
   } else { h += `<p class="empty">暂无自动标签</p>`; }
   h += `</section>`;
 
@@ -230,7 +230,7 @@ async function render(code) {
       <p class="note">${CAVEAT}最新的排在最前面。“快照”来自公司回购公告附带的股东名单，基准日离披露只有 2—3 天；“季报”是定期报告，滞后 1—2 个月。</p>`;
     dates.forEach((d, i) => {
       const rows = byDate[d], kind = rows[0].kind || '季报';
-      h += `<h3 class="grp"><a href="pool.html#${esc(d)}">${esc(d)}</a>　<span class="gk">${esc(kind)}</span>${i === 0 ? '<span class="gnew">最新</span>' : ''}</h3>
+      h += `<h3 class="grp"><a href="list.html#pool${esc(d)}">${esc(d)}</a>　<span class="gk">${esc(kind)}</span>${i === 0 ? '<span class="gnew">最新</span>' : ''}</h3>
         <div class="tblwrap"><table class="t"><thead><tr><th>机构</th><th>名次</th><th>占流通</th><th>变动</th>
         <th>估算成本</th><th>现价</th><th>现价 vs 估算成本</th></tr></thead><tbody>` +
         rows.map(r => `<tr><td>${esc(r.holder)}</td><td class="num">${r.rank}</td>
