@@ -74,6 +74,15 @@
   @media (prefers-reduced-motion: reduce){ .loading .sp{animation:none;} }
   @media (max-width:900px){ .stat .nx{display:none;} }
   .topbar .mini input{min-width:80px;}
+
+  @media (max-width:1100px){
+    .topbar{flex-wrap:wrap; row-gap:8px;}
+    .topbar .brand{order:1;}
+    .topbar .tnav{order:2; margin-left:auto;}
+    .topbar .stat, .stat{order:3;}
+    .topbar .mini{order:4; flex-basis:100%;}
+  }
+  @media (min-width:1101px){ .topbar{flex-wrap:nowrap;} }
 </style>
 </head>
 <body>
