@@ -25,6 +25,7 @@
   .whylist{margin:0 0 14px; padding:0; list-style:none; display:flex; flex-direction:column; gap:5px;}
   .whylist li{font-size:13px; color:var(--ink-2); border-left:2px solid var(--line); padding-left:10px;}
   .whylist b{color:var(--ink);}
+  .ruletip{font-size:12px; color:var(--ink-3);}
   table.t{width:100%; border-collapse:collapse; font-size:13px;}
   table.t th, table.t td{padding:7px 9px; border-bottom:1px solid var(--line-soft); text-align:left;}
   table.t th{font-size:11.5px; color:var(--ink-3); font-weight:500;}
@@ -86,7 +87,6 @@
     <div class="hits" id="hits"></div>
   </header>
   <div id="out"></div>
-  <section class="rules" id="rules"></section>
   <footer>
     <span id="nextupd"></span><br>
     数据来自交易所公告、十大流通股东名册、龙虎榜。机构成本为估算（其持股季度的量价均价），不是真实成交价。<br>
@@ -131,7 +131,10 @@ function render(code) {
   h += `<p class="note">数据更新 ${esc(ups[ups.length-1] || '')}　·　台账 ${esc(D.ledger?.updated || '—')}</p>`;
   if (t?.tags?.length) {
     h += `<div class="tagrow">${t.tags.map(x => `<a class="tag" href="tag.html#${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}</div>`;
-    h += `<ul class="whylist">${Object.entries(t.why || {}).map(([k,v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('')}</ul>`;
+    const RULES = D.tags?.rules || {};
+    h += `<ul class="whylist">${Object.entries(t.why || {}).map(([k,v]) =>
+      `<li><b>${esc(k)}</b>：${esc(v)}<br><span class="ruletip">判定规则：${esc(RULES[k] || '')}</span></li>`).join('')}</ul>
+      <p class="note"><a href="tag.html">看全部标签怎么判定 →</a></p>`;
   } else { h += `<p class="empty">暂无自动标签</p>`; }
   h += `</section>`;
 
@@ -203,10 +206,6 @@ function search() {
   const [tags, timeline, pool, lhb, ledger, names] = await Promise.all(
     ['tags.json','timeline.json','pool.json','lhb.json','ledger.json','names.json'].map(j));
   Object.assign(D, {tags, timeline, pool, lhb, ledger, names});
-  const rules = tags?.rules || {};
-  document.getElementById('rules').innerHTML = '<h2>标签怎么判定</h2><ol>' +
-    Object.entries(rules).map(([k, v]) => `<li><b>${esc(k)}</b>：${esc(v)}</li>`).join('') +
-    '</ol><p class="note">规则都写死在脚本里，谁跑都一样。想加新标签，在 GitHub 提一个 Issue，写清怎么判定、用哪条公开数据验证。</p>';
 
   const hash = location.hash.replace('#', '');
   if (/^[0-9]{6}$/.test(hash)) render(hash);
