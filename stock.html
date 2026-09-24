@@ -84,6 +84,12 @@
       border-bottom:1px solid var(--line); border-radius:0; font-size:11.5px; padding:6px 10px;
       background:var(--line-soft);}
   }
+
+  .loading{display:flex; align-items:center; gap:10px; padding:18px 2px; color:var(--ink-3); font-size:13px;}
+  .loading .sp{width:14px; height:14px; border:2px solid var(--line); border-top-color:var(--accent);
+    border-radius:50%; animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion: reduce){ .loading .sp{animation:none;} }
 </style>
 </head>
 <body>
@@ -98,7 +104,7 @@
     <p class="sub" id="lead">在上面的框里输入代码，看这只票属于哪几种逻辑、时间轴走到哪一步、哪些机构在里面、最近有没有上龙虎榜。</p>
     <div class="hits" id="hits"></div>
   </header>
-  <div id="out"></div>
+  <div id="out"><div class="loading"><span class="sp"></span>正在读取数据…</div></div>
   <footer>
     数据来自交易所公告、十大流通股东名册、龙虎榜。机构成本为估算（其持股季度的量价均价），不是真实成交价。<br>
     <b>研究记录，不构成投资建议。</b>
@@ -229,6 +235,7 @@ function search() {
 
   const hash = location.hash.replace('#', '');
   if (/^[0-9]{6}$/.test(hash)) render(hash);
+  else document.getElementById('out').innerHTML = '';
   addEventListener('hashchange', () => {
     const v = location.hash.replace('#', '');
     if (/^[0-9]{6}$/.test(v)) render(v);
