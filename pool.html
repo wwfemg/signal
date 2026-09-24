@@ -184,7 +184,7 @@ function paint(){
     document.getElementById('stN').textContent =
       `· 下次 ${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}（${h>0?h+' 小时':''}${m} 分后）`; };
   tick(); setInterval(tick, 60000);
-  fetch('data/tags.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(d => {
+  fetch('data/status.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(d => {
     if (!d) return;
     const el2 = document.getElementById('stD'); el2.textContent = d.updated;
     const today = bj().toISOString().slice(0,10);

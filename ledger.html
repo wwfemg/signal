@@ -442,7 +442,7 @@
   </footer>
 </div>
 <script>
-fetch('data/tags.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(d => {
+fetch('data/status.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(d => {
   if (d) document.getElementById('dupd').textContent = d.updated;
 }).catch(() => {});
 </script>

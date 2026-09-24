@@ -309,7 +309,7 @@ const HINTS = ['输入 600520，看这只票在等哪个公告',
     document.getElementById('stN').textContent =
       `· 下次 ${String(o.t.getHours()).padStart(2,'0')}:${String(o.t.getMinutes()).padStart(2,'0')}（${h>0?h+' 小时':''}${m} 分后）`; };
   tick(); setInterval(tick, 60000);
-  fetch('data/tags.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(d => {
+  fetch('data/status.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(d => {
     if (!d) return;
     document.getElementById('stD').textContent = d.updated;
     if (d.updated !== bj().toISOString().slice(0,10))
