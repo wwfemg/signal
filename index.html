@@ -342,7 +342,7 @@ fetch('data/tags.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).th
 }).catch(() => {});
 document.getElementById('go').onclick = ask;
 document.getElementById('rnd').onclick = () => {
-  if (!CODES.length) { location.href = 'tag.html'; return; }
+  if (!CODES.length) { location.href = 'list.html'; return; }
   location.href = 'stock.html#' + CODES[Math.floor(Math.random() * CODES.length)];
 };
 document.getElementById('q').onkeydown = e => { if (e.key === 'Enter') ask(); };
